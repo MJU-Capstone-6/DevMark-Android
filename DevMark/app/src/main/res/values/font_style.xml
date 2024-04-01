@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="pretendard_bold">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="pretendard_medium">
+        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="pretendard_regular">
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="pretendard_semibold">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+</resources>
