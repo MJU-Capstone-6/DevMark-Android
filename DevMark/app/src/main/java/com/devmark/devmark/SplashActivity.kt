@@ -1,0 +1,52 @@
+package com.devmark.devmark
+
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.devmark.devmark.databinding.ActivitySplashBinding
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.common.model.KakaoSdkError
+import com.kakao.sdk.user.UserApiClient
+
+@SuppressLint("CustomSplashScreen")
+class SplashActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySplashBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // binding 세팅
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
+
+
+        if (AuthApiClient.instance.hasToken()) {
+            UserApiClient.instance.accessTokenInfo { _, error ->
+                if (error != null) {
+                    if (error is KakaoSdkError && error.isInvalidTokenError()) {
+                        moveActivity(SignInActivity())
+                    } else {
+                        // 기타 에러
+                        moveActivity(SignInActivity())
+                    }
+                } else {
+                    //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
+                    moveActivity(MainActivity())
+                }
+            }
+        } else {
+            //로그인 필요
+            moveActivity(SignInActivity())
+        }
+    }
+
+    private fun moveActivity(p: Activity) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(this, p::class.java)
+            startActivity(intent)
+        }, 1000)
+    }
+}
