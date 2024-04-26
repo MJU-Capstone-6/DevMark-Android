@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/workspace_round">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.72" />
+
+        <ImageView
+            android:id="@+id/iv_my_workspace"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/workspace_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_workspace_name"
+            style="@style/semibold_16_workspace"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/rust"
+            app:layout_constraintBottom_toTopOf="@id/tv_workspace_detail"
+            app:layout_constraintEnd_toStartOf="@id/guideline1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_workspace_detail"
+            style="@style/medium_12_workspace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:textColor="@color/taupe"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_workspace_name" />
+
+        <TextView
+            android:id="@+id/tv_total_bookmark"
+            style="@style/medium_12_workspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/workspace_total_bookmark"
+            android:textColor="@color/rust"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/guideline1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_total_bookmark_num"
+            style="@style/regular_10_workspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/taupe"
+            app:layout_constraintStart_toStartOf="@id/tv_total_bookmark"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_bookmark" />
+
+        <TextView
+            android:id="@+id/tv_total_people"
+            style="@style/medium_12_workspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/workspace_total_people"
+            android:textColor="@color/rust"
+            app:layout_constraintStart_toStartOf="@id/tv_total_bookmark"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_bookmark_num" />
+
+        <TextView
+            android:id="@+id/tv_total_people_num"
+            style="@style/regular_10_workspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/taupe"
+            app:layout_constraintStart_toStartOf="@id/tv_total_bookmark"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_people" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

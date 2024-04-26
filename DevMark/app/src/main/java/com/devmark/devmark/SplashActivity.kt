@@ -33,8 +33,8 @@ class SplashActivity : AppCompatActivity() {
                         moveActivity(SignInActivity())
                     }
                 } else {
-                    //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
-                    moveActivity(MainActivity())
+                    // 이미 로그인 토큰이 존재한다면
+                    moveActivity(SelectWorkspaceActivity())
                 }
             }
         } else {

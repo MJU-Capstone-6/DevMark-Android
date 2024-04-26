@@ -6,6 +6,7 @@
     <color name="taupe">#704F48</color>
     <color name="sage">#797568</color>
     <color name="platinum">#A9A09B</color>
+    <color name="platinum_alpha70">#B3A9A09B</color>
     <color name="alabaster">#DAD6D3</color>
     <color name="transparent">#00000000</color>
 </resources>
