@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.devmark.devmark.data.WorkSpace
 import com.devmark.devmark.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -31,8 +32,10 @@ class MainActivity : AppCompatActivity() {
             )
             true
         }
+
     }
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, fragment).commit()
     }
+
 }

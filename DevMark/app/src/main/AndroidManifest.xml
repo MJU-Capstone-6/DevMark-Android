@@ -36,6 +36,10 @@
             android:exported="true" />
 
         <activity
+            android:name=".SelectWorkspaceActivity"
+            android:exported="true" />
+
+        <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
