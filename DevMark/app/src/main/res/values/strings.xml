@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">DevMark</string>
+
+    <!-- 네비게이션 바 -->
+    <string name="navi_recommend">추천</string>
+    <string name="navi_workspace">워크스페이스</string>
+    <string name="navi_remind">리마인드</string>
+
+    <!-- 워크스페이스 선택 페이지 -->
+    <string name="select_workspace_my_title">내 워크스페이스</string>
+    <string name="select_workspace_now_title">현재 워크스페이스</string>
+    <string name="select_workspace_btn_create">워크스페이스 생성</string>
+    <string name="select_workspace_btn_enter">워크스페이스 참여</string>
+    <string name="workspace_total_bookmark">총 북마크 수</string>
+    <string name="workspace_total_people">참여 인원</string>
 </resources>
