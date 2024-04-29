@@ -13,4 +13,10 @@
     <string name="select_workspace_btn_enter">워크스페이스 참여</string>
     <string name="workspace_total_bookmark">총 북마크 수</string>
     <string name="workspace_total_people">참여 인원</string>
+
+    <!-- 워크스페이스 목록 조회 -->
+    <string name="filter_sort">최신순</string>
+    <string name="filter_member">멤버</string>
+    <string name="filter_category">카테고리</string>
+
 </resources>

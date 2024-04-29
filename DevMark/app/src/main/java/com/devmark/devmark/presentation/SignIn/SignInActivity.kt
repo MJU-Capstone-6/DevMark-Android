@@ -1,4 +1,4 @@
-package com.devmark.devmark
+package com.devmark.devmark.presentation.SignIn
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.devmark.devmark.R
 import com.devmark.devmark.databinding.ActivitySigninBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError

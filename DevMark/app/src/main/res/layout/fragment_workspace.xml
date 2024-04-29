@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Toolbar
+            android:id="@+id/tb_workspace"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/platinum"
+            android:contentInsetStart="0dp"
+            tools:ignore="MissingConstraints">
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start"
+                android:background="@color/platinum"
+                android:src="@drawable/ic_back"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tb_workspace_title"
+                style="@style/bold_20_tb_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="안드로이드 스터디"
+                android:textColor="@color/taupe" />
+
+            <ImageButton
+                android:id="@+id/tb_workspace_btn_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:background="@color/platinum"
+                tools:ignore="ContentDescription"
+                android:padding="16dp"
+                android:src="@drawable/ic_setting" />
+        </Toolbar>
+
+        <TextView
+            android:id="@+id/tv_filter_sort"
+            style="@style/medium_14_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/filter_round"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:paddingStart="12dp"
+            android:paddingEnd="4dp"
+            android:text="@string/filter_sort"
+            android:textColor="@color/rust"
+            app:drawableEndCompat="@drawable/selector_up_down"
+            app:layout_constraintEnd_toStartOf="@id/tv_filter_member"
+            app:layout_constraintTop_toBottomOf="@id/tb_workspace" />
+
+
+        <TextView
+            android:id="@+id/tv_filter_member"
+            style="@style/medium_14_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/filter_round"
+            android:gravity="center"
+            android:paddingStart="28dp"
+            android:paddingEnd="28dp"
+            android:text="@string/filter_member"
+            android:textColor="@color/rust"
+            app:layout_constraintEnd_toStartOf="@id/tv_filter_category"
+            app:layout_constraintTop_toBottomOf="@id/tb_workspace" />
+
+        <TextView
+            android:id="@+id/tv_filter_category"
+            style="@style/medium_14_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/filter_round"
+            android:gravity="center"
+            android:paddingStart="17dp"
+            android:paddingEnd="17dp"
+            android:text="@string/filter_category"
+            android:textColor="@color/rust"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_workspace" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tv_filter_sort" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_bookmark"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="12dp"
+            app:layout_constraintTop_toBottomOf="@id/rv_filter" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_workspace_setting"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/platinum"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_workspace_setting"
+            app:borderWidth="0dp"
+            app:fabCustomSize="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:rippleColor="#7F7875" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
