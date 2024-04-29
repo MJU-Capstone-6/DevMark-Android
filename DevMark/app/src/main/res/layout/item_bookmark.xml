@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lo_item_bookmark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/workspace_round">
+
+        <TextView
+            android:id="@+id/tv_bookMark_title"
+            style="@style/semibold_16_bookmark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="12dp"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="2"
+            android:textColor="@color/rust"
+            app:layout_constraintBottom_toTopOf="@id/iv_bookMark_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_bookMark_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bookmark_bottom"
+            app:layout_constraintBottom_toBottomOf="@id/tv_bookMark_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_bookMark_category" />
+
+        <TextView
+            android:id="@+id/tv_bookMark_category"
+            style="@style/semibold_12_bookmark"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:textColor="@color/rust"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/iv_bookMark_bottom" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

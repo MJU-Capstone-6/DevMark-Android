@@ -7,6 +7,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lo_item_workspace"
         android:layout_width="match_parent"
         android:layout_height="104dp"
         android:layout_marginBottom="12dp"
