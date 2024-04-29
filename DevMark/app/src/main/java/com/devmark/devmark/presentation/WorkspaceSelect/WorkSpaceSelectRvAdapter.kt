@@ -1,7 +1,5 @@
-package com.devmark.devmark
+package com.devmark.devmark.presentation.WorkspaceSelect
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +7,7 @@ import com.devmark.devmark.data.WorkSpace
 import com.devmark.devmark.databinding.ItemNewWorkspaceBinding
 import com.devmark.devmark.databinding.ItemWorkspaceBinding
 
-class MultiviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ITEM_VIEW_TYPE_NEW_WORKSPACE = 2
     private val ITEM_VIEW_TYPE_WORKSPACE = 1
     private var dataList = mutableListOf<WorkSpace>()

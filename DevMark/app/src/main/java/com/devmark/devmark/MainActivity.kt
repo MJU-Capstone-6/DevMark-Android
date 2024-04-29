@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.devmark.devmark.data.WorkSpace
 import com.devmark.devmark.databinding.ActivityMainBinding
+import com.devmark.devmark.presentation.Recommend.RecommendFragment
+import com.devmark.devmark.presentation.Remind.RemindFragment
+import com.devmark.devmark.presentation.Workspace.WorkspaceFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
