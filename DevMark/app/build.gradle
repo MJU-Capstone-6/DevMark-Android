@@ -19,9 +19,12 @@ android {
 
         def properties = new Properties()
         properties.load(new FileInputStream(rootProject.file("local.properties")))
+
         def key = properties["KAKAO_NATIVE_KEY"]
         buildConfigField("String", "KAKAO_NATIVE_KEY", "\"$key\"")
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = key.toString()
+        def baseUrl = properties["BASE_URL"]
+        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
 
     }
 
@@ -55,4 +58,10 @@ dependencies {
 
     // Kakao Login
     implementation 'com.kakao.sdk:v2-user:2.20.1'
+
+    // Retrofit
+    def RETROFIT_VERSION = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
 }
