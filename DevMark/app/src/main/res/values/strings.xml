@@ -19,4 +19,16 @@
     <string name="filter_member">멤버</string>
     <string name="filter_category">카테고리</string>
 
+    <!-- 워크스페이스 관리 페이지 -->
+    <string name="text_tb_workspace_setting">워크스페이스 관리</string>
+    <string name="now_workspace_workspace_setting">현재 워크스페이스</string>
+    <string name="bookmark_info_workspace_setting">북마크 정보</string>
+    <string name="total_bookmark_workspace_setting">총 북마크 수</string>
+    <string name="invite_workspace_setting">초대 코드 발급</string>
+    <string name="bookmark_code_workspace_setting">북마크 인증 코드 발급</string>
+    <string name="hint_invite_workspace_setting">오른쪽 버튼을 눌러 초대 코드를 발급 받으세요</string>
+    <string name="hint_bookmark_code_workspace_setting">오른쪽 버튼을 눌러 인증 코드를 발급 받으세요</string>
+    <string name="exit_workspace_setting">워크스페이스 나가기</string>
+    <string name="num_bookmark_info">%s 개</string>
+
 </resources>
