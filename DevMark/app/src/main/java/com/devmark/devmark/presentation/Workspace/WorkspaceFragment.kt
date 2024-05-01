@@ -1,24 +1,24 @@
 package com.devmark.devmark.presentation.Workspace
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devmark.devmark.MainActivity
 import com.devmark.devmark.R
 import com.devmark.devmark.data.BookMark
-import com.devmark.devmark.data.Category
-import com.devmark.devmark.data.Member
 import com.devmark.devmark.databinding.FragmentWorkspaceBinding
+import com.devmark.devmark.presentation.WorkspaceSelect.SelectWorkspaceActivity
+import com.devmark.devmark.presentation.WorkspaceSetting.WorkspaceSettingFragment
 
 class WorkspaceFragment : Fragment() {
     private lateinit var binding: FragmentWorkspaceBinding
     private val bookmarkList = ArrayList<BookMark>()
-    private val categoryList = ArrayList<Category>()
-    private val memberList = ArrayList<Member>()
+    private val categoryList = ArrayList<String>()
+    private val memberList = ArrayList<String>()
     private val categoryFilterList = mutableListOf<String>()
     private val memberFilterList = mutableListOf<String>()
     private lateinit var workSpaceRvAdapter: WorkSpaceRvAdapter
@@ -30,9 +30,19 @@ class WorkspaceFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (requireActivity() as MainActivity).changeNaviVisibility(true)
         binding = FragmentWorkspaceBinding.inflate(layoutInflater)
-        binding.btnWorkspaceSetting.setOnClickListener{
-            Log.d("TAG", "btn click")
+
+        binding.btnWorkspaceSetting.setOnClickListener {
+            // 워크스페이스 관리 페이지로
+            (requireActivity() as MainActivity).replaceFragmentWithBackstack(
+                WorkspaceSettingFragment()
+            )
+        }
+        binding.ibBackWorkspace.setOnClickListener {
+            // 이전 화면으로 뒤로가기
+            (requireActivity() as MainActivity).backToSelectWorkspaceActivity()
+            requireActivity().finish()
         }
         return binding.root
     }
@@ -46,25 +56,24 @@ class WorkspaceFragment : Fragment() {
         // 데이터 추가
         bookmarkList.add(
             BookMark(
-                "안드로이드 개발자 로드맵 - Part1: The Android Platform Hello World! Lorem Ipsum",
+                "안드로이드 개발자 로드맵 - Part1: The Android Platform Hello World! 안드로이드 마스터를 해보자~",
                 "Android"
             )
         )
         bookmarkList.add(BookMark("기업들은 왜 코틀린을 선택하였을까?", "Kotlin"))
 
-        memberList.add(Member("함범준"))
-        memberList.add(Member("이성진"))
-        memberList.add(Member("문장훈"))
-        memberList.add(Member("최건호"))
+        memberList.add("문장훈")
+        memberList.add("이성진")
+        memberList.add("최건호")
+        memberList.add("함범준")
 
-
-        categoryList.add(Category("Kotlin"))
-        categoryList.add(Category("Android"))
-        categoryList.add(Category("Golang"))
-        categoryList.add(Category("Python"))
-        categoryList.add(Category("부트캠프"))
-        categoryList.add(Category("Flutter"))
-        categoryList.add(Category("Algorithm"))
+        categoryList.add("Kotlin")
+        categoryList.add("Android")
+        categoryList.add("Golang")
+        categoryList.add("Python")
+        categoryList.add("부트캠프")
+        categoryList.add("Flutter")
+        categoryList.add("Algorithm")
 
         // recyclerview adapter
         workSpaceRvAdapter = WorkSpaceRvAdapter()

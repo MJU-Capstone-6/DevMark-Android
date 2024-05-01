@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.R
-import com.devmark.devmark.data.Member
 import com.devmark.devmark.databinding.ItemFilterListBinding
 
 
 class MemberRvAdapter(private val selectedList: List<String>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var memberList = mutableListOf<Member>()
+    private var memberList = mutableListOf<String>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemFilterListBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -31,14 +30,14 @@ class MemberRvAdapter(private val selectedList: List<String>) :
         }
     }
 
-    fun setData(list: ArrayList<Member>) {
+    fun setData(list: ArrayList<String>) {
         memberList = list
     }
 
     inner class MemberHolder(val binding: ItemFilterListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Member) {
-            binding.tvFilter.isSelected = if (selectedList.contains(item.member)) {
+        fun bind(item: String) {
+            binding.tvFilter.isSelected = if (selectedList.contains(item)) {
                 binding.tvFilter.setTextColor(itemView.context.getColor(R.color.alabaster))
                 true
             } else {
@@ -46,9 +45,9 @@ class MemberRvAdapter(private val selectedList: List<String>) :
                 false
             }
 
-            binding.tvFilter.text = item.member
+            binding.tvFilter.text = item
             binding.tvFilter.setOnClickListener {
-                itemClick.onClick(item.member)
+                itemClick.onClick(item)
                 val newColor =
                     if (!binding.tvFilter.isSelected) {
                         itemView.context.getColor(R.color.alabaster)

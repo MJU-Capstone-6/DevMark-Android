@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_setting_workspace"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Toolbar
+            android:id="@+id/tb_workspace_setting"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/platinum"
+            android:contentInsetStart="0dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/ib_back_workspace_setting"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start"
+                android:background="@color/platinum"
+                android:src="@drawable/ic_back"
+                tools:ignore="ContentDescription, SpeakableTextPresentCheck" />
+
+            <TextView
+                style="@style/bold_20_tb_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="워크스페이스 관리"
+                android:textColor="@color/taupe" />
+        </Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="20dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_workspace_setting"
+            tools:ignore="UselessLeaf">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_now_workspace"
+                    style="@style/semibold_20_workspace_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/now_workspace_workspace_setting"
+                    android:textColor="@color/rust"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/div1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@color/rust"
+                    app:layout_constraintStart_toStartOf="@id/tv_now_workspace"
+                    app:layout_constraintTop_toBottomOf="@id/tv_now_workspace" />
+
+                <TextView
+                    android:id="@+id/tv_workspace_title"
+                    style="@style/medium_16_workspace_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="12dp"
+                    android:text="안드로이드 스터디"
+                    android:textColor="@color/taupe"
+                    app:layout_constraintStart_toStartOf="@id/div1"
+                    app:layout_constraintTop_toBottomOf="@id/div1" />
+
+                <TextView
+                    android:id="@+id/tv_workspace_desc"
+                    style="@style/medium_16_workspace_setting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="명지대 안드로이드 스터디를 위한 워크스페이스 스터디 진행 시 참고한 포스트를 추가해주세요. 설명 전체 텍스트가 모두 출력됩니다."
+                    android:textColor="@color/taupe"
+                    app:layout_constraintEnd_toEndOf="@id/div1"
+                    app:layout_constraintStart_toStartOf="@id/tv_workspace_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_workspace_title" />
+
+                <TextView
+                    android:id="@+id/tv_bookmark_info"
+                    style="@style/semibold_20_workspace_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/bookmark_info_workspace_setting"
+                    android:textColor="@color/rust"
+                    app:layout_constraintStart_toStartOf="@id/div1"
+                    app:layout_constraintTop_toBottomOf="@id/tv_workspace_desc" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/div2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@color/rust"
+                    app:layout_constraintStart_toStartOf="@id/div1"
+                    app:layout_constraintTop_toBottomOf="@id/tv_bookmark_info" />
+
+                <TextView
+                    android:id="@+id/tv_total_bookmark"
+                    style="@style/bold_16_workspace_setting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/total_bookmark_workspace_setting"
+                    android:textColor="@color/rust"
+                    app:layout_constraintEnd_toStartOf="@id/tv_total_bookmark_num"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/div2" />
+
+                <TextView
+                    android:id="@+id/tv_total_bookmark_num"
+                    style="@style/bold_16_workspace_setting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="245 개"
+                    android:textColor="@color/rust"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_total_bookmark"
+                    app:layout_constraintTop_toTopOf="@id/tv_total_bookmark" />
+
+                <ListView
+                    android:id="@+id/lv_workspace_setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:scrollbars="none"
+                    app:layout_constraintStart_toStartOf="@id/tv_total_bookmark"
+                    app:layout_constraintTop_toBottomOf="@id/tv_total_bookmark" />
+
+                <TextView
+                    style="@style/semibold_20_workspace_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/invite_workspace_setting"
+                    android:textColor="@color/rust"
+                    app:layout_constraintStart_toStartOf="@id/div1"
+                    app:layout_constraintTop_toBottomOf="@id/lv_workspace_setting" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/div3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="60dp"
+                    android:background="@color/rust"
+                    app:layout_constraintStart_toStartOf="@id/div2"
+                    app:layout_constraintTop_toBottomOf="@id/lv_workspace_setting" />
+
+                <TextView
+                    android:id="@+id/tv_invite_code_workspace_setting"
+                    style="@style/regular_12_workspace_setting"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/workspace_setting_round"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/hint_invite_workspace_setting"
+                    android:textColor="@color/sage"
+                    app:layout_constraintEnd_toStartOf="@id/iv_invite_code"
+                    app:layout_constraintStart_toStartOf="@id/div3"
+                    app:layout_constraintTop_toBottomOf="@id/div3" />
+
+                <ImageView
+                    android:id="@+id/iv_invite_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/ic_code_print"
+                    app:layout_constraintEnd_toEndOf="@id/div3"
+                    app:layout_constraintTop_toTopOf="@id/tv_invite_code_workspace_setting"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/semibold_20_workspace_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/bookmark_code_workspace_setting"
+                    android:textColor="@color/rust"
+                    app:layout_constraintStart_toStartOf="@id/div3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_invite_code_workspace_setting" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/div4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="60dp"
+                    android:background="@color/rust"
+                    app:layout_constraintStart_toStartOf="@id/div3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_invite_code_workspace_setting" />
+
+                <TextView
+                    android:id="@+id/tv_bookmark_info_workspace_setting"
+                    style="@style/regular_12_workspace_setting"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/workspace_setting_round"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/hint_bookmark_code_workspace_setting"
+                    android:textColor="@color/sage"
+                    app:layout_constraintEnd_toStartOf="@id/iv_bookmark_info"
+                    app:layout_constraintStart_toStartOf="@id/div4"
+                    app:layout_constraintTop_toBottomOf="@id/div4" />
+
+                <ImageView
+                    android:id="@+id/iv_bookmark_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/ic_code_print"
+                    app:layout_constraintEnd_toEndOf="@id/div4"
+                    app:layout_constraintTop_toTopOf="@id/tv_bookmark_info_workspace_setting"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/semibold_20_workspace_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/exit_workspace_setting"
+                    android:textColor="@color/rust"
+                    app:layout_constraintStart_toStartOf="@id/div4"
+                    app:layout_constraintTop_toBottomOf="@id/tv_bookmark_info_workspace_setting" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/div5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="64dp"
+                    android:background="@color/rust"
+                    app:layout_constraintStart_toStartOf="@id/div3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_bookmark_info_workspace_setting" />
+
+                <TextView
+                    android:id="@+id/tv_exit_workspace"
+                    style="@style/semibold_16_workspace_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/exit_workspace_setting"
+                    android:textColor="@color/platinum"
+                    app:layout_constraintStart_toStartOf="@id/tv_bookmark_info_workspace_setting"
+                    app:layout_constraintTop_toBottomOf="@id/div5" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

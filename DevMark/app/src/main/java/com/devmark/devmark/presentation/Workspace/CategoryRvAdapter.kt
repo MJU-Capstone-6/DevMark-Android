@@ -4,12 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.R
-import com.devmark.devmark.data.Category
 import com.devmark.devmark.databinding.ItemFilterListBinding
 
 class CategoryRvAdapter(private val selectedList: List<String>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var categoryList = mutableListOf<Category>()
+    private var categoryList = mutableListOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemFilterListBinding.inflate(
@@ -30,14 +29,14 @@ class CategoryRvAdapter(private val selectedList: List<String>) :
         }
     }
 
-    fun setData(list: ArrayList<Category>) {
+    fun setData(list: ArrayList<String>) {
         categoryList = list
     }
 
     inner class CategoryHolder(val binding: ItemFilterListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Category) {
-            binding.tvFilter.isSelected = if (selectedList.contains(item.category)) {
+        fun bind(item: String) {
+            binding.tvFilter.isSelected = if (selectedList.contains(item)) {
                 binding.tvFilter.setTextColor(itemView.context.getColor(R.color.alabaster))
                 true
             } else {
@@ -45,9 +44,9 @@ class CategoryRvAdapter(private val selectedList: List<String>) :
                 false
             }
 
-            binding.tvFilter.text = item.category
+            binding.tvFilter.text = item
             binding.tvFilter.setOnClickListener {
-                itemClick.onClick(item.category)
+                itemClick.onClick(item)
                 val newColor =
                     if (!binding.tvFilter.isSelected) {
                         itemView.context.getColor(R.color.alabaster)
