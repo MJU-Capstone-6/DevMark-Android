@@ -17,9 +17,10 @@
             android:layout_height="48dp"
             android:background="@color/platinum"
             android:contentInsetStart="0dp"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
+                android:id="@+id/ib_back_workspace"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="start"
