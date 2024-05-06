@@ -1,14 +1,12 @@
 package com.devmark.devmark.presentation.WorkspaceSetting
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.devmark.devmark.MainActivity
-import com.devmark.devmark.R
 import com.devmark.devmark.data.Member
 import com.devmark.devmark.databinding.FragmentSettingWorkspaceBinding
 
