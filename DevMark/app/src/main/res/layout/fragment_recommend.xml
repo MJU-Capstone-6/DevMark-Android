@@ -9,17 +9,82 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Toolbar
+            android:id="@+id/tb_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/platinum"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tb_recommend_title"
+                style="@style/bold_20_tb_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/text_tb_recommend"
+                android:textColor="@color/taupe" />
+
+        </Toolbar>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lo_top_category"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="추천 포스트 화면"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/workspace_round"
+            android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_recommend">
+
+
+            <TextView
+                android:id="@+id/tv_top_category"
+                style="@style/bold_16_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/text_top_category"
+                android:textColor="@color/rust"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ListView
+                android:id="@+id/lv_top_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:divider="@color/transparent"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="@id/lo_top_category"
+                app:layout_constraintStart_toStartOf="@id/tv_top_category"
+                app:layout_constraintTop_toBottomOf="@id/tv_top_category" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/div1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="16dp"
+            app:dividerColor="@color/platinum"
+            app:layout_constraintTop_toBottomOf="@id/lo_top_category" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/div1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
