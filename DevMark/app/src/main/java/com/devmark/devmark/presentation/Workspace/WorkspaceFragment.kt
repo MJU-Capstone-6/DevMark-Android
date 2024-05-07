@@ -10,6 +10,7 @@ import com.devmark.devmark.MainActivity
 import com.devmark.devmark.R
 import com.devmark.devmark.data.BookMark
 import com.devmark.devmark.databinding.FragmentWorkspaceBinding
+import com.devmark.devmark.presentation.Setting.SettingFragment
 import com.devmark.devmark.presentation.WorkspaceSetting.WorkspaceSettingFragment
 
 class WorkspaceFragment : Fragment() {
@@ -37,6 +38,14 @@ class WorkspaceFragment : Fragment() {
                 WorkspaceSettingFragment()
             )
         }
+
+        binding.ibSetting.setOnClickListener {
+            // 설정 페이지로
+            (requireActivity() as MainActivity).replaceFragmentWithBackstack(
+                SettingFragment()
+            )
+        }
+
         binding.ibBackWorkspace.setOnClickListener {
             // 이전 화면으로 뒤로가기
             (requireActivity() as MainActivity).backToSelectWorkspaceActivity()
