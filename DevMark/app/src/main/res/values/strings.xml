@@ -36,4 +36,7 @@
     <string name="text_top_category">내 상위 카테고리</string>
     <string name="num_mybookmark_category">%s 개</string>
 
+    <!-- 리마인드 알림 페이지 -->
+    <string name="text_tb_remind">리마인드</string>
+
 </resources>

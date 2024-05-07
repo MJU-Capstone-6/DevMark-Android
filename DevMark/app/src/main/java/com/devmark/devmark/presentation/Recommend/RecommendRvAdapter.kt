@@ -3,11 +3,11 @@ package com.devmark.devmark.presentation.Recommend
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.devmark.devmark.data.BookMark
+import com.devmark.devmark.data.Recommend
 import com.devmark.devmark.databinding.ItemBookmarkBinding
 
 class RecommendRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var recommendList = mutableListOf<BookMark>()
+    private var recommendList = mutableListOf<Recommend>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemBookmarkBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -27,13 +27,13 @@ class RecommendRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun setData(list: ArrayList<BookMark>) {
+    fun setData(list: ArrayList<Recommend>) {
         recommendList = list
     }
 
     inner class RecommendHolder(val binding: ItemBookmarkBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: BookMark) {
+        fun bind(item: Recommend) {
             binding.tvBookMarkTitle.text = item.title
             binding.tvBookMarkCategory.text = item.category
         }
