@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Toolbar
+            android:id="@+id/tb_workspace_select"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/platinum"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@string/app_name"
+                android:textColor="@color/taupe"
+                android:textSize="20sp" />
+
+            <ImageButton
+                android:id="@+id/ib_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:background="@color/platinum"
+                android:importantForAccessibility="no"
+                android:padding="16dp"
+                android:src="@drawable/ic_setting" />
+        </Toolbar>
+
+        <TextView
+            android:id="@+id/tv_now_workspace"
+            style="@style/semibold_20_select_workspace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/select_workspace_now_title"
+            android:textColor="@color/rust"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_workspace_select" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/div1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/rust"
+            app:layout_constraintTop_toBottomOf="@id/tv_now_workspace" />
+
+        <include
+            android:id="@+id/ic_now_workspace"
+            layout="@layout/item_workspace"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:layout_margin="12dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_my_workspace"
+            app:layout_constraintTop_toBottomOf="@id/div1" />
+
+        <TextView
+            android:id="@+id/tv_my_workspace"
+            style="@style/semibold_20_select_workspace"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="20dp"
+            android:padding="0dp"
+            android:text="@string/select_workspace_my_title"
+            android:textColor="@color/rust"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ic_now_workspace" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/div2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/rust"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_workspace" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_workspace"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/div2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

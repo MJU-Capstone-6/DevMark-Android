@@ -39,4 +39,11 @@
     <!-- 리마인드 알림 페이지 -->
     <string name="text_tb_remind">리마인드</string>
 
+    <!-- 설정 페이지 -->
+    <string name="text_tb_setting">설정</string>
+    <string name="text_push_alarm">푸쉬알림</string>
+    <string name="text_terms_conditions">이용약관</string>
+    <string name="text_signout">로그아웃</string>
+    <string name="text_withdrawal">회원탈퇴</string>
+
 </resources>

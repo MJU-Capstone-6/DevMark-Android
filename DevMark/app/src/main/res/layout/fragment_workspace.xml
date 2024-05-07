@@ -38,7 +38,7 @@
                 android:textColor="@color/taupe" />
 
             <ImageButton
-                android:id="@+id/tb_workspace_btn_setting"
+                android:id="@+id/ib_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_gravity="end"
