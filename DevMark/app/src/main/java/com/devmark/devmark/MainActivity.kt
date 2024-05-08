@@ -1,5 +1,6 @@
 package com.devmark.devmark
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -46,8 +47,9 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(binding.flMain.id, fragment).commit()
     }
 
-     fun replaceFragmentWithBackstack(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(binding.flMain.id, fragment).addToBackStack(null).commit()
+    fun replaceFragmentWithBackstack(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(binding.flMain.id, fragment)
+            .addToBackStack(null).commit()
     }
 
     fun changeNaviVisibility(p: Boolean) {
@@ -56,6 +58,11 @@ class MainActivity : AppCompatActivity() {
         } else {
             binding.bottomNav.visibility = View.GONE
         }
+    }
+
+    fun moveActivity(p: Activity) {
+        val intent = Intent(this, p::class.java)
+        startActivity(intent)
     }
 
     fun backToSelectWorkspaceActivity() {
