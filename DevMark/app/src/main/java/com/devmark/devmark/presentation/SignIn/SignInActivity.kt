@@ -1,5 +1,6 @@
 package com.devmark.devmark.presentation.SignIn
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -8,7 +9,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.devmark.devmark.R
+import com.devmark.devmark.SplashActivity
 import com.devmark.devmark.databinding.ActivitySigninBinding
+import com.devmark.devmark.presentation.WorkspaceSelect.SelectWorkspaceActivity
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -17,6 +20,7 @@ import com.kakao.sdk.user.UserApiClient
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding
+    private val splashActivity = SplashActivity()
     private var backPressedTime: Long = 0
     private val TAG = "SignIn"
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -35,7 +39,6 @@ class SignInActivity : AppCompatActivity() {
 
         val kakaoLoginButton: Button = findViewById(R.id.btn_kakao_login)
         kakaoLoginButton.setOnClickListener {
-            Log.d(TAG, "버튼누름")
             //로그인 함수 호출
             kakaoLogin()
         }
@@ -62,6 +65,9 @@ class SignInActivity : AppCompatActivity() {
                     UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
                 } else if (token != null) {
                     Log.d(TAG, "카카오톡으로 로그인 성공 ")
+
+                    val intent = Intent(this, SelectWorkspaceActivity::class.java)
+                    startActivity(intent)
                 }
             }
         } else {
@@ -71,6 +77,9 @@ class SignInActivity : AppCompatActivity() {
                     Log.e(TAG, "카카오계정으로 로그인 실패", error)
                 } else if (token != null) {
                     Log.d(TAG, "카카오계정으로 로그인 성공")
+
+                    val intent = Intent(this, SelectWorkspaceActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }
