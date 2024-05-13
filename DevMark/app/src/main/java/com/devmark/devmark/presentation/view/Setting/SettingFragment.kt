@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.devmark.devmark.MainActivity
+import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.databinding.FragmentSettingBinding
 import com.devmark.devmark.presentation.view.SignIn.SignInActivity
 import com.devmark.devmark.presentation.view.WorkspaceSelect.SelectWorkspaceActivity

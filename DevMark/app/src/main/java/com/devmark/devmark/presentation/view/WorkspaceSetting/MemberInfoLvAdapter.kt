@@ -8,11 +8,10 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.BaseAdapter
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.devmark.devmark.R
-import com.devmark.devmark.data.Member
+import com.devmark.devmark.domain.model.Member
 import com.devmark.devmark.databinding.ItemMemberInfoBinding
 
-class MemberInfoLvAdapter(val context: Context, private val memberList: List<Member>) :
-    BaseAdapter() {
+class MemberInfoLvAdapter(val context: Context, private val memberList: List<Member>) : BaseAdapter() {
     private var mBinding: ItemMemberInfoBinding? = null
     private val binding get() = mBinding!!
 

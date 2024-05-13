@@ -3,7 +3,7 @@ package com.devmark.devmark.presentation.view.WorkspaceSelect
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.devmark.devmark.data.WorkSpace
+import com.devmark.devmark.domain.model.WorkSpace
 import com.devmark.devmark.databinding.ItemNewWorkspaceBinding
 import com.devmark.devmark.databinding.ItemWorkspaceBinding
 import com.devmark.devmark.presentation.view.Workspace.OnItemClickListener

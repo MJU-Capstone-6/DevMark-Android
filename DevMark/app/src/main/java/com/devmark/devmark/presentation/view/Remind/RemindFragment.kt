@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.devmark.devmark.MainActivity
-import com.devmark.devmark.data.Remind
+import com.devmark.devmark.presentation.view.MainActivity
+import com.devmark.devmark.domain.model.Remind
 import com.devmark.devmark.databinding.FragmentRemindBinding
 
 class RemindFragment : Fragment() {

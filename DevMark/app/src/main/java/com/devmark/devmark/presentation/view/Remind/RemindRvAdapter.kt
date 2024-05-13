@@ -3,7 +3,7 @@ package com.devmark.devmark.presentation.view.Remind
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.devmark.devmark.data.Remind
+import com.devmark.devmark.domain.model.Remind
 import com.devmark.devmark.databinding.ItemRemindBookmarkBinding
 
 class RemindRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

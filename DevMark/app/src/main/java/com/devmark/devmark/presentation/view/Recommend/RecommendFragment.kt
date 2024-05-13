@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.devmark.devmark.MainActivity
-import com.devmark.devmark.data.Recommend
-import com.devmark.devmark.data.TopCategory
+import com.devmark.devmark.presentation.view.MainActivity
+import com.devmark.devmark.domain.model.Recommend
+import com.devmark.devmark.domain.model.TopCategory
 import com.devmark.devmark.databinding.FragmentRecommendBinding
 
 class RecommendFragment : Fragment() {

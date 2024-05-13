@@ -3,7 +3,7 @@ package com.devmark.devmark.presentation.view.Recommend
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.devmark.devmark.data.Recommend
+import com.devmark.devmark.domain.model.Recommend
 import com.devmark.devmark.databinding.ItemBookmarkBinding
 
 class RecommendRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

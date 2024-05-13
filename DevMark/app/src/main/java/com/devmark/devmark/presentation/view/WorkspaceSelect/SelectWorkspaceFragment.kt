@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.devmark.devmark.MainActivity
-import com.devmark.devmark.data.WorkSpace
+import com.devmark.devmark.presentation.view.MainActivity
+import com.devmark.devmark.domain.model.WorkSpace
 import com.devmark.devmark.databinding.FragmentSelectWorkspaceBinding
 import com.devmark.devmark.presentation.view.Setting.SettingFragment
 import com.devmark.devmark.presentation.view.Workspace.OnItemClickListener

@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.devmark.devmark.MainActivity
+import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.R
-import com.devmark.devmark.data.BookMark
+import com.devmark.devmark.domain.model.BookMark
 import com.devmark.devmark.databinding.FragmentWorkspaceBinding
 import com.devmark.devmark.presentation.view.Setting.SettingFragment
 import com.devmark.devmark.presentation.view.WorkspaceSetting.WorkspaceSettingFragment

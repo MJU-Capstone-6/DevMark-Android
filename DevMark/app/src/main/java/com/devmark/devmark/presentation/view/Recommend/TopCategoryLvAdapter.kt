@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.devmark.devmark.R
-import com.devmark.devmark.data.TopCategory
+import com.devmark.devmark.domain.model.TopCategory
 import com.devmark.devmark.databinding.ItemTopCategoryBinding
 
 class TopCategoryLvAdapter(val context: Context, private val categoryList: List<TopCategory>) :
