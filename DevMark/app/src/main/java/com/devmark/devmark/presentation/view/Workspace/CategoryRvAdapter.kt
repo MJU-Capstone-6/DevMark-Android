@@ -1,5 +1,4 @@
-package com.devmark.devmark.presentation.Workspace
-
+package com.devmark.devmark.presentation.view.Workspace
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,34 +6,34 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.R
 import com.devmark.devmark.databinding.ItemFilterListBinding
 
-
-class MemberRvAdapter(private val selectedList: List<String>) :
+class CategoryRvAdapter(private val selectedList: List<String>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var memberList = mutableListOf<String>()
+    private var categoryList = mutableListOf<String>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemFilterListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return MemberHolder(binding)
+        return CategoryHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return memberList.size
+        return categoryList.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is MemberHolder) {
-            holder.bind(memberList[position])
+        if (holder is CategoryHolder) {
+            holder.bind(categoryList[position])
         }
     }
 
     fun setData(list: ArrayList<String>) {
-        memberList = list
+        categoryList = list
     }
 
-    inner class MemberHolder(val binding: ItemFilterListBinding) :
+    inner class CategoryHolder(val binding: ItemFilterListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
             binding.tvFilter.isSelected = if (selectedList.contains(item)) {
@@ -65,4 +64,5 @@ class MemberRvAdapter(private val selectedList: List<String>) :
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClick = onItemClickListener
     }
+
 }

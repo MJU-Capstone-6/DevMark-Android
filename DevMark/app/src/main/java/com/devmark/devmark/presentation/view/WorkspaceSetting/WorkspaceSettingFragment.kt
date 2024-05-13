@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.WorkspaceSetting
+package com.devmark.devmark.presentation.view.WorkspaceSetting
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.devmark.devmark.MainActivity
 import com.devmark.devmark.data.Member
 import com.devmark.devmark.databinding.FragmentSettingWorkspaceBinding
-import com.devmark.devmark.presentation.Setting.SettingFragment
 
 class WorkspaceSettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingWorkspaceBinding

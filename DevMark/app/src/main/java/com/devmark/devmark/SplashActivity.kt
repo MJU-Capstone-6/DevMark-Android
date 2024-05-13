@@ -9,8 +9,8 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.devmark.devmark.databinding.ActivitySplashBinding
-import com.devmark.devmark.presentation.SignIn.SignInActivity
-import com.devmark.devmark.presentation.WorkspaceSelect.SelectWorkspaceActivity
+import com.devmark.devmark.presentation.view.SignIn.SignInActivity
+import com.devmark.devmark.presentation.view.WorkspaceSelect.SelectWorkspaceActivity
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.common.model.KakaoSdkError
 import com.kakao.sdk.user.UserApiClient

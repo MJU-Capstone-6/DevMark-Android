@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.Recommend
+package com.devmark.devmark.presentation.view.Recommend
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.Setting
+package com.devmark.devmark.presentation.view.Setting
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

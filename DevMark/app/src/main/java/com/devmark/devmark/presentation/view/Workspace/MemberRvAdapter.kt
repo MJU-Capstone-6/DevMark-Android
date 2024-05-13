@@ -1,4 +1,5 @@
-package com.devmark.devmark.presentation.Workspace
+package com.devmark.devmark.presentation.view.Workspace
+
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,34 +7,34 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.R
 import com.devmark.devmark.databinding.ItemFilterListBinding
 
-class CategoryRvAdapter(private val selectedList: List<String>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var categoryList = mutableListOf<String>()
 
+class MemberRvAdapter(private val selectedList: List<String>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var memberList = mutableListOf<String>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemFilterListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return CategoryHolder(binding)
+        return MemberHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return categoryList.size
+        return memberList.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is CategoryHolder) {
-            holder.bind(categoryList[position])
+        if (holder is MemberHolder) {
+            holder.bind(memberList[position])
         }
     }
 
     fun setData(list: ArrayList<String>) {
-        categoryList = list
+        memberList = list
     }
 
-    inner class CategoryHolder(val binding: ItemFilterListBinding) :
+    inner class MemberHolder(val binding: ItemFilterListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
             binding.tvFilter.isSelected = if (selectedList.contains(item)) {
@@ -64,5 +65,4 @@ class CategoryRvAdapter(private val selectedList: List<String>) :
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClick = onItemClickListener
     }
-
 }

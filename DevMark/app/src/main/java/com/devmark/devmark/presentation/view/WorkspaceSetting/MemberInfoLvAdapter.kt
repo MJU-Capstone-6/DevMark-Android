@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.WorkspaceSetting
+package com.devmark.devmark.presentation.view.WorkspaceSetting
 
 import android.content.Context
 import android.view.LayoutInflater

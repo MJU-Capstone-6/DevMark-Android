@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.WorkspaceSelect
+package com.devmark.devmark.presentation.view.WorkspaceSelect
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.MainActivity
 import com.devmark.devmark.data.WorkSpace
-import com.devmark.devmark.databinding.DialogWorkspaceJoinBinding
 import com.devmark.devmark.databinding.FragmentSelectWorkspaceBinding
-import com.devmark.devmark.presentation.Setting.SettingFragment
-import com.devmark.devmark.presentation.Setting.SignOutDialog
-import com.devmark.devmark.presentation.Workspace.OnItemClickListener
+import com.devmark.devmark.presentation.view.Setting.SettingFragment
+import com.devmark.devmark.presentation.view.Workspace.OnItemClickListener
 
 class SelectWorkspaceFragment : Fragment() {
     private lateinit var workSpaceSelectRvAdapter: WorkSpaceSelectRvAdapter

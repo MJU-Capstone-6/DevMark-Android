@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.Recommend
+package com.devmark.devmark.presentation.view.Recommend
 
 import android.os.Bundle
 import android.view.LayoutInflater

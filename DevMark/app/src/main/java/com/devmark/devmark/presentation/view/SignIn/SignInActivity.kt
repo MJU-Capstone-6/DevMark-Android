@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.SignIn
+package com.devmark.devmark.presentation.view.SignIn
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import com.devmark.devmark.R
 import com.devmark.devmark.SplashActivity
 import com.devmark.devmark.databinding.ActivitySigninBinding
-import com.devmark.devmark.presentation.WorkspaceSelect.SelectWorkspaceActivity
+import com.devmark.devmark.presentation.view.WorkspaceSelect.SelectWorkspaceActivity
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -20,7 +20,6 @@ import com.kakao.sdk.user.UserApiClient
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding
-    private val splashActivity = SplashActivity()
     private var backPressedTime: Long = 0
     private val TAG = "SignIn"
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->

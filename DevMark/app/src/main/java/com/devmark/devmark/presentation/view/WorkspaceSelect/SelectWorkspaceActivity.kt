@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.WorkspaceSelect
+package com.devmark.devmark.presentation.view.WorkspaceSelect
 
 import android.app.Activity
 import android.content.Intent

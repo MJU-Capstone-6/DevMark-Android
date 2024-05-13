@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.Setting
+package com.devmark.devmark.presentation.view.Setting
 
 import android.content.Intent
 import android.net.Uri
@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.devmark.devmark.MainActivity
 import com.devmark.devmark.databinding.FragmentSettingBinding
-import com.devmark.devmark.presentation.SignIn.SignInActivity
-import com.devmark.devmark.presentation.WorkspaceSelect.SelectWorkspaceActivity
+import com.devmark.devmark.presentation.view.SignIn.SignInActivity
+import com.devmark.devmark.presentation.view.WorkspaceSelect.SelectWorkspaceActivity
 import com.kakao.sdk.user.UserApiClient
 
 class SettingFragment : Fragment() {
@@ -35,7 +35,7 @@ class SettingFragment : Fragment() {
         }
 
         binding.ibTermsConditions.setOnClickListener {
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com"))
             startActivity(intent)
         }
 

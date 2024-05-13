@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.WorkspaceSelect
+package com.devmark.devmark.presentation.view.WorkspaceSelect
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
