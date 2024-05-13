@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_round"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_dialog_signout"
+            style="@style/bold_16_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/taupe"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_signout_yes"
+            style="@style/bold_16_dialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/dialog_btn_round"
+            android:stateListAnimator="@null"
+            android:text="예"
+            android:textColor="@color/taupe"
+            app:layout_constraintEnd_toStartOf="@id/btn_signout_no"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_dialog_signout" />
+
+        <Button
+            android:id="@+id/btn_signout_no"
+            style="@style/bold_16_dialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_btn_round"
+            android:stateListAnimator="@null"
+            android:text="아니요"
+            android:textColor="@color/taupe"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_signout_yes"
+            app:layout_constraintTop_toTopOf="@id/btn_signout_yes" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
