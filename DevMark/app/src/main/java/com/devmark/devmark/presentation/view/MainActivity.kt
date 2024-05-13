@@ -1,4 +1,4 @@
-package com.devmark.devmark
+package com.devmark.devmark.presentation.view
 
 import android.app.Activity
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.devmark.devmark.R
 import com.devmark.devmark.databinding.ActivityMainBinding
 import com.devmark.devmark.presentation.view.Recommend.RecommendFragment
 import com.devmark.devmark.presentation.view.Remind.RemindFragment

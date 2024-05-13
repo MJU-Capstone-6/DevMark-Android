@@ -1,4 +1,4 @@
-package com.devmark.devmark.data
+package com.devmark.devmark.domain.model
 
 data class Remind(
     val title: String,
