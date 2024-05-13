@@ -4,8 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.data.WorkSpace
+import com.devmark.devmark.databinding.DialogWorkspaceJoinBinding
 import com.devmark.devmark.databinding.ItemNewWorkspaceBinding
 import com.devmark.devmark.databinding.ItemWorkspaceBinding
+import com.devmark.devmark.presentation.Setting.SignOutDialog
+import com.devmark.devmark.presentation.Workspace.OnItemClickListener
 
 class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ITEM_VIEW_TYPE_NEW_WORKSPACE = 2
@@ -47,7 +50,9 @@ class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is WorkspaceHolder -> holder.bind(dataList[position])
-            is NewWorkspaceHolder -> {}
+            is NewWorkspaceHolder -> {
+                holder.bind()
+            }
         }
 
     }
@@ -63,10 +68,25 @@ class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     }
 
     inner class NewWorkspaceHolder(val binding: ItemNewWorkspaceBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
+            binding.btnEnterWorkspace.setOnClickListener {
+                itemClick.onClick("aa")
+            }
+            binding.btnNewWorkspace.setOnClickListener {
+
+            }
+        }
+    }
+
 
     fun setData(list: ArrayList<WorkSpace>) {
         dataList = list
+    }
+
+    lateinit var itemClick: OnItemClickListener
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.itemClick = onItemClickListener
     }
 
 }

@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.MainActivity
 import com.devmark.devmark.data.WorkSpace
+import com.devmark.devmark.databinding.DialogWorkspaceJoinBinding
 import com.devmark.devmark.databinding.FragmentSelectWorkspaceBinding
 import com.devmark.devmark.presentation.Setting.SettingFragment
+import com.devmark.devmark.presentation.Setting.SignOutDialog
+import com.devmark.devmark.presentation.Workspace.OnItemClickListener
 
 class SelectWorkspaceFragment : Fragment() {
     private lateinit var workSpaceSelectRvAdapter: WorkSpaceSelectRvAdapter
@@ -49,7 +52,26 @@ class SelectWorkspaceFragment : Fragment() {
         workspaceList.add(WorkSpace("Spring 모음", "백엔드 스터디", 21, 4))
 
         // recyclerview adapter
-        workSpaceSelectRvAdapter = WorkSpaceSelectRvAdapter()
+        workSpaceSelectRvAdapter = WorkSpaceSelectRvAdapter().apply {
+            this.setItemClickListener(object : OnItemClickListener {
+                override fun onClick(name: String) {
+                    val dialog = WorkspaceJoinDialog()
+                    dialog.setButtonClickListener(object :
+                        WorkspaceJoinDialog.OnButtonClickListener {
+                        override fun onButton1Clicked() {
+                            // 입력 버튼을 눌렀을 때 처리할 곳
+                        }
+
+                        override fun onButton2Clicked() {
+                            // 닫기 버튼을 눌렀을 때 처리할 곳
+                            dialog.dismiss()
+                        }
+                    })
+                    dialog.show(parentFragmentManager, "Workspace Join Dialog")
+                }
+            })
+
+        }
 
         // set up recyclerview
         binding.rvWorkspace.apply {
@@ -65,6 +87,7 @@ class SelectWorkspaceFragment : Fragment() {
         }
         // set data
         workSpaceSelectRvAdapter.setData(list = workspaceList)
+
     }
 
 }
