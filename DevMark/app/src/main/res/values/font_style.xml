@@ -142,4 +142,10 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="bold_16_dialog">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
 </resources>
