@@ -3,86 +3,58 @@ package com.devmark.devmark.presentation.view.SignIn
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import com.devmark.devmark.R
-import com.devmark.devmark.SplashActivity
+import com.devmark.devmark.presentation.view.splash.SplashActivity
+import com.devmark.devmark.data.model.user.KakaoAuthService
 import com.devmark.devmark.databinding.ActivitySigninBinding
-import com.devmark.devmark.presentation.view.WorkspaceSelect.SelectWorkspaceActivity
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.ClientError
-import com.kakao.sdk.common.model.ClientErrorCause
-import com.kakao.sdk.user.UserApiClient
+import com.devmark.devmark.presentation.utils.UiState
 
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding
+    private val viewModel: SignInViewModel by viewModels()
     private var backPressedTime: Long = 0
-    private val TAG = "SignIn"
-    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            Log.e(TAG, "카카오계정으로 로그인 실패 ", error)
-        } else if (token != null) {
-            // 최종적으로 카카오로그인 및 유저정보 가져온 결과
-            Log.d(TAG, "카카오계정으로 로그인 성공 ")
-        }
-    }
+    private lateinit var kakaoAuthService: KakaoAuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_signin)
+        binding = ActivitySigninBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         addOnBackPressedCallback()
 
-        val kakaoLoginButton: Button = findViewById(R.id.btn_kakao_login)
-        kakaoLoginButton.setOnClickListener {
-            //로그인 함수 호출
-            kakaoLogin()
+        kakaoAuthService = KakaoAuthService(this)
+        observer()
+
+        binding.btnKakaoLogin.setOnClickListener {
+            kakaoAuthService.signInKakao(viewModel::login)
         }
     }
 
-    private fun kakaoLogin() {
-        // 카카오계정으로 로그인 공통 callback 구성
-        // 카카오톡으로 로그인 할 수 없어 카카오계정으로 로그인할 경우 사용됨
-
-
-        // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
-            UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
-                if (error != null) {
-                    Log.e(TAG, "카카오톡으로 로그인 실패 ", error)
-
-                    // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
-                    // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
-                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                        return@loginWithKakaoTalk
-                    }
-
-                    // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
-                    UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-                } else if (token != null) {
-                    Log.d(TAG, "카카오톡으로 로그인 성공 ")
-
-                    val intent = Intent(this, SelectWorkspaceActivity::class.java)
-                    startActivity(intent)
+    private fun observer(){
+        viewModel.loginState.observe(this){
+            when(it){
+                is UiState.Failure -> {
+                    Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
+                    Log.e("SIGNIN", "로그인 실패: ${it.error}")
                 }
-            }
-        } else {
-            // 카카오계정으로 로그인
-            UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
-                if (error != null) {
-                    Log.e(TAG, "카카오계정으로 로그인 실패", error)
-                } else if (token != null) {
-                    Log.d(TAG, "카카오계정으로 로그인 성공")
-
-                    val intent = Intent(this, SelectWorkspaceActivity::class.java)
-                    startActivity(intent)
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    moveToSplash()
                 }
             }
         }
     }
+
+    private fun moveToSplash(){
+        Log.i("SIGNIN", "moveToSplash()")
+        val intent = Intent(this, SplashActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 
     // 뒤로가기로 스플래시 화면으로 가는 것 방지
     private fun addOnBackPressedCallback() {
