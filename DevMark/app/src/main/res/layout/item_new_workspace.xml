@@ -8,33 +8,33 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="24dp"
-        android:layout_height="60dp">
+        android:layout_marginBottom="24dp">
 
         <Button
-            android:id="@+id/btn_new_workspace"
-            app:layout_constraintHorizontal_chainStyle="spread"
+            android:id="@+id/btn_create_workspace"
             style="@style/bold_12_workspace"
             android:layout_width="124dp"
             android:layout_height="match_parent"
             android:background="@drawable/workspace_round"
             android:text="@string/select_workspace_btn_create"
             android:textColor="@color/taupe"
+            app:layout_constraintEnd_toStartOf="@id/btn_join_workspace"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_enter_workspace"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btn_enter_workspace"
+            android:id="@+id/btn_join_workspace"
             style="@style/bold_12_workspace"
             android:layout_width="124dp"
             android:layout_height="match_parent"
             android:background="@drawable/workspace_round"
             android:text="@string/select_workspace_btn_enter"
             android:textColor="@color/taupe"
-            app:layout_constraintStart_toEndOf="@id/btn_new_workspace"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_create_workspace"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

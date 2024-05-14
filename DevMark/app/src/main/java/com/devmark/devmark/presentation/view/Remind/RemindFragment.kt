@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.view.Remind
+package com.devmark.devmark.presentation.view.remind
 
 import android.os.Bundle
 import android.view.LayoutInflater

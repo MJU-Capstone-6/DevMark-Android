@@ -1,8 +1,9 @@
-package com.devmark.devmark.presentation.view.WorkspaceSelect
+package com.devmark.devmark.presentation.view.workspace_select
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import com.devmark.devmark.databinding.ActivitySelectWorkspaceBinding
 
 class SelectWorkspaceActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySelectWorkspaceBinding
+    private val viewModel: SelectWorkSpaceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

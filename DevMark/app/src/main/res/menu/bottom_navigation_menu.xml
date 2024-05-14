@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="추천"
-        android:enabled="true"
         android:id="@+id/menu_recommend"
-        android:icon="@drawable/ic_recommend" />
-    <item
-        android:title="워크스페이스"
         android:enabled="true"
+        android:icon="@drawable/ic_recommend"
+        android:title="@string/navi_recommend" />
+    <item
         android:id="@+id/menu_workspace"
-        android:icon="@drawable/ic_workspace" />
-    <item
-        android:title="리마인드"
         android:enabled="true"
+        android:icon="@drawable/ic_workspace"
+        android:title="@string/navi_workspace" />
+    <item
         android:id="@+id/menu_remind"
-        android:icon="@drawable/ic_remind" />
+        android:enabled="true"
+        android:icon="@drawable/ic_remind"
+        android:title="@string/navi_remind" />
 </menu>

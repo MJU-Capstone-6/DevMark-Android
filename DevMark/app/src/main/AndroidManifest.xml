@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name=".presentation.view.SignIn.SignInActivity"
+            android:name=".presentation.view.signin.SignInActivity"
             android:exported="true" />
 
         <activity
@@ -37,7 +37,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".presentation.view.WorkspaceSelect.SelectWorkspaceActivity"
+            android:name=".presentation.view.workspace_select.SelectWorkspaceActivity"
             android:exported="true" />
 
         <activity

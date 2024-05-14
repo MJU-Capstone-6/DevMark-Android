@@ -1,4 +1,4 @@
-package com.devmark.devmark.data.model.user
+package com.devmark.devmark.data.remote
 
 import android.content.Context
 import android.util.Log

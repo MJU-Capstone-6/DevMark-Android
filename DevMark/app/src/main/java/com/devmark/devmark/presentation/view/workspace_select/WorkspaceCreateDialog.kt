@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.view.setting
+package com.devmark.devmark.presentation.view.workspace_select
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -9,14 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
-import com.devmark.devmark.databinding.DialogSignoutBinding
+import com.devmark.devmark.databinding.DialogWorkspaceCreateBinding
 
-
-@Suppress("DEPRECATION")
-class SignOutDialog(val title: String) : DialogFragment() {
-    private var _binding: DialogSignoutBinding? = null
+class WorkspaceCreateDialog : DialogFragment() {
+    private var _binding: DialogWorkspaceCreateBinding? = null
     private val binding get() = _binding!!
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -42,28 +41,34 @@ class SignOutDialog(val title: String) : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DialogSignoutBinding.inflate(inflater, container, false)
+        _binding = DialogWorkspaceCreateBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.tvDialogSignout.text = title
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
-        // 예 버튼 동작
-        binding.btnSignoutYes.setOnClickListener {
-            buttonClickListener.onButton1Clicked()
+        // 생성 버튼 동작
+        binding.btnDialogCreate.setOnClickListener {
+            val workspaceTitle = binding.etDialogAddTitle.text.toString()
+            val workspaceDesc = binding.etDialogAddDesc.text.toString()
+            if (workspaceTitle.isBlank()) {
+                Toast.makeText(requireContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else if (workspaceDesc.isBlank()) {
+                Toast.makeText(requireContext(), "설명을 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                buttonClickListener.onButton1Clicked(workspaceTitle, workspaceDesc)
+            }
+            dismiss()
         }
 
-        // 아니요 버튼 동작
-        binding.btnSignoutNo.setOnClickListener {
-            buttonClickListener.onButton2Clicked()
+        // 닫기 버튼 동작
+        binding.btnDialogNo.setOnClickListener {
+            dismiss()
         }
-
         return view
     }
 
     interface OnButtonClickListener {
-        fun onButton1Clicked()
-        fun onButton2Clicked()
+        fun onButton1Clicked(title: String, desc: String)
     }
 
     // 클릭 이벤트 설정
@@ -78,4 +83,5 @@ class SignOutDialog(val title: String) : DialogFragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

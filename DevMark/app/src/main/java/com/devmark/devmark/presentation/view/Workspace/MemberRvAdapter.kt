@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.view.Workspace
+package com.devmark.devmark.presentation.view.workspace
 
 
 import android.view.LayoutInflater
