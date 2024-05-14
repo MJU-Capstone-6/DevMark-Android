@@ -11,7 +11,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.devmark.devmark.R
 import com.devmark.devmark.presentation.utils.UiState
-import com.devmark.devmark.presentation.view.SignIn.SignInActivity
 import com.devmark.devmark.presentation.view.WorkspaceSelect.SelectWorkspaceActivity
 
 @SuppressLint("CustomSplashScreen")
@@ -31,7 +30,8 @@ class SplashActivity : AppCompatActivity() {
             when(it){
                 is UiState.Failure -> {
                     Log.e("SPLASH", it.error ?: "자동 로그인 실패")
-                    moveActivity(SignInActivity())
+//                    moveActivity(SignInActivity())
+                    moveActivity(SelectWorkspaceActivity())
                 }
                 is UiState.Loading -> {}
                 is UiState.Success -> {

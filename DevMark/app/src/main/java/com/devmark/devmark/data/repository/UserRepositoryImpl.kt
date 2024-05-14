@@ -15,7 +15,8 @@ class UserRepositoryImpl: UserRepository {
         val res = service.login("Bearer $accessToken")
 
         return if(res.isSuccessful){
-            Result.success(LoginMapper.mapperToResponseEntity(res.body() ?: ResponseLoginDTO("", "")))
+            val data = res.body()!!
+            Result.success(LoginMapper.mapperToResponseEntity(ResponseLoginDTO(data.accessToken , data.refreshToken)))
         } else {
             val errorMsg = JSONObject(res.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))
