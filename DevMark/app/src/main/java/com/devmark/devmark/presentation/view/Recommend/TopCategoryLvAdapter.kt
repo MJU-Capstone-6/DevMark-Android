@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.view.Recommend
+package com.devmark.devmark.presentation.view.recommend
 
 import android.annotation.SuppressLint
 import android.content.Context

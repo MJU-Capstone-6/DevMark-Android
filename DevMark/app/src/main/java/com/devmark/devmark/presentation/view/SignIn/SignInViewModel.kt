@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.view.SignIn
+package com.devmark.devmark.presentation.view.signin
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,19 +11,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class SignInViewModel: ViewModel() {
+class SignInViewModel : ViewModel() {
     private val userRepositoryImpl = UserRepositoryImpl()
 
     private val _loginState = MutableLiveData<UiState<Unit>>(UiState.Loading)
     val loginState: LiveData<UiState<Unit>> get() = _loginState
 
-    fun login(accessToken: String){
+    fun login(accessToken: String) {
         _loginState.value = UiState.Loading
 
         viewModelScope.launch {
-            userRepositoryImpl.login(accessToken
+            userRepositoryImpl.login(
+                accessToken
             ).onSuccess {
-                runBlocking(Dispatchers.IO){
+                runBlocking(Dispatchers.IO) {
                     app.userPreferences.setAccessToken(it.accessToken)
                     app.userPreferences.setRefreshToken(it.refreshToken)
                 }

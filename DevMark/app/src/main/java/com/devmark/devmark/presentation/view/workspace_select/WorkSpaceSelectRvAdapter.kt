@@ -1,17 +1,16 @@
-package com.devmark.devmark.presentation.view.WorkspaceSelect
+package com.devmark.devmark.presentation.view.workspace_select
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.devmark.devmark.domain.model.WorkSpace
 import com.devmark.devmark.databinding.ItemNewWorkspaceBinding
 import com.devmark.devmark.databinding.ItemWorkspaceBinding
-import com.devmark.devmark.presentation.view.Workspace.OnItemClickListener
+import com.devmark.devmark.domain.model.workspace.ResponseWorkSpaceCreateEntity
 
 class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ITEM_VIEW_TYPE_NEW_WORKSPACE = 2
     private val ITEM_VIEW_TYPE_WORKSPACE = 1
-    private var dataList = mutableListOf<WorkSpace>()
+    private var dataList = mutableListOf<ResponseWorkSpaceCreateEntity>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ITEM_VIEW_TYPE_WORKSPACE -> {
@@ -52,38 +51,41 @@ class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
                 holder.bind()
             }
         }
-
     }
 
     inner class WorkspaceHolder(val binding: ItemWorkspaceBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: WorkSpace) {
-            binding.tvWorkspaceName.text = item.title
-            binding.tvWorkspaceDetail.text = item.desc
-            binding.tvTotalBookmarkNum.text = item.totalBookmark.toString()
-            binding.tvTotalPeopleNum.text = item.totalPeople.toString()
+        fun bind(item: ResponseWorkSpaceCreateEntity) {
+            binding.tvWorkspaceName.text = item.name
+            binding.tvWorkspaceDetail.text = item.description
+            binding.tvTotalBookmarkNum.text = item.bookmarkCount.toString()
+            binding.tvTotalPeopleNum.text = item.userCount.toString()
         }
     }
 
     inner class NewWorkspaceHolder(val binding: ItemNewWorkspaceBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            binding.btnEnterWorkspace.setOnClickListener {
-                itemClick.onClick("aa")
+            binding.btnJoinWorkspace.setOnClickListener {
+                itemClick.onClickJoin()
             }
-            binding.btnNewWorkspace.setOnClickListener {
-
+            binding.btnCreateWorkspace.setOnClickListener {
+                itemClick.onClickCreate()
             }
         }
     }
 
+    fun addItem(item: ResponseWorkSpaceCreateEntity) {
+        dataList.add(item)
+        notifyItemInserted(dataList.size - 1)
+    }
 
-    fun setData(list: ArrayList<WorkSpace>) {
+    fun setData(list: ArrayList<ResponseWorkSpaceCreateEntity>) {
         dataList = list
     }
 
-    lateinit var itemClick: OnItemClickListener
-    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+    lateinit var itemClick: OnMethodClickListener
+    fun setItemClickListener(onItemClickListener: OnMethodClickListener) {
         this.itemClick = onItemClickListener
     }
 

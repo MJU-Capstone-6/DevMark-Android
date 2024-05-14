@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.view.WorkspaceSelect
+package com.devmark.devmark.presentation.view.workspace_select
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.devmark.devmark.databinding.DialogWorkspaceJoinBinding
@@ -48,20 +49,24 @@ class WorkspaceJoinDialog : DialogFragment() {
 
         // 예 버튼 동작
         binding.btnInviteCodeYes.setOnClickListener {
-            buttonClickListener.onButton1Clicked()
+            val inviteCode = binding.etInviteCode.text.toString()
+            if (inviteCode.isBlank()) {
+                Toast.makeText(requireContext(), "코드를 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                buttonClickListener.onButton1Clicked(inviteCode)
+            }
+            dismiss()
         }
 
         // 아니요 버튼 동작
         binding.btnInviteCodeNo.setOnClickListener {
-            buttonClickListener.onButton2Clicked()
+            dismiss()
         }
-
         return view
     }
 
     interface OnButtonClickListener {
-        fun onButton1Clicked()
-        fun onButton2Clicked()
+        fun onButton1Clicked(code: String)
     }
 
     // 클릭 이벤트 설정

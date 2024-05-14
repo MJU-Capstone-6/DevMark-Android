@@ -9,10 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.devmark.devmark.R
 import com.devmark.devmark.databinding.ActivityMainBinding
-import com.devmark.devmark.presentation.view.Recommend.RecommendFragment
-import com.devmark.devmark.presentation.view.Remind.RemindFragment
-import com.devmark.devmark.presentation.view.Workspace.WorkspaceFragment
-import com.devmark.devmark.presentation.view.WorkspaceSelect.SelectWorkspaceActivity
+import com.devmark.devmark.presentation.view.recommend.RecommendFragment
+import com.devmark.devmark.presentation.view.remind.RemindFragment
+import com.devmark.devmark.presentation.view.workspace.WorkspaceFragment
+import com.devmark.devmark.presentation.view.workspace_select.SelectWorkspaceActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

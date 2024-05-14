@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.view.Workspace
+package com.devmark.devmark.presentation.view.workspace
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.R
 import com.devmark.devmark.domain.model.BookMark
 import com.devmark.devmark.databinding.FragmentWorkspaceBinding
-import com.devmark.devmark.presentation.view.Setting.SettingFragment
-import com.devmark.devmark.presentation.view.WorkspaceSetting.WorkspaceSettingFragment
+import com.devmark.devmark.presentation.view.setting.SettingFragment
+import com.devmark.devmark.presentation.view.workspace_setting.WorkspaceSettingFragment
 
 class WorkspaceFragment : Fragment() {
     private lateinit var binding: FragmentWorkspaceBinding

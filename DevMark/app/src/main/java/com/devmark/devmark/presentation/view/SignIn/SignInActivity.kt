@@ -1,4 +1,4 @@
-package com.devmark.devmark.presentation.view.SignIn
+package com.devmark.devmark.presentation.view.signin
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.devmark.devmark.presentation.view.splash.SplashActivity
-import com.devmark.devmark.data.model.user.KakaoAuthService
+import com.devmark.devmark.data.remote.KakaoAuthService
+import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.databinding.ActivitySigninBinding
 import com.devmark.devmark.presentation.utils.UiState
 
@@ -33,13 +34,14 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun observer(){
-        viewModel.loginState.observe(this){
-            when(it){
+    private fun observer() {
+        viewModel.loginState.observe(this) {
+            when (it) {
                 is UiState.Failure -> {
                     Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
-                    Log.e("SIGNIN", "로그인 실패: ${it.error}")
+                    LoggerUtils.error("로그인 실패: ${it.error}")
                 }
+
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     moveToSplash()
@@ -48,8 +50,8 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun moveToSplash(){
-        Log.i("SIGNIN", "moveToSplash()")
+    private fun moveToSplash() {
+        LoggerUtils.debug("moveToSplash()")
         val intent = Intent(this, SplashActivity::class.java)
         startActivity(intent)
         finish()
