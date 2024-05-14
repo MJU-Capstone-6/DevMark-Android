@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.base.GlobalApplication.Companion.app
 import com.devmark.devmark.domain.repository.UserPreferencesRepository
 import kotlinx.coroutines.flow.first
@@ -26,7 +27,7 @@ class UserPreferencesRepositoryImpl: UserPreferencesRepository {
     }
 
     override suspend fun clearData(): Result<Boolean> {
-        Log.d(tag, "clearData 호출")
+        LoggerUtils.debug("clearData 호출")
         return try {
             userDataStorePreferences.edit { preferences ->
                 preferences.clear()
@@ -38,14 +39,14 @@ class UserPreferencesRepositoryImpl: UserPreferencesRepository {
     }
 
     override suspend fun setAccessToken(accessToken: String) {
-        Log.d(tag, "setAccessToken 호출")
+        LoggerUtils.debug("setAccessToken 호출")
         userDataStorePreferences.edit { preferences ->
             preferences[ACCESS_TOKEN_KEY] = accessToken
         }
     }
 
     override suspend fun getAccessToken(): Result<String> {
-        Log.d(tag, "getAccessToken 호출")
+        LoggerUtils.debug("getAccessToken 호출")
         return try {
             val accessToken = userDataStorePreferences.data.map { preferences ->
                 preferences[ACCESS_TOKEN_KEY] ?: ""
@@ -57,14 +58,14 @@ class UserPreferencesRepositoryImpl: UserPreferencesRepository {
     }
 
     override suspend fun setRefreshToken(refreshToken: String) {
-        Log.d(tag, "setRefreshToken 호출")
+        LoggerUtils.debug("setRefreshToken 호출")
         userDataStorePreferences.edit { preferences ->
             preferences[REFRESH_TOKEN_KEY] = refreshToken
         }
     }
 
     override suspend fun getRefreshToken(): Result<String> {
-        Log.d(tag, "getRefreshToken 호출")
+        LoggerUtils.debug("getRefreshToken 호출")
         return try {
             val refreshToken = userDataStorePreferences.data.map { preferences ->
                 preferences[REFRESH_TOKEN_KEY] ?: ""

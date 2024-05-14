@@ -1,5 +1,5 @@
-package com.devmark.devmark.presentation.view.Workspace
+package com.devmark.devmark.presentation.view.workspace
 
 interface OnItemClickListener {
-    fun onClick(name: String)
+    fun onClick(item: String)
 }
