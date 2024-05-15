@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.databinding.FragmentSelectWorkspaceBinding
-import com.devmark.devmark.domain.model.workspace.ResponseWorkSpaceCreateEntity
+import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.setting.SettingFragment
 
@@ -21,7 +21,7 @@ class SelectWorkspaceFragment : Fragment() {
     private var _binding: FragmentSelectWorkspaceBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SelectWorkSpaceViewModel by activityViewModels()
-    private val workspaceList = ArrayList<ResponseWorkSpaceCreateEntity>()
+    private val workspaceList = ArrayList<WorkspaceEntity>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,13 +34,14 @@ class SelectWorkspaceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
         observer()
-        workSpaceSelectRvAdapter.setData(list = workspaceList)
+        initView()
 
     }
 
     private fun initView() {
+        viewModel.fetchData()
+
         binding.icNowWorkspace.loItemWorkspace.setOnClickListener {
             (requireActivity() as SelectWorkspaceActivity).moveActivity(MainActivity())
         }
@@ -97,6 +98,21 @@ class SelectWorkspaceFragment : Fragment() {
 
     private fun observer() {
         viewModel.uiState.observe(viewLifecycleOwner) {
+            when(it) {
+                is UiState.Failure -> {
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                    LoggerUtils.error("워크스페이스 조회 실패: ${it.error}")
+                }
+
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    workSpaceSelectRvAdapter.setData(it.data)
+
+                }
+            }
+        }
+
+        viewModel.createState.observe(viewLifecycleOwner) {
             when (it) {
                 is UiState.Failure -> {
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()

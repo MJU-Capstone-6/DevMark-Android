@@ -1,16 +1,14 @@
 package com.devmark.devmark.data.mapper.workspace
 
-import com.devmark.devmark.data.model.user.ResponseLoginDTO
 import com.devmark.devmark.data.model.workspace.RequestWorkSpaceCreateDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceCreateDTO
-import com.devmark.devmark.domain.model.user.ResponseLoginEntity
+import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.domain.model.workspace.RequestWorkSpaceCreateEntity
-import com.devmark.devmark.domain.model.workspace.ResponseWorkSpaceCreateEntity
 
 object WorkSpaceCreateMapper {
-    fun mapperToResponseEntity(item: ResponseWorkSpaceCreateDTO): ResponseWorkSpaceCreateEntity {
+    fun mapperToResponseEntity(item: ResponseWorkSpaceCreateDTO): WorkspaceEntity {
         return item.run {
-            ResponseWorkSpaceCreateEntity(bookmarkCount, description, id, name, userCount)
+            WorkspaceEntity(bookmarkCount, description, id, name, userCount)
         }
     }
 

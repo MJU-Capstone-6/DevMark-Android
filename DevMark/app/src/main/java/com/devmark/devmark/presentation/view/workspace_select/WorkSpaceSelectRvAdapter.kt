@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.databinding.ItemNewWorkspaceBinding
 import com.devmark.devmark.databinding.ItemWorkspaceBinding
-import com.devmark.devmark.domain.model.workspace.ResponseWorkSpaceCreateEntity
+import com.devmark.devmark.domain.model.user.WorkspaceEntity
 
 class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ITEM_VIEW_TYPE_NEW_WORKSPACE = 2
     private val ITEM_VIEW_TYPE_WORKSPACE = 1
-    private var dataList = mutableListOf<ResponseWorkSpaceCreateEntity>()
+    private var dataList = mutableListOf<WorkspaceEntity>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ITEM_VIEW_TYPE_WORKSPACE -> {
@@ -55,7 +55,7 @@ class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     inner class WorkspaceHolder(val binding: ItemWorkspaceBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ResponseWorkSpaceCreateEntity) {
+        fun bind(item: WorkspaceEntity) {
             binding.tvWorkspaceName.text = item.name
             binding.tvWorkspaceDetail.text = item.description
             binding.tvTotalBookmarkNum.text = item.bookmarkCount.toString()
@@ -75,13 +75,13 @@ class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         }
     }
 
-    fun addItem(item: ResponseWorkSpaceCreateEntity) {
+    fun addItem(item: WorkspaceEntity) {
         dataList.add(item)
         notifyItemInserted(dataList.size - 1)
     }
 
-    fun setData(list: ArrayList<ResponseWorkSpaceCreateEntity>) {
-        dataList = list
+    fun setData(list: List<WorkspaceEntity>) {
+        dataList = list.toMutableList()
     }
 
     lateinit var itemClick: OnMethodClickListener
