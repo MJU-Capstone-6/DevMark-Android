@@ -1,6 +1,7 @@
 package com.devmark.devmark.data.remote
 
 import com.devmark.devmark.BuildConfig
+import com.devmark.devmark.data.utils.PrettyJsonLogger
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,7 +14,7 @@ object RetrofitClient {
     private val gson = GsonBuilder().setLenient().create()
 
     private val loggingInterceptor = if(BuildConfig.DEBUG){
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        HttpLoggingInterceptor(PrettyJsonLogger()).setLevel(HttpLoggingInterceptor.Level.BODY)
     }else {
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
     }
