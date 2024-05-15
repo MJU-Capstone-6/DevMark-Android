@@ -14,5 +14,4 @@ interface WorkSpaceService {
         @Header("Authorization") accessToken: String,
         @Body body: RequestWorkSpaceCreateDTO
     ): Response<ResponseWorkSpaceCreateDTO>
-
 }
