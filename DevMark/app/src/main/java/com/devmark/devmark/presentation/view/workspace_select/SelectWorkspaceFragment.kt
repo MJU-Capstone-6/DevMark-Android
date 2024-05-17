@@ -1,5 +1,6 @@
 package com.devmark.devmark.presentation.view.workspace_select
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.devmark.devmark.databinding.FragmentSelectWorkspaceBinding
 import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.setting.SettingFragment
+import com.devmark.devmark.presentation.view.workspace.OnWorkspaceClickListener
 
 
 class SelectWorkspaceFragment : Fragment() {
@@ -82,6 +84,16 @@ class SelectWorkspaceFragment : Fragment() {
                     }.show(parentFragmentManager, "Workspace Create Dialog")
                 }
             })
+            this.setWorkspaceClickListener(object : OnWorkspaceClickListener {
+                override fun onWorkspaceClick(id: Int, name: String, description: String) {
+                    val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                        putExtra("WORKSPACE_ID", id)
+                        putExtra("WORKSPACE_NAME", name)
+                        putExtra("WORKSPACE_DESCRIPTION", description)
+                    }
+                    startActivity(intent)
+                }
+            })
         }
 
         binding.rvWorkspace.apply {
@@ -98,7 +110,7 @@ class SelectWorkspaceFragment : Fragment() {
 
     private fun observer() {
         viewModel.uiState.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is UiState.Failure -> {
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                     LoggerUtils.error("워크스페이스 조회 실패: ${it.error}")
