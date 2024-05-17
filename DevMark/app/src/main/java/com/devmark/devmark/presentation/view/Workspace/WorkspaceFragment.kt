@@ -35,7 +35,7 @@ class WorkspaceFragment : Fragment() {
         binding.btnWorkspaceSetting.setOnClickListener {
             // 워크스페이스 관리 페이지로
             (requireActivity() as MainActivity).replaceFragmentWithBackstack(
-                WorkspaceSettingFragment()
+                WorkspaceSettingFragment(1) // 진짜 값 넣어야 함
             )
         }
 
