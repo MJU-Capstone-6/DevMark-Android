@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.devmark.devmark.databinding.DialogWorkspaceCreateBinding
 
+@Suppress("DEPRECATION")
 class WorkspaceCreateDialog : DialogFragment() {
     private var _binding: DialogWorkspaceCreateBinding? = null
     private val binding get() = _binding!!
@@ -28,7 +29,6 @@ class WorkspaceCreateDialog : DialogFragment() {
         context?.display?.getRealMetrics(displayMetrics)
 
         val layoutParams = window?.attributes
-
         val width = (displayMetrics.widthPixels * 0.8).toInt()
 
         layoutParams?.width = width
@@ -44,7 +44,6 @@ class WorkspaceCreateDialog : DialogFragment() {
         _binding = DialogWorkspaceCreateBinding.inflate(inflater, container, false)
         val view = binding.root
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         // 생성 버튼 동작
         binding.btnDialogCreate.setOnClickListener {

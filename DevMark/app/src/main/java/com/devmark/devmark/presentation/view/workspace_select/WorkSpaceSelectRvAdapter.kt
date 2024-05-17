@@ -1,11 +1,15 @@
 package com.devmark.devmark.presentation.view.workspace_select
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.databinding.ItemNewWorkspaceBinding
 import com.devmark.devmark.databinding.ItemWorkspaceBinding
 import com.devmark.devmark.domain.model.user.WorkspaceEntity
+import com.devmark.devmark.presentation.view.MainActivity
+import com.devmark.devmark.presentation.view.workspace.OnItemClickListener
+import com.devmark.devmark.presentation.view.workspace.OnWorkspaceClickListener
 
 class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ITEM_VIEW_TYPE_NEW_WORKSPACE = 2
@@ -56,6 +60,10 @@ class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     inner class WorkspaceHolder(val binding: ItemWorkspaceBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: WorkspaceEntity) {
+            binding.loItemWorkspace.setOnClickListener {
+                workspaceClick.onWorkspaceClick(item.id, item.name, item.description)
+            }
+
             binding.tvWorkspaceName.text = item.name
             binding.tvWorkspaceDetail.text = item.description
             binding.tvTotalBookmarkNum.text = item.bookmarkCount.toString()
@@ -88,6 +96,11 @@ class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     lateinit var itemClick: OnMethodClickListener
     fun setItemClickListener(onItemClickListener: OnMethodClickListener) {
         this.itemClick = onItemClickListener
+    }
+
+    lateinit var workspaceClick: OnWorkspaceClickListener
+    fun setWorkspaceClickListener(onWorkspaceClickListener: OnWorkspaceClickListener) {
+        this.workspaceClick = onWorkspaceClickListener
     }
 
 }
