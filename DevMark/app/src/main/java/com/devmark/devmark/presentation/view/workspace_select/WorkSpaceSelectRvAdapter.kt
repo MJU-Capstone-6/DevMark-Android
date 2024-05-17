@@ -82,6 +82,7 @@ class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     fun setData(list: List<WorkspaceEntity>) {
         dataList = list.toMutableList()
+        notifyDataSetChanged()
     }
 
     lateinit var itemClick: OnMethodClickListener

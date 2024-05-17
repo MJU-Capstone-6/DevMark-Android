@@ -9,9 +9,7 @@ import com.devmark.devmark.presentation.base.GlobalApplication.Companion.app
 import com.devmark.devmark.presentation.utils.UiState
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class SplashViewModel: ViewModel() {
     private val userRepositoryImpl = UserRepositoryImpl()
@@ -23,13 +21,8 @@ class SplashViewModel: ViewModel() {
         _loginState.value = UiState.Loading
 
         viewModelScope.launch {
-            userRepositoryImpl.login(app.userPreferences.getAccessToken().getOrNull().orEmpty()
+            userRepositoryImpl.getWorkspaceList(app.userPreferences.getAccessToken().getOrNull().orEmpty()
             ).onSuccess {
-                runBlocking(Dispatchers.IO){
-                    app.userPreferences.setAccessToken(it.accessToken)
-                    app.userPreferences.setRefreshToken(it.refreshToken)
-                }
-
                 validationKakao()
             }.onFailure {
                 _loginState.value = UiState.Failure(it.message)

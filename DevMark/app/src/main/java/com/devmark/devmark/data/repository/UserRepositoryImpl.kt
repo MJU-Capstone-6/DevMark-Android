@@ -27,8 +27,8 @@ class UserRepositoryImpl : UserRepository {
     override suspend fun getWorkspaceList(accessToken: String): Result<ResponseWorkSpaceListEntity> {
         val res = service.getWorkspaceList("Bearer $accessToken")
         return if (res.isSuccessful) {
-            val data = res.body()!!
-            Result.success(WorkSpaceListMapper.mapperToResponseEntity(data))
+            val data = res.body()
+            Result.success(WorkSpaceListMapper.mapperToResponseEntity(data!!))
         } else {
             val errorMsg = JSONObject(res.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))

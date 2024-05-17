@@ -107,7 +107,6 @@ class SelectWorkspaceFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     workSpaceSelectRvAdapter.setData(it.data)
-
                 }
             }
         }

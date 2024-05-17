@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.devmark.devmark.R
@@ -14,7 +13,6 @@ import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.signin.SignInActivity
 import com.devmark.devmark.presentation.view.workspace_select.SelectWorkspaceActivity
-import java.util.logging.Logger
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -23,19 +21,16 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-//        observer()
-//        moveActivity(SignInActivity())
-        moveActivity(SelectWorkspaceActivity())
-//        viewModel.doValidation()
+        observer()
+        viewModel.doValidation()
     }
 
     private fun observer(){
         viewModel.loginState.observe(this){
             when(it){
                 is UiState.Failure -> {
-                    LoggerUtils.error("자동 로그인 실패")
-//                    moveActivity(SignInActivity())
-                    moveActivity(SelectWorkspaceActivity())
+                    LoggerUtils.error("자동 로그인 실패: ${it.error}")
+                    moveActivity(SignInActivity())
                 }
                 is UiState.Loading -> {}
                 is UiState.Success -> {
