@@ -29,7 +29,6 @@ class WorkspaceJoinDialog : DialogFragment() {
         context?.display?.getRealMetrics(displayMetrics)
 
         val layoutParams = window?.attributes
-
         val width = (displayMetrics.widthPixels * 0.8).toInt()
 
         layoutParams?.width = width
