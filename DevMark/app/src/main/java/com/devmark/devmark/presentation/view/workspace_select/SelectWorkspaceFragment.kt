@@ -15,7 +15,6 @@ import com.devmark.devmark.databinding.FragmentSelectWorkspaceBinding
 import com.devmark.devmark.presentation.base.GlobalApplication.Companion.app
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.setting.SettingFragment
-import com.devmark.devmark.presentation.view.workspace.OnWorkspaceClickListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -98,7 +97,12 @@ class SelectWorkspaceFragment : Fragment() {
 
     private fun initListener(){
         binding.icNowWorkspace.loItemWorkspace.setOnClickListener {
-            (requireActivity() as SelectWorkspaceActivity).moveActivity(MainActivity())
+            val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                putExtra("WORKSPACE_ID", viewModel.currentWorkspace.value?.id)
+                putExtra("WORKSPACE_NAME", viewModel.currentWorkspace.value?.name)
+                putExtra("WORKSPACE_DESCRIPTION", viewModel.currentWorkspace.value?.description)
+            }
+            startActivity(intent)
         }
 
         binding.ibSetting.setOnClickListener {

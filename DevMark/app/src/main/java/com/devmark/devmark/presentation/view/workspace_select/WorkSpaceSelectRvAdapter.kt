@@ -1,15 +1,11 @@
 package com.devmark.devmark.presentation.view.workspace_select
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.databinding.ItemNewWorkspaceBinding
 import com.devmark.devmark.databinding.ItemWorkspaceBinding
 import com.devmark.devmark.domain.model.user.WorkspaceEntity
-import com.devmark.devmark.presentation.view.MainActivity
-import com.devmark.devmark.presentation.view.workspace.OnItemClickListener
-import com.devmark.devmark.presentation.view.workspace.OnWorkspaceClickListener
 
 class WorkSpaceSelectRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ITEM_VIEW_TYPE_NEW_WORKSPACE = 2
