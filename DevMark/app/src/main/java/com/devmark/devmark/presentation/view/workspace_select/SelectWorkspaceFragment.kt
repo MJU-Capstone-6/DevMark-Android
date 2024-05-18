@@ -12,9 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.databinding.FragmentSelectWorkspaceBinding
+import com.devmark.devmark.presentation.base.GlobalApplication.Companion.app
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.setting.SettingFragment
 import com.devmark.devmark.presentation.view.workspace.OnWorkspaceClickListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class SelectWorkspaceFragment : Fragment() {
@@ -35,26 +39,12 @@ class SelectWorkspaceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observer()
+        initListener()
         initView()
     }
 
     private fun initView() {
         viewModel.fetchData()
-
-        binding.icNowWorkspace.loItemWorkspace.setOnClickListener {
-            (requireActivity() as SelectWorkspaceActivity).moveActivity(MainActivity())
-        }
-
-        binding.ibSetting.setOnClickListener {
-            (requireActivity() as SelectWorkspaceActivity).replaceFragmentWithBackstack(
-                SettingFragment()
-            )
-        }
-
-        binding.icNowWorkspace.tvWorkspaceName.text = "안드로이드 스터디"
-        binding.icNowWorkspace.tvWorkspaceDetail.text = "안드로이드 북마크 모음"
-        binding.icNowWorkspace.tvTotalBookmarkNum.text = "2873"
-        binding.icNowWorkspace.tvTotalPeopleNum.text = "123"
 
         workSpaceSelectRvAdapter = WorkSpaceSelectRvAdapter().apply {
             this.setItemClickListener(object : OnMethodClickListener {
@@ -82,6 +72,8 @@ class SelectWorkspaceFragment : Fragment() {
             })
             this.setWorkspaceClickListener(object : OnWorkspaceClickListener {
                 override fun onWorkspaceClick(id: Int, name: String, description: String) {
+                    CoroutineScope(Dispatchers.IO).launch { app.userPreferences.setCurrentWorkspace(id) }
+
                     val intent = Intent(requireContext(), MainActivity::class.java).apply {
                         putExtra("WORKSPACE_ID", id)
                         putExtra("WORKSPACE_NAME", name)
@@ -101,6 +93,18 @@ class SelectWorkspaceFragment : Fragment() {
                     false
                 )
             adapter = workSpaceSelectRvAdapter
+        }
+    }
+
+    private fun initListener(){
+        binding.icNowWorkspace.loItemWorkspace.setOnClickListener {
+            (requireActivity() as SelectWorkspaceActivity).moveActivity(MainActivity())
+        }
+
+        binding.ibSetting.setOnClickListener {
+            (requireActivity() as SelectWorkspaceActivity).replaceFragmentWithBackstack(
+                SettingFragment()
+            )
         }
     }
 
@@ -129,6 +133,20 @@ class SelectWorkspaceFragment : Fragment() {
                 is UiState.Success -> {
                     workSpaceSelectRvAdapter.addItem(item = it.data)
                 }
+            }
+        }
+
+        viewModel.currentWorkspace.observe(viewLifecycleOwner){
+            if(it.id != -1){
+                binding.icNowWorkspace.root.visibility = View.VISIBLE
+                with(binding.icNowWorkspace){
+                    tvWorkspaceName.text = it.name
+                    tvWorkspaceDetail.text = it.description
+                    tvTotalPeopleNum.text = it.userCount.toString()
+                    tvTotalBookmarkNum.text = it.bookmarkCount.toString()
+                }
+            } else {
+                binding.icNowWorkspace.root.visibility = View.INVISIBLE
             }
         }
     }

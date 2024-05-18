@@ -10,4 +10,8 @@ interface UserPreferencesRepository {
     suspend fun setRefreshToken(refreshToken: String)
 
     suspend fun getRefreshToken(): Result<String>
+
+    suspend fun setCurrentWorkspace(workspaceId: Int)
+
+    suspend fun getCurrentWorkspace(): Result<Int>
 }

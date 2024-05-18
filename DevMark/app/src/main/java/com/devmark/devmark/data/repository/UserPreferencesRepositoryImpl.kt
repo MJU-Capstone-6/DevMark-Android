@@ -1,10 +1,10 @@
 package com.devmark.devmark.data.repository
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.devmark.devmark.data.utils.LoggerUtils
@@ -19,11 +19,11 @@ val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(
 
 class UserPreferencesRepositoryImpl: UserPreferencesRepository {
     private val userDataStorePreferences: DataStore<Preferences> = app.applicationContext.userDataStore
-    private val tag = "UserPreferences"
 
     private companion object {
         private val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
+        private val CURRENT_WORKSPACE = intPreferencesKey("current_workspace")
     }
 
     override suspend fun clearData(): Result<Boolean> {
@@ -71,6 +71,25 @@ class UserPreferencesRepositoryImpl: UserPreferencesRepository {
                 preferences[REFRESH_TOKEN_KEY] ?: ""
             }.first()
             Result.success(refreshToken)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun setCurrentWorkspace(workspaceId: Int) {
+        LoggerUtils.debug("setCurrentWorkspace 호출")
+        userDataStorePreferences.edit { preferences ->
+            preferences[CURRENT_WORKSPACE] = workspaceId
+        }
+    }
+
+    override suspend fun getCurrentWorkspace(): Result<Int> {
+        LoggerUtils.debug("getCurrentWorkspace 호출")
+        return try {
+            val currentWorkspaceId = userDataStorePreferences.data.map { preferences ->
+                preferences[CURRENT_WORKSPACE] ?: -1
+            }.first()
+            Result.success(currentWorkspaceId)
         } catch (e: Exception) {
             Result.failure(e)
         }
