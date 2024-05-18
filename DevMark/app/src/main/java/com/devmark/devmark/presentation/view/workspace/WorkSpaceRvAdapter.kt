@@ -38,7 +38,7 @@ class WorkSpaceRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.tvBookMarkCategory.text = item.category
 
             itemView.setOnClickListener {
-                itemClick.onClick(-1) // todo 북마크 Id로 변경 필요
+                itemClick.onClick(1) // todo 북마크 Id로 변경 필요
             }
         }
     }

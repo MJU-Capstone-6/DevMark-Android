@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.R
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.databinding.FragmentBookmarkBinding
-import com.devmark.devmark.domain.model.ResponseCommentEntity
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.presentation.view.workspace.CommentRvAdapter
@@ -50,6 +49,13 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
                 is UiState.Failure -> {
                     Toast.makeText(requireContext(), "북마크 정보 조회 실패: ${it.error}", Toast.LENGTH_SHORT).show()
                     LoggerUtils.error("북마크 정보 조회 실패: ${it.error}")
+
+                    // todo 테스트를 위한 코드로 이후 제거해야 함
+                    binding.apply {
+                        tvBookmarkTitle.text = "[Android] NestedScrollView에 대해 알아보자!"
+                        tvSummary.text = getText(R.string.dummy_summary)
+                        btnCategoryEdit.text = "Android"
+                    }
                 }
                 is UiState.Loading -> {}
                 is UiState.Success -> {
@@ -59,9 +65,20 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
 //                        tvBookmarkTitle.text = it.data.title
                         tvSummary.text = it.data.summary
 //                        btnCategoryEdit.text = it.data.categoryName
-                        tvBookmarkTitle.text = "[Android] NestedScrollView에 대해 알아보자!"
-                        tvSummary.text = getText(R.string.dummy_summary)
                     }
+                }
+            }
+        }
+
+        viewModel.commentState.observe(viewLifecycleOwner){
+            when(it){
+                is UiState.Failure -> {
+                    Toast.makeText(requireContext(), "댓글 조회 실패: ${it.error}", Toast.LENGTH_SHORT).show()
+                    LoggerUtils.error("댓글 조회 실패: ${it.error}")
+                }
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    adapter.setData(it.data)
                 }
             }
         }
@@ -100,6 +117,7 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.fetchData(bookmarkId)
         setCommentRv()
+        viewModel.fetchComment(bookmarkId)
     }
 
     private fun setCommentRv(){
@@ -113,12 +131,6 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
         // todo 이후 더미 데이터 제거 필요
         binding.rvComment.adapter = adapter
         binding.rvComment.layoutManager = LinearLayoutManager(requireContext())
-        adapter.setData(
-            listOf(
-                ResponseCommentEntity(0, -1, 3, "장훈", "댓글 테스트1", "2024-05-18T14:04:52.917884Z"),
-                ResponseCommentEntity(0, -1, -1, "장훈", "댓글 테스트2", "2024-05-13T14:04:52"),
-                ResponseCommentEntity(0, -1, -1, "장훈", "댓글 테스트3", "2024-05-11T14:04:52.91"),
-            )
-        )
+        adapter.setData(listOf())
     }
 }

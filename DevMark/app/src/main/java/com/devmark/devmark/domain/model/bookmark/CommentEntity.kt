@@ -1,6 +1,6 @@
-package com.devmark.devmark.domain.model
+package com.devmark.devmark.domain.model.bookmark
 
-data class ResponseCommentEntity(
+data class CommentEntity(
     val id: Int,
     val bookmarkId: Int,
     val userId: Int,

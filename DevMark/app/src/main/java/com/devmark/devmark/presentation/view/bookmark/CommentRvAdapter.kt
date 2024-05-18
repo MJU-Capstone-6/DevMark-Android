@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.databinding.ItemCommentBinding
-import com.devmark.devmark.domain.model.ResponseCommentEntity
+import com.devmark.devmark.domain.model.bookmark.CommentEntity
 import com.devmark.devmark.presentation.base.GlobalApplication.Companion.userId
 import com.devmark.devmark.presentation.utils.TimeUtil
 
 class CommentRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var commentList = mutableListOf<ResponseCommentEntity>()
+    private var commentList = mutableListOf<CommentEntity>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemCommentBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -30,14 +30,14 @@ class CommentRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun setData(list: List<ResponseCommentEntity>) {
+    fun setData(list: List<CommentEntity>) {
         commentList = list.toMutableList()
         notifyDataSetChanged()
     }
 
     inner class CommentHolder(val binding: ItemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ResponseCommentEntity) {
+        fun bind(item: CommentEntity) {
             if(userId == item.userId){
                 binding.groupBtn.visibility = View.VISIBLE
 
