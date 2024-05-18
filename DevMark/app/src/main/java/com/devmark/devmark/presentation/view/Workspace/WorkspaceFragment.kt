@@ -15,6 +15,7 @@ import com.devmark.devmark.domain.model.BookMark
 import com.devmark.devmark.databinding.FragmentWorkspaceBinding
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainViewModel
+import com.devmark.devmark.presentation.view.bookmark.BookmarkFragment
 import com.devmark.devmark.presentation.view.setting.SettingFragment
 import com.devmark.devmark.presentation.view.workspace_setting.WorkspaceSettingFragment
 
@@ -124,16 +125,28 @@ class WorkspaceFragment : Fragment() {
         binding.rvFilter.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        workSpaceRvAdapter = WorkSpaceRvAdapter()
+        setBookmarkRv()
         setCategoryRv()
         setMemberRv()
         viewModel.fetchInfo()
+    }
+
+    private fun setBookmarkRv(){
+        workSpaceRvAdapter = WorkSpaceRvAdapter().apply {
+            this.setItemClickListener(object : OnItemClickListener{
+                override fun onClick(item: Int) {
+                    (requireActivity() as MainActivity).replaceFragmentWithBackstack(BookmarkFragment(item))
+                }
+            })
+        }
 
         binding.rvBookmark.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = workSpaceRvAdapter
         }
+
+        bookmarkList.add(BookMark("Test", "Test")) // todo 이후 제거 필요
 
         workSpaceRvAdapter.setData(bookmarkList)
     }

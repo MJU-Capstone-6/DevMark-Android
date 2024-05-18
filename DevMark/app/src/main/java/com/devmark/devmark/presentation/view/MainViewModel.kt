@@ -10,10 +10,12 @@ import com.devmark.devmark.presentation.utils.UiState
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
+    private val workSpaceRepositoryImpl = WorkSpaceRepositoryImpl()
+
     var workspaceId: Int = -1
     var workspaceName: String = ""
     var workspaceDescription: String = ""
-    val workSpaceRepositoryImpl = WorkSpaceRepositoryImpl()
+
     var categoryList = listOf<Pair<Int, String>>()
     var memberList = listOf<Pair<Int, String>>()
 

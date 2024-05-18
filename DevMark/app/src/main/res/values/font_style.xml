@@ -6,6 +6,11 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="pretendard_semi_bold">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
     <style name="pretendard_medium">
         <item name="fontFamily">@font/pretendard_medium</item>
         <item name="android:includeFontPadding">false</item>

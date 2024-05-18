@@ -1,0 +1,102 @@
+package com.devmark.devmark.presentation.view.bookmark
+
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.devmark.devmark.R
+import com.devmark.devmark.data.utils.LoggerUtils
+import com.devmark.devmark.databinding.FragmentBookmarkBinding
+import com.devmark.devmark.domain.model.ResponseCommentEntity
+import com.devmark.devmark.presentation.view.MainActivity
+import com.devmark.devmark.presentation.view.workspace.CommentRvAdapter
+import com.devmark.devmark.presentation.view.workspace.OnItemClickListener
+
+class BookmarkFragment(private val bookmarkId: Int): Fragment() {
+    private var _binding: FragmentBookmarkBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: BookmarkViewModel by viewModels()
+    private lateinit var adapter: CommentRvAdapter
+    private lateinit var clipboard: ClipboardManager
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        (requireActivity() as MainActivity).changeNaviVisibility(false)
+        _binding = FragmentBookmarkBinding.inflate(layoutInflater)
+        clipboard = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        observer()
+        initListener()
+        return binding.root
+    }
+
+    private fun observer() {
+    }
+
+    private fun initListener() {
+        binding.ibBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        binding.btnReadable.setOnClickListener {
+            val rust = ContextCompat.getColor(requireContext(), R.color.rust)
+            val alabaster = ContextCompat.getColor(requireContext(), R.color.alabaster)
+
+            with(binding.btnReadable){
+                if (currentTextColor == rust) {
+                    setTextColor(alabaster)
+                } else if (currentTextColor == alabaster) {
+                    setTextColor(rust)
+                }
+            }
+        }
+
+        binding.ibCopy.setOnClickListener {
+            clipboard.setPrimaryClip(ClipData.newPlainText("북마크 링크", "https://google.com"))
+            Toast.makeText(requireContext(), "클립보드에 복사되었습니다.", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.ibLink.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com"))
+            startActivity(intent)
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setCommentRv()
+    }
+
+    private fun setCommentRv(){
+        adapter = CommentRvAdapter().apply {
+            this.setItemClickListener(object : OnItemClickListener {
+                override fun onClick(item: Int) {
+                    LoggerUtils.info("댓글 테스트: $item")
+                }
+            })
+        }
+        // todo 이후 더미 데이터 제거 필요
+        binding.rvComment.adapter = adapter
+        binding.rvComment.layoutManager = LinearLayoutManager(requireContext())
+        adapter.setData(
+            listOf(
+                ResponseCommentEntity(0, -1, 3, "장훈", "댓글 테스트1", "2024-05-18T14:04:52.917884Z"),
+                ResponseCommentEntity(0, -1, -1, "장훈", "댓글 테스트2", "2024-05-13T14:04:52"),
+                ResponseCommentEntity(0, -1, -1, "장훈", "댓글 테스트3", "2024-05-11T14:04:52.91"),
+            )
+        )
+    }
+}

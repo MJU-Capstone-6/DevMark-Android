@@ -54,5 +54,32 @@
     <string name="text_workspace_add_title">워크스페이스 이름</string>
     <string name="text_workspace_add_desc">워크스페이스 설명</string>
 
+    <!-- 북마크 상세 페이지 -->
+    <string name="text_tb_bookmark">북마크 상세 페이지</string>
+    <string name="toggle_readable">읽음</string>
+
+    <string name="dummy_summary">
+        NestedScrollView는 ScrollView와 비슷하지만, ScrollView 안에서 스크롤 가능한 뷰를 더 잘 처리할 수 있습니다.\n
+ScrollView 안에 RecyclerView를 사용하면 RecyclerView만 스크롤되고 ScrollView는 스크롤되지 않는 문제가 발생할 수 있습니다.\n
+NestedScrollView를 사용하면 RecyclerView와 함께 모든 뷰가 함께 스크롤됩니다.\n
+NestedScrollView 사용법은 ScrollView와 거의 비슷하며, RecyclerView의 nestedScrollingEnabled 속성을 false로 설정해야 합니다.\n
+NestedScrollView 안에 RecyclerView를 사용하는 것은 성능 문제가 발생할 수 있으므로, 아이템이 많은 경우에는 지양해야 합니다.\n
+아이템이 많은 경우에는 RecyclerView에서 여러 개의 ViewHolder를 사용하여 구현할 수 있습니다.\n
+결론적으로 NestedScrollView는 RecyclerView와 함께 사용할 때 편리하며, 성능을 위해 아이템이 많은 경우에는 여러 개의 ViewHolder를 사용하는 것이 좋습니다.
+    </string>
+
+    <!-- 댓글 페이지 -->
+    <string name="text_btn_modify">수정</string>
+    <string name="text_btn_delete">삭제</string>
+    <string name="text_btn_post">게시</string>
+
+    <string name="edit_text_hint">댓글 남기기</string>
+    <string name="edit_text_hint_modify">댓글 수정하기</string>
+
+    <string name="text_time_day">%s일 전</string>
+    <string name="text_time_hour">%s시간 전</string>
+    <string name="text_time_min">%s분 전</string>
+    <string name="text_time_now">방금</string>
+
 
 </resources>

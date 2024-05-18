@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmark.devmark.data.repository.UserRepositoryImpl
 import com.devmark.devmark.presentation.base.GlobalApplication.Companion.app
+import com.devmark.devmark.presentation.base.GlobalApplication.Companion.userId
 import com.devmark.devmark.presentation.utils.UiState
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
@@ -23,6 +24,7 @@ class SplashViewModel: ViewModel() {
         viewModelScope.launch {
             userRepositoryImpl.getWorkspaceList(app.userPreferences.getAccessToken().getOrNull().orEmpty()
             ).onSuccess {
+                userId = it.id
                 validationKakao()
             }.onFailure {
                 _loginState.value = UiState.Failure(it.message)
