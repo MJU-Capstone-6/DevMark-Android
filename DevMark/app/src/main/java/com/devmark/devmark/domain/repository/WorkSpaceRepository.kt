@@ -3,6 +3,7 @@ package com.devmark.devmark.domain.repository
 import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.domain.model.workspace.RequestWorkSpaceCreateEntity
 import com.devmark.devmark.domain.model.workspace.ResponseInviteCodeEntity
+import com.devmark.devmark.domain.model.workspace.WorkSpaceInfoEntity
 
 interface WorkSpaceRepository {
     suspend fun createWorkspace(
@@ -19,4 +20,9 @@ interface WorkSpaceRepository {
         accessToken: String,
         inviteCode: String
     ): Result<WorkspaceEntity>
+    
+    suspend fun getWorkspaceInfo(
+        accessToken: String,
+        workspaceId: Int
+    ): Result<WorkSpaceInfoEntity>
 }

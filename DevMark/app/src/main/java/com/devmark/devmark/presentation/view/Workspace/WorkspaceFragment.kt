@@ -4,22 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.R
+import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.domain.model.BookMark
 import com.devmark.devmark.databinding.FragmentWorkspaceBinding
+import com.devmark.devmark.presentation.utils.UiState
+import com.devmark.devmark.presentation.view.MainViewModel
 import com.devmark.devmark.presentation.view.setting.SettingFragment
 import com.devmark.devmark.presentation.view.workspace_setting.WorkspaceSettingFragment
 
 class WorkspaceFragment : Fragment() {
     private lateinit var binding: FragmentWorkspaceBinding
+    private val viewModel: MainViewModel by activityViewModels()
     private val bookmarkList = ArrayList<BookMark>()
-    private val categoryList = ArrayList<String>()
-    private val memberList = ArrayList<String>()
-    private val categoryFilterList = mutableListOf<String>()
-    private val memberFilterList = mutableListOf<String>()
+    private val categoryFilterList = mutableListOf<Int>()
+    private val memberFilterList = mutableListOf<Int>()
     private lateinit var workSpaceRvAdapter: WorkSpaceRvAdapter
     private lateinit var categoryRvAdapter: CategoryRvAdapter
     private lateinit var memberRvAdapter: MemberRvAdapter
@@ -31,72 +35,30 @@ class WorkspaceFragment : Fragment() {
     ): View {
         (requireActivity() as MainActivity).changeNaviVisibility(true)
         binding = FragmentWorkspaceBinding.inflate(layoutInflater)
+        observer()
+        initListener()
+        return binding.root
+    }
 
+    private fun initListener() {
         binding.btnWorkspaceSetting.setOnClickListener {
-            // 워크스페이스 관리 페이지로
             (requireActivity() as MainActivity).replaceFragmentWithBackstack(
                 WorkspaceSettingFragment(1) // 진짜 값 넣어야 함
             )
         }
 
         binding.ibSetting.setOnClickListener {
-            // 설정 페이지로
             (requireActivity() as MainActivity).replaceFragmentWithBackstack(
                 SettingFragment()
             )
         }
 
         binding.ibBackWorkspace.setOnClickListener {
-            // 이전 화면으로 뒤로가기
             (requireActivity() as MainActivity).backToSelectWorkspaceActivity()
             requireActivity().finish()
         }
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.rvFilter.visibility = View.GONE
-        binding.rvFilter.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-        // 데이터 추가
-        bookmarkList.add(
-            BookMark(
-                "안드로이드 개발자 로드맵 - Part1: The Android Platform Hello World! 안드로이드 마스터를 해보자~",
-                "Android"
-            )
-        )
-        bookmarkList.add(BookMark("기업들은 왜 코틀린을 선택하였을까?", "Kotlin"))
-
-        memberList.add("문장훈")
-        memberList.add("이성진")
-        memberList.add("최건호")
-        memberList.add("함범준")
-
-        categoryList.add("Kotlin")
-        categoryList.add("Android")
-        categoryList.add("Golang")
-        categoryList.add("Python")
-        categoryList.add("부트캠프")
-        categoryList.add("Flutter")
-        categoryList.add("Algorithm")
-
-        // recyclerview adapter
-        workSpaceRvAdapter = WorkSpaceRvAdapter()
-
-        // set up recyclerview
-        binding.rvBookmark.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = workSpaceRvAdapter
-        }
-
-        // set data
-        workSpaceRvAdapter.setData(bookmarkList)
 
         binding.tvFilterSort.setOnClickListener {
-            // 최신순 정렬 아이콘 변경
             binding.tvFilterSort.isSelected = !binding.tvFilterSort.isSelected
         }
 
@@ -116,7 +78,7 @@ class WorkspaceFragment : Fragment() {
             binding.tvFilterMember.setTextColor(newColor)
 
             setMemberRv()
-            memberRvAdapter.setData(memberList)
+            memberRvAdapter.setData(viewModel.memberList)
         }
 
         binding.tvFilterCategory.setOnClickListener {
@@ -135,18 +97,55 @@ class WorkspaceFragment : Fragment() {
             binding.tvFilterCategory.setTextColor(newColor)
 
             setCategoryRv()
-            categoryRvAdapter.setData(categoryList)
+            categoryRvAdapter.setData(viewModel.categoryList)
         }
+    }
+
+    private fun observer() {
+        viewModel.filterState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> {
+                    LoggerUtils.error(it.error.toString())
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                }
+
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    categoryRvAdapter.setData(it.data.first)
+                    memberRvAdapter.setData(it.data.second)
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.rvFilter.visibility = View.GONE
+        binding.rvFilter.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        workSpaceRvAdapter = WorkSpaceRvAdapter()
+        setCategoryRv()
+        setMemberRv()
+        viewModel.fetchInfo()
+
+        binding.rvBookmark.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = workSpaceRvAdapter
+        }
+
+        workSpaceRvAdapter.setData(bookmarkList)
     }
 
     private fun setCategoryRv() {
         categoryRvAdapter = CategoryRvAdapter(categoryFilterList).apply {
             this.setItemClickListener(object : OnItemClickListener {
-                override fun onClick(name: String) {
-                    if (categoryFilterList.contains(name)) {
-                        categoryFilterList.remove(name)
+                override fun onClick(id: Int) {
+                    if (categoryFilterList.contains(id)) {
+                        categoryFilterList.remove(id)
                     } else {
-                        categoryFilterList.add(name)
+                        categoryFilterList.add(id)
                     }
                 }
             })
@@ -157,16 +156,15 @@ class WorkspaceFragment : Fragment() {
     private fun setMemberRv() {
         memberRvAdapter = MemberRvAdapter(memberFilterList).apply {
             this.setItemClickListener(object : OnItemClickListener {
-                override fun onClick(name: String) {
-                    if (memberFilterList.contains(name)) {
-                        memberFilterList.remove(name)
+                override fun onClick(id: Int) {
+                    if (memberFilterList.contains(id)) {
+                        memberFilterList.remove(id)
                     } else {
-                        memberFilterList.add(name)
+                        memberFilterList.add(id)
                     }
                 }
             })
         }
         binding.rvFilter.adapter = memberRvAdapter
     }
-
 }

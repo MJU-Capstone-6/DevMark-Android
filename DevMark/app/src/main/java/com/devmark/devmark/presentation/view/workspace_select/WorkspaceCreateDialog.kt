@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment
 import com.devmark.devmark.databinding.DialogWorkspaceCreateBinding
 import com.devmark.devmark.presentation.utils.GetDisplayUtil
 
+@Suppress("DEPRECATION")
 class WorkspaceCreateDialog : DialogFragment() {
     private var _binding: DialogWorkspaceCreateBinding? = null
     private val binding get() = _binding!!

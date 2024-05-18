@@ -3,11 +3,13 @@ package com.devmark.devmark.data.repository
 import com.devmark.devmark.data.mapper.workspace.InviteCodeMapper
 import com.devmark.devmark.data.mapper.workspace.JoinWorkspaceMapper
 import com.devmark.devmark.data.mapper.workspace.WorkSpaceCreateMapper
+import com.devmark.devmark.data.mapper.workspace.WorkSpaceInfoMapper
 import com.devmark.devmark.data.remote.RetrofitClient
 import com.devmark.devmark.data.remote.api.WorkSpaceService
 import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.domain.model.workspace.RequestWorkSpaceCreateEntity
 import com.devmark.devmark.domain.model.workspace.ResponseInviteCodeEntity
+import com.devmark.devmark.domain.model.workspace.WorkSpaceInfoEntity
 import com.devmark.devmark.domain.repository.WorkSpaceRepository
 import org.json.JSONObject
 import java.lang.Exception
@@ -58,10 +60,29 @@ class WorkSpaceRepositoryImpl : WorkSpaceRepository {
                 JoinWorkspaceMapper.mapperToRequestDTO(inviteCode)
             )
         return if (response.isSuccessful) {
-            if(response.body() == null) Result.failure(Exception("null data"))
+            if(response.body() == null) {
+                Result.failure(Exception("null data"))
+            }
             else {
                 Result.success(JoinWorkspaceMapper.mapperToResponseEntity(response.body()!!))
             }
+        } else {
+            val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
+            Result.failure(Exception(errorMsg))
+        }
+    }
+
+    override suspend fun getWorkspaceInfo(
+        accessToken: String,
+        workspaceId: Int
+    ): Result<WorkSpaceInfoEntity> {
+        val response =
+            service.getWorkspaceInfo(
+                "Bearer $accessToken",
+                workspaceId
+            )
+        return if (response.isSuccessful) {
+            Result.success(WorkSpaceInfoMapper.mapperToResponseEntity(response.body()!!))
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))

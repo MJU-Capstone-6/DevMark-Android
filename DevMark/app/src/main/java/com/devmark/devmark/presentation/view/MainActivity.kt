@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.devmark.devmark.R
@@ -17,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
 
     private val bn: BottomNavigationView by lazy {
         binding.bottomNav
@@ -24,12 +28,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.workspaceId = intent.getIntExtra("WORKSPACE_ID", -1)
+        viewModel.workspaceName = intent.getStringExtra("WORKSPACE_NAME") ?: ""
+        viewModel.workspaceDescription = intent.getStringExtra("WORKSPACE_DESCRIPTION") ?: ""
+
         // binding 세팅
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // 첫 화면 workspace 표시
         bn.selectedItemId = R.id.menu_workspace
-        supportFragmentManager.beginTransaction().add(binding.flMain.id, WorkspaceFragment())
+        supportFragmentManager.beginTransaction()
+            .add(binding.flMain.id, WorkspaceFragment())
             .commit()
         bn.setOnItemSelectedListener { item ->
             replaceFragment(
@@ -41,7 +50,6 @@ class MainActivity : AppCompatActivity() {
             )
             true
         }
-
     }
 
     fun replaceFragment(fragment: Fragment) {
