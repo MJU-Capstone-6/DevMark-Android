@@ -19,7 +19,7 @@ class SelectWorkSpaceViewModel : ViewModel() {
     private val _uiState = MutableLiveData<UiState<List<WorkspaceEntity>>>(UiState.Loading)
     val uiState: LiveData<UiState<List<WorkspaceEntity>>> get() = _uiState
 
-    private var _currentWorkspace = MutableLiveData<WorkspaceEntity>(WorkspaceEntity(id = -1, name = "", description = "", bookmarkCount = 0, userCount = 0))
+    private var _currentWorkspace = MutableLiveData<WorkspaceEntity>()
     val currentWorkspace get() = _currentWorkspace
 
     fun fetchData() {

@@ -97,7 +97,12 @@ class SelectWorkspaceFragment : Fragment() {
 
     private fun initListener(){
         binding.icNowWorkspace.loItemWorkspace.setOnClickListener {
-            (requireActivity() as SelectWorkspaceActivity).moveActivity(MainActivity())
+            val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                putExtra("WORKSPACE_ID", viewModel.currentWorkspace.value?.id)
+                putExtra("WORKSPACE_NAME", viewModel.currentWorkspace.value?.name)
+                putExtra("WORKSPACE_DESCRIPTION", viewModel.currentWorkspace.value?.description)
+            }
+            startActivity(intent)
         }
 
         binding.ibSetting.setOnClickListener {
