@@ -19,6 +19,9 @@ class SelectWorkSpaceViewModel : ViewModel() {
     private val _uiState = MutableLiveData<UiState<List<WorkspaceEntity>>>(UiState.Loading)
     val uiState: LiveData<UiState<List<WorkspaceEntity>>> get() = _uiState
 
+    private var _currentWorkspace = MutableLiveData<WorkspaceEntity>(WorkspaceEntity(id = -1, name = "", description = "", bookmarkCount = 0, userCount = 0))
+    val currentWorkspace get() = _currentWorkspace
+
     fun fetchData() {
         _uiState.value = UiState.Loading
 
@@ -26,7 +29,9 @@ class SelectWorkSpaceViewModel : ViewModel() {
             val accessToken = app.userPreferences.getAccessToken().getOrNull().orEmpty()
             userRepositoryImpl.getWorkspaceList(accessToken)
                 .onSuccess {
-                    _uiState.value = UiState.Success(it.workspaces)
+                    val (newList, currentWorkspaceList) = it.workspaces.partition { item -> item.id != app.userPreferences.getCurrentWorkspace().getOrNull()}
+                    if(currentWorkspaceList.isNotEmpty()) _currentWorkspace.value = currentWorkspaceList.first()
+                    _uiState.value = UiState.Success(newList)
                 }.onFailure {
                     _uiState.value = UiState.Failure(it.message)
                 }
