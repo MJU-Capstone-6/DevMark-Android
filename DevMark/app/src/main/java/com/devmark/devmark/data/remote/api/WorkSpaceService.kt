@@ -1,6 +1,10 @@
 package com.devmark.devmark.data.remote.api
 
+import com.devmark.devmark.data.model.workspace.RequestInviteCodeDTO
+import com.devmark.devmark.data.model.workspace.RequestJoinWorkSpaceDTO
 import com.devmark.devmark.data.model.workspace.RequestWorkSpaceCreateDTO
+import com.devmark.devmark.data.model.workspace.ResponseInviteCodeDTO
+import com.devmark.devmark.data.model.workspace.ResponseJoinWorkSpaceDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceCreateDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceInfoDTO
 import okhttp3.RequestBody
@@ -18,6 +22,18 @@ interface WorkSpaceService {
         @Body body: RequestWorkSpaceCreateDTO
     ): Response<ResponseWorkSpaceCreateDTO>
 
+    @POST("/api/v1/invitecode")
+    suspend fun getInviteCode(
+        @Header("Authorization") accessToken: String,
+        @Body workspaceId: RequestInviteCodeDTO
+    ): Response<ResponseInviteCodeDTO>
+
+    @POST("/api/v1/workspace/join")
+    suspend fun joinWorkspace(
+        @Header("Authorization") accessToken: String,
+        @Body inviteCode: RequestJoinWorkSpaceDTO
+    ): Response<ResponseJoinWorkSpaceDTO>
+    
     @GET("/api/v1/workspace/{id}")
     suspend fun getWorkspaceInfo(
         @Header("Authorization") accessToken: String,

@@ -2,38 +2,30 @@ package com.devmark.devmark.presentation.view.workspace_select
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.devmark.devmark.databinding.DialogWorkspaceCreateBinding
+import com.devmark.devmark.presentation.utils.GetDisplayUtil
 
 @Suppress("DEPRECATION")
 class WorkspaceCreateDialog : DialogFragment() {
     private var _binding: DialogWorkspaceCreateBinding? = null
     private val binding get() = _binding!!
 
-    @RequiresApi(Build.VERSION_CODES.R)
     override fun onStart() {
         super.onStart()
 
-        // Dialog의 window 속성 조정
-        val window = dialog?.window
-        val displayMetrics = DisplayMetrics()
-        context?.display?.getRealMetrics(displayMetrics)
+        val size = GetDisplayUtil.getSize(requireContext())
+        val width = (size.first * 0.8).toInt()
 
-        val layoutParams = window?.attributes
-        val width = (displayMetrics.widthPixels * 0.8).toInt()
+        dialog?.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        layoutParams?.width = width
-        layoutParams?.height = ViewGroup.LayoutParams.WRAP_CONTENT
-        window?.attributes = layoutParams
+        isCancelable = false
     }
 
     override fun onCreateView(
@@ -43,7 +35,6 @@ class WorkspaceCreateDialog : DialogFragment() {
     ): View {
         _binding = DialogWorkspaceCreateBinding.inflate(inflater, container, false)
         val view = binding.root
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         // 생성 버튼 동작
         binding.btnDialogCreate.setOnClickListener {

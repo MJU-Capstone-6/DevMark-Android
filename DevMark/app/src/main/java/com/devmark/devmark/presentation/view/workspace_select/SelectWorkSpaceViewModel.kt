@@ -51,4 +51,17 @@ class SelectWorkSpaceViewModel : ViewModel() {
             }
         }
     }
+
+    fun workspaceJoin(inviteCode: String){
+        _createState.value = UiState.Loading
+
+        viewModelScope.launch {
+            workSpaceRepositoryImpl.joinWorkspace(app.userPreferences.getAccessToken().getOrNull().orEmpty(), inviteCode)
+                .onSuccess {
+                    _createState.value = UiState.Success(it)
+                }.onFailure {
+                    _createState.value = UiState.Failure(it.message)
+                }
+        }
+    }
 }

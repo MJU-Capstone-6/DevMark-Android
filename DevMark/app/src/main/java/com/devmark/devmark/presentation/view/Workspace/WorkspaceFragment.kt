@@ -43,7 +43,7 @@ class WorkspaceFragment : Fragment() {
     private fun initListener() {
         binding.btnWorkspaceSetting.setOnClickListener {
             (requireActivity() as MainActivity).replaceFragmentWithBackstack(
-                WorkspaceSettingFragment()
+                WorkspaceSettingFragment(1) // 진짜 값 넣어야 함
             )
         }
 
