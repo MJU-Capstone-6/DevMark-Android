@@ -1,6 +1,7 @@
 package com.devmark.devmark.data.repository
 
 import com.devmark.devmark.data.mapper.workspace.InviteCodeMapper
+import com.devmark.devmark.data.mapper.workspace.JoinWorkspaceMapper
 import com.devmark.devmark.data.mapper.workspace.WorkSpaceCreateMapper
 import com.devmark.devmark.data.remote.RetrofitClient
 import com.devmark.devmark.data.remote.api.WorkSpaceService
@@ -41,6 +42,26 @@ class WorkSpaceRepositoryImpl : WorkSpaceRepository {
             )
         return if (response.isSuccessful) {
             Result.success(InviteCodeMapper.mapperToResponseEntity(response.body()!!))
+        } else {
+            val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
+            Result.failure(Exception(errorMsg))
+        }
+    }
+
+    override suspend fun joinWorkspace(
+        accessToken: String,
+        inviteCode: String
+    ): Result<WorkspaceEntity> {
+        val response =
+            service.joinWorkspace(
+                "Bearer $accessToken",
+                JoinWorkspaceMapper.mapperToRequestDTO(inviteCode)
+            )
+        return if (response.isSuccessful) {
+            if(response.body() == null) Result.failure(Exception("null data"))
+            else {
+                Result.success(JoinWorkspaceMapper.mapperToResponseEntity(response.body()!!))
+            }
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))

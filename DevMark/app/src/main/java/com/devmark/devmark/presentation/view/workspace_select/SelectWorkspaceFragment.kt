@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.databinding.FragmentSelectWorkspaceBinding
-import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.setting.SettingFragment
 
@@ -21,7 +20,6 @@ class SelectWorkspaceFragment : Fragment() {
     private var _binding: FragmentSelectWorkspaceBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SelectWorkSpaceViewModel by activityViewModels()
-    private val workspaceList = ArrayList<WorkspaceEntity>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +34,6 @@ class SelectWorkspaceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observer()
         initView()
-
     }
 
     private fun initView() {
@@ -57,7 +54,6 @@ class SelectWorkspaceFragment : Fragment() {
         binding.icNowWorkspace.tvTotalBookmarkNum.text = "2873"
         binding.icNowWorkspace.tvTotalPeopleNum.text = "123"
 
-        // recyclerview adapter
         workSpaceSelectRvAdapter = WorkSpaceSelectRvAdapter().apply {
             this.setItemClickListener(object : OnMethodClickListener {
                 override fun onClickJoin() {
@@ -65,7 +61,7 @@ class SelectWorkspaceFragment : Fragment() {
                         setButtonClickListener(object :
                             WorkspaceJoinDialog.OnButtonClickListener {
                             override fun onButton1Clicked(code: String) {
-
+                                viewModel.workspaceJoin(code)
                             }
                         })
                     }.show(parentFragmentManager, "Workspace Join Dialog")
@@ -117,13 +113,9 @@ class SelectWorkspaceFragment : Fragment() {
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                     LoggerUtils.error("워크스페이스 생성 실패: ${it.error}")
                 }
-
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    // 워크스페이스 목록에 워크스페이스 추가
-                    workSpaceSelectRvAdapter.addItem(
-                        item = it.data
-                    )
+                    workSpaceSelectRvAdapter.addItem(item = it.data)
                 }
             }
         }

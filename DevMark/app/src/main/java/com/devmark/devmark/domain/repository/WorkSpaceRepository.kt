@@ -14,4 +14,9 @@ interface WorkSpaceRepository {
         accessToken: String,
         workspaceId: Int
     ): Result<ResponseInviteCodeEntity>
+
+    suspend fun joinWorkspace(
+        accessToken: String,
+        inviteCode: String
+    ): Result<WorkspaceEntity>
 }

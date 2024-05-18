@@ -1,8 +1,10 @@
 package com.devmark.devmark.data.remote.api
 
 import com.devmark.devmark.data.model.workspace.RequestInviteCodeDTO
+import com.devmark.devmark.data.model.workspace.RequestJoinWorkSpaceDTO
 import com.devmark.devmark.data.model.workspace.RequestWorkSpaceCreateDTO
 import com.devmark.devmark.data.model.workspace.ResponseInviteCodeDTO
+import com.devmark.devmark.data.model.workspace.ResponseJoinWorkSpaceDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceCreateDTO
 import retrofit2.Response
 import retrofit2.http.Body
@@ -21,4 +23,10 @@ interface WorkSpaceService {
         @Header("Authorization") accessToken: String,
         @Body workspaceId: RequestInviteCodeDTO
     ): Response<ResponseInviteCodeDTO>
+
+    @POST("/api/v1/workspace/join")
+    suspend fun joinWorkspace(
+        @Header("Authorization") accessToken: String,
+        @Body inviteCode: RequestJoinWorkSpaceDTO
+    ): Response<ResponseJoinWorkSpaceDTO>
 }
