@@ -18,6 +18,7 @@ import com.devmark.devmark.R
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.databinding.FragmentBookmarkBinding
 import com.devmark.devmark.domain.model.ResponseCommentEntity
+import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.presentation.view.workspace.CommentRvAdapter
 import com.devmark.devmark.presentation.view.workspace.OnItemClickListener
@@ -28,6 +29,7 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
     private val viewModel: BookmarkViewModel by viewModels()
     private lateinit var adapter: CommentRvAdapter
     private lateinit var clipboard: ClipboardManager
+    private lateinit var bookmarkLink: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +45,26 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
     }
 
     private fun observer() {
+        viewModel.detailState.observe(viewLifecycleOwner){
+            when(it){
+                is UiState.Failure -> {
+                    Toast.makeText(requireContext(), "북마크 정보 조회 실패: ${it.error}", Toast.LENGTH_SHORT).show()
+                    LoggerUtils.error("북마크 정보 조회 실패: ${it.error}")
+                }
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    bookmarkLink = it.data.link
+
+                    binding.apply {
+//                        tvBookmarkTitle.text = it.data.title
+                        tvSummary.text = it.data.summary
+//                        btnCategoryEdit.text = it.data.categoryName
+                        tvBookmarkTitle.text = "[Android] NestedScrollView에 대해 알아보자!"
+                        tvSummary.text = getText(R.string.dummy_summary)
+                    }
+                }
+            }
+        }
     }
 
     private fun initListener() {
@@ -76,7 +98,7 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.fetchData(bookmarkId)
         setCommentRv()
     }
 
