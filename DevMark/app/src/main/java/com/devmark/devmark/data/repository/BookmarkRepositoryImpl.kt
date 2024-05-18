@@ -32,7 +32,8 @@ class BookmarkRepositoryImpl: BookmarkRepository {
     ): Result<List<CommentEntity>> {
         val response = service.getComments("Bearer $accessToken", bookmarkId)
         return if (response.isSuccessful) {
-            Result.success(CommentMapper.mapperToResponseEntity(response.body()!!))
+            if(response.body().isNullOrEmpty()) Result.success(listOf())
+            else Result.success(CommentMapper.mapperToResponseEntity(response.body()!!))
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))
