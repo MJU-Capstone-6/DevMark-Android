@@ -27,4 +27,20 @@ class WorkSpaceSettingViewModel: ViewModel() {
                 }
         }
     }
+
+    private val _exitState = MutableLiveData<UiState<Unit>>(UiState.Loading)
+    val exitState: LiveData<UiState<Unit>> get() = _exitState
+
+    fun deleteWorkspace(workspaceId: Int){
+        _exitState.value = UiState.Loading
+
+        viewModelScope.launch {
+            workSpaceRepositoryImpl.deleteWorkspace(app.userPreferences.getAccessToken().getOrNull().orEmpty(), workspaceId)
+                .onSuccess {
+                    _exitState.value = UiState.Success(Unit)
+                }.onFailure {
+                    _exitState.value = UiState.Failure(it.message)
+                }
+        }
+    }
 }

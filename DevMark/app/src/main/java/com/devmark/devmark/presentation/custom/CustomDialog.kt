@@ -16,7 +16,7 @@ import com.devmark.devmark.databinding.DialogCustomBinding
 class CustomDialog private constructor(private val dialogType: DialogType, private val msg: String?) : DialogFragment() {
 
     enum class DialogType {
-        UNLINK
+        WS_EXIT
     }
 
     companion object {
@@ -60,7 +60,7 @@ class CustomDialog private constructor(private val dialogType: DialogType, priva
         binding.lifecycleOwner = viewLifecycleOwner
 
         when (dialogType) {
-            DialogType.UNLINK -> { setUnlink() }
+            DialogType.WS_EXIT -> { setWorkSpaceExit() }
         }
 
         return binding.root
@@ -90,11 +90,11 @@ class CustomDialog private constructor(private val dialogType: DialogType, priva
         instance = null
     }
 
-    private fun setUnlink(){
-        binding.dialogTitle.text = getString(R.string.dialog_unlink_title)
-        binding.dialogComment.text = getString(R.string.dialog_unlink_comment)
-        binding.dialogBtnYes.text = getString(R.string.dialog_unlink_yes)
-        binding.dialogBtnNo.text = getString(R.string.dialog_unlink_no)
+    private fun setWorkSpaceExit(){
+        binding.dialogTitle.text = getString(R.string.dialog_ws_exit_title)
+        binding.dialogComment.text = getString(R.string.dialog_ws_exit_comment)
+        binding.dialogBtnYes.text = getString(R.string.dialog_ws_exit_yes)
+        binding.dialogBtnNo.text = getString(R.string.dialog_ws_exit_no)
 
         binding.dialogBtnNo.setOnClickListener {
             dismiss()

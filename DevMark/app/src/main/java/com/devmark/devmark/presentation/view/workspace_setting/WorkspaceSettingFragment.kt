@@ -10,15 +10,20 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.domain.model.Member
 import com.devmark.devmark.databinding.FragmentSettingWorkspaceBinding
+import com.devmark.devmark.presentation.custom.CustomDialog
 import com.devmark.devmark.presentation.utils.UiState
+import com.devmark.devmark.presentation.view.MainViewModel
 
 class WorkspaceSettingFragment(private val workspaceId: Int) : Fragment() {
     private lateinit var binding: FragmentSettingWorkspaceBinding
     private val viewModel: WorkSpaceSettingViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var clipboard: ClipboardManager
 
     private var memberList = arrayListOf<Member>(
@@ -53,8 +58,11 @@ class WorkspaceSettingFragment(private val workspaceId: Int) : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
         binding.tvExitWorkspace.setOnClickListener {
-            (requireActivity() as MainActivity).backToSelectWorkspaceActivity()
-            requireActivity().finish()
+            CustomDialog.getInstance(CustomDialog.DialogType.WS_EXIT, null).apply {
+                setOnOKClickedListener {
+                    viewModel.deleteWorkspace(mainViewModel.workspaceId)
+                }
+            }.show(requireActivity().supportFragmentManager, "")
         }
         binding.ivInviteCode.setOnClickListener {
             viewModel.getInviteCode(workspaceId)
@@ -72,6 +80,19 @@ class WorkspaceSettingFragment(private val workspaceId: Int) : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Failure -> {
                     binding.tvInviteCodeWorkspaceSetting.text = it.error
+                }
+            }
+        }
+
+        viewModel.exitState.observe(viewLifecycleOwner){
+            when(it){
+                is UiState.Failure -> {
+                    Toast.makeText(requireContext(), "워크스페이스 나가기 실패: ${it.error}", Toast.LENGTH_SHORT).show()
+                    LoggerUtils.error(it.error.toString())
+                }
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    (requireActivity() as MainActivity).backToSelectWorkspaceActivity()
                 }
             }
         }
