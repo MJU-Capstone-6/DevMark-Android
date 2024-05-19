@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.domain.model.BookMark
 import com.devmark.devmark.databinding.ItemBookmarkBinding
+import com.devmark.devmark.domain.model.bookmark.BookmarksEntity
 
 class WorkSpaceRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var bookmarkList = mutableListOf<BookMark>()
+    private var bookmarkList = mutableListOf<BookmarksEntity>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemBookmarkBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -27,18 +28,19 @@ class WorkSpaceRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun setData(list: ArrayList<BookMark>) {
-        bookmarkList = list
+    fun setData(list: List<BookmarksEntity>) {
+        bookmarkList = list.toMutableList()
+        notifyDataSetChanged()
     }
 
     inner class BookmarkHolder(val binding: ItemBookmarkBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: BookMark) {
+        fun bind(item: BookmarksEntity) {
             binding.tvBookMarkTitle.text = item.title
-            binding.tvBookMarkCategory.text = item.category
+            binding.tvBookMarkCategory.text = item.categoryId.toString()
 
             itemView.setOnClickListener {
-                itemClick.onClick(1) // todo 북마크 Id로 변경 필요
+                itemClick.onClick(item.id)
             }
         }
     }

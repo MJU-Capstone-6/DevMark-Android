@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.R
 import com.devmark.devmark.data.utils.LoggerUtils
-import com.devmark.devmark.domain.model.BookMark
 import com.devmark.devmark.databinding.FragmentWorkspaceBinding
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainViewModel
@@ -21,8 +21,8 @@ import com.devmark.devmark.presentation.view.workspace_setting.WorkspaceSettingF
 
 class WorkspaceFragment : Fragment() {
     private lateinit var binding: FragmentWorkspaceBinding
-    private val viewModel: MainViewModel by activityViewModels()
-    private val bookmarkList = ArrayList<BookMark>()
+    private val mainViewModel: MainViewModel by activityViewModels()
+    private val viewModel: WorkspaceViewModel by viewModels()
     private val categoryFilterList = mutableListOf<Int>()
     private val memberFilterList = mutableListOf<Int>()
     private lateinit var workSpaceRvAdapter: WorkSpaceRvAdapter
@@ -79,7 +79,7 @@ class WorkspaceFragment : Fragment() {
             binding.tvFilterMember.setTextColor(newColor)
 
             setMemberRv()
-            memberRvAdapter.setData(viewModel.memberList)
+            memberRvAdapter.setData(mainViewModel.memberList)
         }
 
         binding.tvFilterCategory.setOnClickListener {
@@ -98,12 +98,12 @@ class WorkspaceFragment : Fragment() {
             binding.tvFilterCategory.setTextColor(newColor)
 
             setCategoryRv()
-            categoryRvAdapter.setData(viewModel.categoryList)
+            categoryRvAdapter.setData(mainViewModel.categoryList)
         }
     }
 
     private fun observer() {
-        viewModel.filterState.observe(viewLifecycleOwner) {
+        mainViewModel.filterState.observe(viewLifecycleOwner) {
             when (it) {
                 is UiState.Failure -> {
                     LoggerUtils.error(it.error.toString())
@@ -114,6 +114,19 @@ class WorkspaceFragment : Fragment() {
                 is UiState.Success -> {
                     categoryRvAdapter.setData(it.data.first)
                     memberRvAdapter.setData(it.data.second)
+                }
+            }
+        }
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> {
+                    LoggerUtils.error(it.error.toString())
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                }
+
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    workSpaceRvAdapter.setData(it.data)
                 }
             }
         }
@@ -128,14 +141,17 @@ class WorkspaceFragment : Fragment() {
         setBookmarkRv()
         setCategoryRv()
         setMemberRv()
-        viewModel.fetchInfo()
+        mainViewModel.fetchInfo()
+        viewModel.fetchData(memberFilterList, categoryFilterList)
     }
 
-    private fun setBookmarkRv(){
+    private fun setBookmarkRv() {
         workSpaceRvAdapter = WorkSpaceRvAdapter().apply {
-            this.setItemClickListener(object : OnItemClickListener{
+            this.setItemClickListener(object : OnItemClickListener {
                 override fun onClick(item: Int) {
-                    (requireActivity() as MainActivity).replaceFragmentWithBackstack(BookmarkFragment(item))
+                    (requireActivity() as MainActivity).replaceFragmentWithBackstack(
+                        BookmarkFragment(item)
+                    )
                 }
             })
         }
@@ -146,9 +162,7 @@ class WorkspaceFragment : Fragment() {
             adapter = workSpaceRvAdapter
         }
 
-        bookmarkList.add(BookMark("Test", "Test")) // todo 이후 제거 필요
-
-        workSpaceRvAdapter.setData(bookmarkList)
+        workSpaceRvAdapter.setData(listOf())
     }
 
     private fun setCategoryRv() {
@@ -160,6 +174,7 @@ class WorkspaceFragment : Fragment() {
                     } else {
                         categoryFilterList.add(id)
                     }
+                    viewModel.fetchData(memberFilterList, categoryFilterList)
                 }
             })
         }
@@ -175,6 +190,7 @@ class WorkspaceFragment : Fragment() {
                     } else {
                         memberFilterList.add(id)
                     }
+                    viewModel.fetchData(memberFilterList, categoryFilterList)
                 }
             })
         }
