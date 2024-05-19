@@ -4,6 +4,8 @@ import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.domain.model.workspace.RequestWorkSpaceCreateEntity
 import com.devmark.devmark.domain.model.workspace.ResponseInviteCodeEntity
 import com.devmark.devmark.domain.model.workspace.WorkSpaceInfoEntity
+import retrofit2.http.Header
+import retrofit2.http.Path
 
 interface WorkSpaceRepository {
     suspend fun createWorkspace(
@@ -25,4 +27,9 @@ interface WorkSpaceRepository {
         accessToken: String,
         workspaceId: Int
     ): Result<WorkSpaceInfoEntity>
+
+    suspend fun deleteWorkspace(
+        @Header("Authorization") accessToken: String,
+        @Path("id") workspaceId: Int
+    ): Result<Boolean>
 }

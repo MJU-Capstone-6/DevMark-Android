@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -77,6 +75,6 @@ class MainActivity : AppCompatActivity() {
     fun backToSelectWorkspaceActivity() {
         val intent = Intent(this, SelectWorkspaceActivity::class.java)
         startActivity(intent)
+        finish()
     }
-
 }

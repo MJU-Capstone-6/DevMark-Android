@@ -122,6 +122,7 @@ class SelectWorkspaceFragment : Fragment() {
 
                 is UiState.Loading -> {}
                 is UiState.Success -> {
+                    binding.icNowWorkspace.root.visibility = if(viewModel.currentWorkspace.value == null) View.INVISIBLE else View.VISIBLE
                     workSpaceSelectRvAdapter.setData(it.data)
                 }
             }

@@ -88,4 +88,18 @@ class WorkSpaceRepositoryImpl : WorkSpaceRepository {
             Result.failure(Exception(errorMsg))
         }
     }
+
+    override suspend fun deleteWorkspace(accessToken: String, workspaceId: Int): Result<Boolean> {
+        val response =
+            service.deleteWorkspace(
+                "Bearer $accessToken",
+                workspaceId
+            )
+        return if (response.isSuccessful) {
+            Result.success(true)
+        } else {
+            val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
+            Result.failure(Exception(errorMsg))
+        }
+    }
 }
