@@ -27,9 +27,10 @@ class SelectWorkSpaceViewModel : ViewModel() {
 
         viewModelScope.launch {
             val accessToken = app.userPreferences.getAccessToken().getOrNull().orEmpty()
+            val currentWorkspace = app.userPreferences.getCurrentWorkspace().getOrNull()
             userRepositoryImpl.getWorkspaceList(accessToken)
                 .onSuccess {
-                    val (newList, currentWorkspaceList) = it.workspaces.partition { item -> item.id != app.userPreferences.getCurrentWorkspace().getOrNull()}
+                    val (newList, currentWorkspaceList) = it.workspaces.partition { item -> item.id != currentWorkspace}
                     if(currentWorkspaceList.isNotEmpty()) _currentWorkspace.value = currentWorkspaceList.first()
                     _uiState.value = UiState.Success(newList)
                 }.onFailure {
