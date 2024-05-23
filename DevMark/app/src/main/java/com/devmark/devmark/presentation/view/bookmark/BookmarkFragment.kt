@@ -104,6 +104,16 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkLink))
             startActivity(intent)
         }
+
+        binding.btnCategoryEdit.setOnClickListener {
+            UpdateCategoryDialog().apply {
+                this.setButtonClickListener(object: UpdateCategoryDialog.OnButtonClickListener {
+                    override fun onButtonClicked(id: String) {
+                        //
+                    }
+                })
+            }.show(requireActivity().supportFragmentManager, "")
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
