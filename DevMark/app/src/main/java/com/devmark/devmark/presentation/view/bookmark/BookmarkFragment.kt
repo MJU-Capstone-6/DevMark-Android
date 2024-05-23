@@ -49,22 +49,15 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
                 is UiState.Failure -> {
                     Toast.makeText(requireContext(), "북마크 정보 조회 실패: ${it.error}", Toast.LENGTH_SHORT).show()
                     LoggerUtils.error("북마크 정보 조회 실패: ${it.error}")
-
-                    // todo 테스트를 위한 코드로 이후 제거해야 함
-                    binding.apply {
-                        tvBookmarkTitle.text = "[Android] NestedScrollView에 대해 알아보자!"
-                        tvSummary.text = getText(R.string.dummy_summary)
-                        btnCategoryEdit.text = "Android"
-                    }
                 }
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     bookmarkLink = it.data.link
 
                     binding.apply {
-//                        tvBookmarkTitle.text = it.data.title
+                        tvBookmarkTitle.text = it.data.title
                         tvSummary.text = it.data.summary
-//                        btnCategoryEdit.text = it.data.categoryName
+                        btnCategoryEdit.text = it.data.categoryName
                     }
                 }
             }
@@ -103,12 +96,12 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
         }
 
         binding.ibCopy.setOnClickListener {
-            clipboard.setPrimaryClip(ClipData.newPlainText("북마크 링크", "https://google.com"))
+            clipboard.setPrimaryClip(ClipData.newPlainText("북마크 링크", bookmarkLink))
             Toast.makeText(requireContext(), "클립보드에 복사되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
         binding.ibLink.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkLink))
             startActivity(intent)
         }
     }
