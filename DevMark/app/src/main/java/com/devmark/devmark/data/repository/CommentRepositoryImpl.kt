@@ -22,7 +22,11 @@ class CommentRepositoryImpl : CommentRepository {
         return if (response.isSuccessful) {
             val item = response.body()!!.run {
                 CommentEntity(
-                    bookmarkId, commentContext, createdAt, id, updatedAt, userId
+                    commentContext = commentContext,
+                    commentId = this.id,
+                    createdAt = this.createdAt,
+                    userId = this.userId,
+                    username = this.userId.toString()
                 )
             }
             Result.success(item)
@@ -41,7 +45,11 @@ class CommentRepositoryImpl : CommentRepository {
         return if (response.isSuccessful) {
             val item = response.body()!!.run {
                 CommentEntity(
-                    bookmarkId, commentContext, createdAt, id, updatedAt, userId
+                    commentContext = commentContext,
+                    commentId = this.id,
+                    createdAt = this.createdAt,
+                    userId = this.userId,
+                    username = this.userId.toString()
                 )
             }
             Result.success(item)

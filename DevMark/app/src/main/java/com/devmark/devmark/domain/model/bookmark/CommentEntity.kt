@@ -1,10 +1,10 @@
 package com.devmark.devmark.domain.model.bookmark
 
+
 data class CommentEntity(
-    val id: Int,
-    val bookmarkId: Int,
+    val commentContext: String,
+    val commentId: Int,
+    val createdAt: String,
     val userId: Int,
-    val userName: String,
-    val context: String,
-    val updatedAt: String
+    val username: String
 )

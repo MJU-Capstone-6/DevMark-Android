@@ -67,7 +67,10 @@
         android:text="@string/text_btn_modify"
         style="@style/pretendard_medium"
         android:textSize="14sp"
-        android:textColor="@color/taupe"/>
+
+        android:textColor="@color/platinum_alpha30"
+        android:clickable="false"
+        />
 
     <TextView
         android:id="@+id/tv_comment"

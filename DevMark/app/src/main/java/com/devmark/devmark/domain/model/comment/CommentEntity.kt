@@ -2,11 +2,10 @@ package com.devmark.devmark.domain.model.comment
 
 import com.google.gson.annotations.SerializedName
 
-data class CommentEntity (
-    val bookmarkId: Int,
+data class CommentEntity(
     val commentContext: String,
+    val commentId: Int,
     val createdAt: String,
-    val id: Int,
-    val updatedAt: String,
-    val userId: Int
+    val userId: Int,
+    val username: String
 )
