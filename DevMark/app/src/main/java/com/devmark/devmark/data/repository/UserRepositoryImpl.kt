@@ -28,7 +28,8 @@ class UserRepositoryImpl : UserRepository {
         val res = service.getWorkspaceList("Bearer $accessToken")
         return if (res.isSuccessful) {
             val data = res.body()
-            Result.success(WorkSpaceListMapper.mapperToResponseEntity(data!!))
+            if(data != null) Result.success(WorkSpaceListMapper.mapperToResponseEntity(data))
+            else Result.success(ResponseWorkSpaceListEntity(-1, listOf()))
         } else {
             val errorMsg = JSONObject(res.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))

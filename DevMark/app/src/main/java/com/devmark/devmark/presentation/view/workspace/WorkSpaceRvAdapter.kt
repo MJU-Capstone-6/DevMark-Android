@@ -3,7 +3,6 @@ package com.devmark.devmark.presentation.view.workspace
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.devmark.devmark.domain.model.BookMark
 import com.devmark.devmark.databinding.ItemBookmarkBinding
 import com.devmark.devmark.domain.model.bookmark.BookmarksEntity
 
