@@ -18,13 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.R
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.databinding.FragmentBookmarkBinding
+import com.devmark.devmark.domain.model.bookmark.BookmarkDetailEntity
+import com.devmark.devmark.domain.model.bookmark.CommentEntity
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.presentation.view.MainViewModel
-import com.devmark.devmark.presentation.view.workspace.CommentRvAdapter
 import com.devmark.devmark.presentation.view.workspace.OnItemClickListener
 
 class BookmarkFragment(private val bookmarkId: Int): Fragment() {
+
     private var _binding: FragmentBookmarkBinding? = null
     private val binding get() = _binding!!
     private val viewModel: BookmarkViewModel by viewModels()
@@ -38,123 +40,142 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = FragmentBookmarkBinding.inflate(inflater, container, false)
         (requireActivity() as MainActivity).changeNaviVisibility(false)
-        _binding = FragmentBookmarkBinding.inflate(layoutInflater)
         clipboard = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-        observer()
-        initListener()
+
+        setupObservers()
+        setupListeners()
+        setupCommentRecyclerView()
+        fetchInitialData()
         return binding.root
     }
 
-    private fun observer() {
-        viewModel.detailState.observe(viewLifecycleOwner){
-            when(it){
-                is UiState.Failure -> {
-                    Toast.makeText(requireContext(), "북마크 정보 조회 실패: ${it.error}", Toast.LENGTH_SHORT).show()
-                    LoggerUtils.error("북마크 정보 조회 실패: ${it.error}")
-                }
-                is UiState.Loading -> {}
-                is UiState.Success -> {
-                    bookmarkLink = it.data.link
+    private fun fetchInitialData() {
+        viewModel.fetchData(bookmarkId)
+        viewModel.fetchComment(bookmarkId)
+    }
 
-                    binding.apply {
-                        tvBookmarkTitle.text = it.data.title
-                        tvSummary.text = it.data.summary
-                        btnCategoryEdit.text = it.data.categoryName
-                    }
-                }
+    private fun setupObservers() {
+        viewModel.detailState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Failure -> showErrorToast("북마크 정보 조회 실패: ${state.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> updateBookmarkDetails(state.data)
             }
         }
 
-        viewModel.commentState.observe(viewLifecycleOwner){
-            when(it){
-                is UiState.Failure -> {
-                    Toast.makeText(requireContext(), "댓글 조회 실패: ${it.error}", Toast.LENGTH_SHORT).show()
-                    LoggerUtils.error("댓글 조회 실패: ${it.error}")
-                }
+        viewModel.commentState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Failure -> showErrorToast("실패: ${state.error}")
                 is UiState.Loading -> {}
-                is UiState.Success -> {
-                    adapter.setData(it.data)
-                }
+                is UiState.Success -> adapter.setData(state.data)
             }
         }
 
-        viewModel.updateState.observe(viewLifecycleOwner){
-            when(it){
-                is UiState.Failure -> {
-                    Toast.makeText(requireContext(), "카테고리 수정 실패: ${it.error}", Toast.LENGTH_SHORT).show()
-                    LoggerUtils.error("카테고리 수정 실패: ${it.error}")
-                }
+        viewModel.updateState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Failure -> showErrorToast("카테고리 수정 실패: ${state.error}")
                 is UiState.Loading -> {}
-                is UiState.Success -> {
-//                    viewModel.fetchData(bookmarkId)
-                    // todo API 수정 필요
-
-                    binding.apply {
-                        btnCategoryEdit.text = it.data.categoryId.toString() // API 수정 요청함
-                    }
-                }
+                is UiState.Success -> updateCategory(state.data.categoryId)
             }
         }
     }
 
-    private fun initListener() {
+    private fun showErrorToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        LoggerUtils.error(message)
+    }
+
+    private fun updateBookmarkDetails(data: BookmarkDetailEntity) {
+        bookmarkLink = data.link
+        binding.apply {
+            tvBookmarkTitle.text = data.title
+            tvSummary.text = data.summary
+            btnCategoryEdit.text = data.categoryName
+        }
+    }
+
+    private fun updateCategory(categoryId: Int) {
+        // TODO: 수정 필요
+        binding.btnCategoryEdit.text = categoryId.toString()
+    }
+
+    private fun setupListeners() {
         binding.ibBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
         binding.btnReadable.setOnClickListener {
-            val rust = ContextCompat.getColor(requireContext(), R.color.rust)
-            val alabaster = ContextCompat.getColor(requireContext(), R.color.alabaster)
-
-            with(binding.btnReadable){
-                if (currentTextColor == rust) {
-                    setTextColor(alabaster)
-                } else if (currentTextColor == alabaster) {
-                    setTextColor(rust)
-                }
-            }
+            toggleTextColor()
         }
 
         binding.ibCopy.setOnClickListener {
-            clipboard.setPrimaryClip(ClipData.newPlainText("북마크 링크", bookmarkLink))
-            Toast.makeText(requireContext(), "클립보드에 복사되었습니다.", Toast.LENGTH_SHORT).show()
+            copyToClipboard(bookmarkLink)
         }
 
         binding.ibLink.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(bookmarkLink))
-            startActivity(intent)
+            openLink(bookmarkLink)
         }
 
         binding.btnCategoryEdit.setOnClickListener {
-            UpdateCategoryDialog(mainViewModel.categoryList.map { it.second }).apply {
-                this.setButtonClickListener(object: UpdateCategoryDialog.OnButtonClickListener {
-                    override fun onButtonClicked(categoryName: String) {
-                        viewModel.updateCategory(mainViewModel.categoryList.find { it.second == categoryName }?.first ?: -1)
-                    }
-                })
-            }.show(requireActivity().supportFragmentManager, "")
+            showUpdateCategoryDialog()
+        }
+
+        binding.btnPost.setOnClickListener {
+            viewModel.postComment(bookmarkId, binding.etComment.text.toString())
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.fetchData(bookmarkId)
-        setCommentRv()
-        viewModel.fetchComment(bookmarkId)
+    private fun toggleTextColor() {
+        val rust = ContextCompat.getColor(requireContext(), R.color.rust)
+        val alabaster = ContextCompat.getColor(requireContext(), R.color.alabaster)
+
+        binding.btnReadable.apply {
+            setTextColor(if (currentTextColor == rust) alabaster else rust)
+        }
     }
 
-    private fun setCommentRv(){
+    private fun copyToClipboard(text: String) {
+        clipboard.setPrimaryClip(ClipData.newPlainText("북마크 링크", text))
+        Toast.makeText(requireContext(), "클립보드에 복사되었습니다.", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun openLink(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
+    }
+
+    private fun showUpdateCategoryDialog() {
+        val categoryNames = mainViewModel.categoryList.map { it.second }
+        UpdateCategoryDialog(categoryNames).apply {
+            setButtonClickListener(object : UpdateCategoryDialog.OnButtonClickListener {
+                override fun onButtonClicked(categoryName: String) {
+                    val categoryId = mainViewModel.categoryList.find { it.second == categoryName }?.first ?: -1
+                    viewModel.updateCategory(categoryId)
+                }
+            })
+        }.show(requireActivity().supportFragmentManager, "")
+    }
+
+    private fun setupCommentRecyclerView() {
         adapter = CommentRvAdapter().apply {
-            this.setItemClickListener(object : OnItemClickListener {
-                override fun onClick(item: Int) {
-                    LoggerUtils.info("댓글 테스트: $item")
+            setItemClickListener(object : CommentRvAdapter.OnCommentClickListener{
+                override fun onClick(type: String, item: CommentEntity) {
+                    if(type == "delete") viewModel.deleteComment(bookmarkId, item.commentId)
+                    else viewModel.updateComment(bookmarkId, item.commentId, item.commentContext)
                 }
             })
         }
+        binding.rvComment.apply {
+            adapter = this@BookmarkFragment.adapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+        adapter.setData(emptyList())
+    }
 
-        binding.rvComment.adapter = adapter
-        binding.rvComment.layoutManager = LinearLayoutManager(requireContext())
-        adapter.setData(listOf())
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

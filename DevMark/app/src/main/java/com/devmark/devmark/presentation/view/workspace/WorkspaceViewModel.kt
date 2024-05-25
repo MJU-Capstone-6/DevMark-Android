@@ -3,12 +3,9 @@ package com.devmark.devmark.presentation.view.workspace
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.devmark.devmark.data.repository.BookmarkRepositoryImpl
 import com.devmark.devmark.domain.model.bookmark.BookmarksEntity
-import com.devmark.devmark.presentation.base.GlobalApplication
 import com.devmark.devmark.presentation.utils.UiState
-import kotlinx.coroutines.launch
 
 class WorkspaceViewModel : ViewModel() {
     private val bookmarkRepositoryImpl = BookmarkRepositoryImpl()

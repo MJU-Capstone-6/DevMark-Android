@@ -1,15 +1,10 @@
 package com.devmark.devmark.domain.repository
 
-import com.devmark.devmark.data.model.bookmark.BookmarkDTO
-import com.devmark.devmark.data.model.bookmark.RequestUpdateBookmarkDTO
 import com.devmark.devmark.domain.model.bookmark.BookmarkDetailEntity
 import com.devmark.devmark.domain.model.bookmark.BookmarksEntity
 import com.devmark.devmark.domain.model.bookmark.CommentEntity
 import com.devmark.devmark.domain.model.bookmark.UpdateBookmarkEntity
-import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.Path
+
 
 interface BookmarkRepository {
     suspend fun getBookmarkDetail(
