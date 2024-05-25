@@ -27,7 +27,8 @@ class WorkSpaceRepositoryImpl : WorkSpaceRepository {
                 WorkSpaceCreateMapper.mapperToRequestDTO(body)
             )
         return if (response.isSuccessful) {
-            Result.success(WorkSpaceCreateMapper.mapperToResponseEntity(response.body()!!))
+            if(response.body() != null) Result.success(WorkSpaceCreateMapper.mapperToResponseEntity(response.body()!!))
+            else Result.failure(Exception("null data"))
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))
@@ -83,7 +84,8 @@ class WorkSpaceRepositoryImpl : WorkSpaceRepository {
                 workspaceId
             )
         return if (response.isSuccessful) {
-            Result.success(WorkSpaceInfoMapper.mapperToResponseEntity(response.body()!!))
+            if(response.body() != null) Result.success(WorkSpaceInfoMapper.mapperToResponseEntity(response.body()!!))
+            else Result.failure(Exception("null data"))
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))
