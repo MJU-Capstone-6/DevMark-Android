@@ -1,11 +1,15 @@
 package com.devmark.devmark.data.remote.api
 
+import com.devmark.devmark.data.model.bookmark.BookmarkDTO
+import com.devmark.devmark.data.model.bookmark.RequestUpdateBookmarkDTO
 import com.devmark.devmark.data.model.bookmark.ResponseBookmarkDTO
 import com.devmark.devmark.data.model.bookmark.ResponseBookmarksDTO
 import com.devmark.devmark.data.model.bookmark.ResponseCommentsDTO
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -29,4 +33,11 @@ interface BookmarkService {
         @Query("users") userIds: String,
         @Query("categories") categoryIds: String
     ): Response<List<ResponseBookmarksDTO>>
+
+    @PUT("/api/v1/bookmark/{id}")
+    suspend fun updateBookmark(
+        @Header("Authorization") accessToken: String,
+        @Path("id") bookmarkId: Int,
+        @Body bookmark: RequestUpdateBookmarkDTO
+    ): Response<BookmarkDTO>
 }

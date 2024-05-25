@@ -8,15 +8,13 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.devmark.devmark.R
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.databinding.DialogUpdateCategoryBinding
-import com.devmark.devmark.databinding.DialogWorkspaceCreateBinding
 import com.devmark.devmark.presentation.utils.GetDisplayUtil
 
-class UpdateCategoryDialog : DialogFragment() {
+class UpdateCategoryDialog(private val items: List<String>) : DialogFragment() {
     private var _binding: DialogUpdateCategoryBinding? = null
     private val binding get() = _binding!!
 
@@ -39,13 +37,9 @@ class UpdateCategoryDialog : DialogFragment() {
     ): View {
         _binding = DialogUpdateCategoryBinding.inflate(inflater, container, false)
 
-        val autoAdapter = CategoryAutoCompleteViewAdapter(requireContext(), R.layout.item_dropdown_category, listOf("apple", "application", "android", "before"))
+        val autoAdapter = CategoryAutoCompleteViewAdapter(requireContext(), R.layout.item_dropdown_category, items)
         binding.etAuto.setDropDownBackgroundResource(R.drawable.shape_dropdown_category)
         binding.etAuto.setAdapter(autoAdapter)
-
-//        binding.etAuto.setOnItemClickListener { parent, _, position, _ ->
-//            val selectedItem = parent.getItemAtPosition(position) as String
-//        }
 
         binding.dialogBtnDone.setOnClickListener{
             dismiss()
@@ -61,7 +55,7 @@ class UpdateCategoryDialog : DialogFragment() {
     }
 
     interface OnButtonClickListener {
-        fun onButtonClicked(id: String)
+        fun onButtonClicked(categoryName: String)
     }
 
     fun setButtonClickListener(buttonClickListener: OnButtonClickListener) {

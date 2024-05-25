@@ -17,22 +17,26 @@ class WorkspaceViewModel : ViewModel() {
     val uiState: LiveData<UiState<List<BookmarksEntity>>> get() = _uiState
 
     fun fetchData(userIds: List<Int>, categoryIds: List<Int>) {
-        _uiState.value = UiState.Loading
+        _uiState.value = UiState.Success(listOf(
+            BookmarksEntity(1, 1, "","","test",0, 1),
+            BookmarksEntity(2, 2, "","","test",0, 1),
+        ))
+//        _uiState.value = UiState.Loading
 
-        viewModelScope.launch {
-            val accessToken =
-                GlobalApplication.app.userPreferences.getAccessToken().getOrNull().orEmpty()
-            val currentWorkspace =
-                GlobalApplication.app.userPreferences.getCurrentWorkspace().getOrNull()
-            bookmarkRepositoryImpl.getBookmarks(
-                accessToken, currentWorkspace ?: -1,
-                userIds.joinToString(","), categoryIds.joinToString(",")
-            )
-                .onSuccess {
-                    _uiState.value = UiState.Success(it)
-                }.onFailure {
-                    _uiState.value = UiState.Failure(it.message)
-                }
-        }
+//        viewModelScope.launch {
+//            val accessToken =
+//                GlobalApplication.app.userPreferences.getAccessToken().getOrNull().orEmpty()
+//            val currentWorkspace =
+//                GlobalApplication.app.userPreferences.getCurrentWorkspace().getOrNull()
+//            bookmarkRepositoryImpl.getBookmarks(
+//                accessToken, currentWorkspace ?: -1,
+//                userIds.joinToString(","), categoryIds.joinToString(",")
+//            )
+//                .onSuccess {
+//                    _uiState.value = UiState.Success(it)
+//                }.onFailure {
+//                    _uiState.value = UiState.Failure(it.message)
+//                }
+//        }
     }
 }

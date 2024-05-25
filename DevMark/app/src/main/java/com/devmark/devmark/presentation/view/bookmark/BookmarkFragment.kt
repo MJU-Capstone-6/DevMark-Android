@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.R
@@ -19,6 +20,7 @@ import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.databinding.FragmentBookmarkBinding
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainActivity
+import com.devmark.devmark.presentation.view.MainViewModel
 import com.devmark.devmark.presentation.view.workspace.CommentRvAdapter
 import com.devmark.devmark.presentation.view.workspace.OnItemClickListener
 
@@ -26,6 +28,7 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
     private var _binding: FragmentBookmarkBinding? = null
     private val binding get() = _binding!!
     private val viewModel: BookmarkViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var adapter: CommentRvAdapter
     private lateinit var clipboard: ClipboardManager
     private lateinit var bookmarkLink: String
@@ -75,6 +78,24 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
                 }
             }
         }
+
+        viewModel.updateState.observe(viewLifecycleOwner){
+            when(it){
+                is UiState.Failure -> {
+                    Toast.makeText(requireContext(), "카테고리 수정 실패: ${it.error}", Toast.LENGTH_SHORT).show()
+                    LoggerUtils.error("카테고리 수정 실패: ${it.error}")
+                }
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+//                    viewModel.fetchData(bookmarkId)
+                    // todo API 수정 필요
+
+                    binding.apply {
+                        btnCategoryEdit.text = it.data.categoryId.toString() // API 수정 요청함
+                    }
+                }
+            }
+        }
     }
 
     private fun initListener() {
@@ -106,10 +127,10 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
         }
 
         binding.btnCategoryEdit.setOnClickListener {
-            UpdateCategoryDialog().apply {
+            UpdateCategoryDialog(mainViewModel.categoryList.map { it.second }).apply {
                 this.setButtonClickListener(object: UpdateCategoryDialog.OnButtonClickListener {
-                    override fun onButtonClicked(id: String) {
-                        //
+                    override fun onButtonClicked(categoryName: String) {
+                        viewModel.updateCategory(mainViewModel.categoryList.find { it.second == categoryName }?.first ?: -1)
                     }
                 })
             }.show(requireActivity().supportFragmentManager, "")
@@ -131,7 +152,7 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
                 }
             })
         }
-        // todo 이후 더미 데이터 제거 필요
+
         binding.rvComment.adapter = adapter
         binding.rvComment.layoutManager = LinearLayoutManager(requireContext())
         adapter.setData(listOf())

@@ -12,7 +12,8 @@ object BookmarkDetailMapper {
                 summary = this.bookmark.summary,
                 link = this.bookmark.link,
                 categoryId = this.category.id,
-                categoryName = this.category.name
+                categoryName = this.category.name,
+                workspaceId = this.workspace.id
             )
         }
     }
