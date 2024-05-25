@@ -4,6 +4,7 @@ import com.devmark.devmark.data.mapper.workspace.InviteCodeMapper
 import com.devmark.devmark.data.mapper.workspace.JoinWorkspaceMapper
 import com.devmark.devmark.data.mapper.workspace.WorkSpaceCreateMapper
 import com.devmark.devmark.data.mapper.workspace.WorkSpaceInfoMapper
+import com.devmark.devmark.data.model.common.OkResponse
 import com.devmark.devmark.data.remote.RetrofitClient
 import com.devmark.devmark.data.remote.api.WorkSpaceService
 import com.devmark.devmark.domain.model.user.WorkspaceEntity
@@ -53,7 +54,7 @@ class WorkSpaceRepositoryImpl : WorkSpaceRepository {
     override suspend fun joinWorkspace(
         accessToken: String,
         inviteCode: String
-    ): Result<WorkspaceEntity> {
+    ): Result<Boolean> {
         val response =
             service.joinWorkspace(
                 "Bearer $accessToken",
@@ -64,7 +65,7 @@ class WorkSpaceRepositoryImpl : WorkSpaceRepository {
                 Result.failure(Exception("null data"))
             }
             else {
-                Result.success(JoinWorkspaceMapper.mapperToResponseEntity(response.body()!!))
+                Result.success(response.body()!!.ok)
             }
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")

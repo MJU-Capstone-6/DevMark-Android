@@ -17,6 +17,8 @@ class SelectWorkSpaceViewModel : ViewModel() {
     private val userRepositoryImpl = UserRepositoryImpl()
 
     private val _uiState = MutableLiveData<UiState<List<WorkspaceEntity>>>(UiState.Loading)
+    private val _joinState = MutableLiveData<UiState<Unit>>(UiState.Loading)
+
     val uiState: LiveData<UiState<List<WorkspaceEntity>>> get() = _uiState
 
     private var _currentWorkspace = MutableLiveData<WorkspaceEntity>()
@@ -30,8 +32,9 @@ class SelectWorkSpaceViewModel : ViewModel() {
             val currentWorkspace = app.userPreferences.getCurrentWorkspace().getOrNull()
             userRepositoryImpl.getWorkspaceList(accessToken)
                 .onSuccess {
-                    val (newList, currentWorkspaceList) = it.workspaces.partition { item -> item.id != currentWorkspace}
-                    if(currentWorkspaceList.isNotEmpty()) _currentWorkspace.value = currentWorkspaceList.first()
+                    val (newList, currentWorkspaceList) = it.workspaces.partition { item -> item.id != currentWorkspace }
+                    if (currentWorkspaceList.isNotEmpty()) _currentWorkspace.value =
+                        currentWorkspaceList.first()
                     _uiState.value = UiState.Success(newList)
                 }.onFailure {
                     _uiState.value = UiState.Failure(it.message)
@@ -58,15 +61,22 @@ class SelectWorkSpaceViewModel : ViewModel() {
         }
     }
 
-    fun workspaceJoin(inviteCode: String){
-        _createState.value = UiState.Loading
+    fun workspaceJoin(inviteCode: String) {
+        _joinState.value = UiState.Loading
 
         viewModelScope.launch {
-            workSpaceRepositoryImpl.joinWorkspace(app.userPreferences.getAccessToken().getOrNull().orEmpty(), inviteCode)
+            workSpaceRepositoryImpl.joinWorkspace(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), inviteCode
+            )
                 .onSuccess {
-                    _createState.value = UiState.Success(it)
+                    if (it) {
+                        fetchData()
+                        _joinState.value = UiState.Success(Unit)
+                    } else {
+                        _joinState.value = UiState.Failure("워크스페이스 참가 실패")
+                    }
                 }.onFailure {
-                    _createState.value = UiState.Failure(it.message)
+                    _joinState.value = UiState.Failure(it.message)
                 }
         }
     }

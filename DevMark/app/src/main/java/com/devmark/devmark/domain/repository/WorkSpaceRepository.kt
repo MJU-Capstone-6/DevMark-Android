@@ -1,5 +1,6 @@
 package com.devmark.devmark.domain.repository
 
+import com.devmark.devmark.data.model.common.OkResponse
 import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.domain.model.workspace.RequestWorkSpaceCreateEntity
 import com.devmark.devmark.domain.model.workspace.ResponseInviteCodeEntity
@@ -21,7 +22,7 @@ interface WorkSpaceRepository {
     suspend fun joinWorkspace(
         accessToken: String,
         inviteCode: String
-    ): Result<WorkspaceEntity>
+    ): Result<Boolean>
     
     suspend fun getWorkspaceInfo(
         accessToken: String,
