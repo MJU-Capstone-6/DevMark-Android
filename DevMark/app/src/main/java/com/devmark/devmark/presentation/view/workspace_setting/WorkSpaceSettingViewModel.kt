@@ -9,17 +9,21 @@ import com.devmark.devmark.presentation.base.GlobalApplication.Companion.app
 import com.devmark.devmark.presentation.utils.UiState
 import kotlinx.coroutines.launch
 
-class WorkSpaceSettingViewModel: ViewModel() {
+class WorkSpaceSettingViewModel : ViewModel() {
     private val workSpaceRepositoryImpl = WorkSpaceRepositoryImpl()
 
     private val _inviteState = MutableLiveData<UiState<String>>(UiState.Loading)
     val inviteState: LiveData<UiState<String>> get() = _inviteState
+    private val _bookmarkCodeState = MutableLiveData<UiState<String>>(UiState.Loading)
+    val bookmarkCodeState: LiveData<UiState<String>> get() = _bookmarkCodeState
 
-    fun getInviteCode(workspaceId: Int){
+    fun getInviteCode(workspaceId: Int) {
         _inviteState.value = UiState.Loading
 
         viewModelScope.launch {
-            workSpaceRepositoryImpl.getInviteCode(app.userPreferences.getAccessToken().getOrNull().orEmpty(), workspaceId)
+            workSpaceRepositoryImpl.getInviteCode(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), workspaceId
+            )
                 .onSuccess {
                     _inviteState.value = UiState.Success(it.inviteCode)
                 }.onFailure {
@@ -28,14 +32,31 @@ class WorkSpaceSettingViewModel: ViewModel() {
         }
     }
 
+    fun getBookmarkCode(workspaceId: Int) {
+        _bookmarkCodeState.value = UiState.Loading
+
+        viewModelScope.launch {
+            workSpaceRepositoryImpl.getBookmarkCode(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), workspaceId
+            )
+                .onSuccess {
+                    _bookmarkCodeState.value = UiState.Success(it.code)
+                }.onFailure {
+                    _bookmarkCodeState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
     private val _exitState = MutableLiveData<UiState<Unit>>(UiState.Loading)
     val exitState: LiveData<UiState<Unit>> get() = _exitState
 
-    fun deleteWorkspace(workspaceId: Int){
+    fun deleteWorkspace(workspaceId: Int) {
         _exitState.value = UiState.Loading
 
         viewModelScope.launch {
-            workSpaceRepositoryImpl.deleteWorkspace(app.userPreferences.getAccessToken().getOrNull().orEmpty(), workspaceId)
+            workSpaceRepositoryImpl.deleteWorkspace(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), workspaceId
+            )
                 .onSuccess {
                     _exitState.value = UiState.Success(Unit)
                 }.onFailure {

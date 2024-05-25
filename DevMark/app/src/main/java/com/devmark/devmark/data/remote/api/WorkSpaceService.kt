@@ -1,5 +1,6 @@
 package com.devmark.devmark.data.remote.api
 
+import com.devmark.devmark.data.model.bookmark.ResponseBookmarkCodeDTO
 import com.devmark.devmark.data.model.common.OkResponse
 import com.devmark.devmark.data.model.workspace.RequestInviteCodeDTO
 import com.devmark.devmark.data.model.workspace.RequestJoinWorkSpaceDTO
@@ -46,4 +47,10 @@ interface WorkSpaceService {
         @Header("Authorization") accessToken: String,
         @Path("id") workspaceId: Int
     ): Response<OkResponse>
+
+    @POST("/api/v1/workspace/{id}/code")
+    suspend fun getBookmarkCode(
+        @Header("Authorization") accessToken: String,
+        @Path("id") workspaceId: Int
+    ): Response<ResponseBookmarkCodeDTO>
 }

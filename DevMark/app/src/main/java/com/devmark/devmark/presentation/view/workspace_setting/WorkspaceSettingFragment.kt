@@ -53,7 +53,7 @@ class WorkspaceSettingFragment(private val workspaceId: Int) : Fragment() {
         return binding.root
     }
 
-    private fun initListener(){
+    private fun initListener() {
         binding.ibBackWorkspaceSetting.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
@@ -67,16 +67,20 @@ class WorkspaceSettingFragment(private val workspaceId: Int) : Fragment() {
         binding.ivInviteCode.setOnClickListener {
             viewModel.getInviteCode(workspaceId)
         }
+        binding.ivBookmarkInfo.setOnClickListener {
+            viewModel.getBookmarkCode(workspaceId)
+        }
     }
 
-    private fun observer(){
-        viewModel.inviteState.observe(viewLifecycleOwner){
-            when(it){
+    private fun observer() {
+        viewModel.inviteState.observe(viewLifecycleOwner) {
+            when (it) {
                 is UiState.Success -> {
                     binding.tvInviteCodeWorkspaceSetting.text = it.data
                     clipboard.setPrimaryClip(ClipData.newPlainText("InviteCode", it.data))
                     Toast.makeText(requireContext(), "클립보드에 복사되었습니다.", Toast.LENGTH_SHORT).show()
                 }
+
                 is UiState.Loading -> {}
                 is UiState.Failure -> {
                     binding.tvInviteCodeWorkspaceSetting.text = it.error
@@ -84,12 +88,32 @@ class WorkspaceSettingFragment(private val workspaceId: Int) : Fragment() {
             }
         }
 
-        viewModel.exitState.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.bookmarkCodeState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Success -> {
+                    binding.tvBookmarkInfoWorkspaceSetting.text = it.data
+                    clipboard.setPrimaryClip(ClipData.newPlainText("Bookmark Code", it.data))
+                    Toast.makeText(requireContext(), "클립보드에 복사되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+
+                is UiState.Loading -> {}
                 is UiState.Failure -> {
-                    Toast.makeText(requireContext(), "워크스페이스 나가기 실패: ${it.error}", Toast.LENGTH_SHORT).show()
+                    binding.tvBookmarkInfoWorkspaceSetting.text = it.error
+                }
+            }
+        }
+
+        viewModel.exitState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "워크스페이스 나가기 실패: ${it.error}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     LoggerUtils.error(it.error.toString())
                 }
+
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     (requireActivity() as MainActivity).backToSelectWorkspaceActivity()

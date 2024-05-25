@@ -1,6 +1,7 @@
 package com.devmark.devmark.domain.repository
 
 import com.devmark.devmark.data.model.common.OkResponse
+import com.devmark.devmark.domain.model.bookmark.ResponseBookmarkCodeEntity
 import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.domain.model.workspace.RequestWorkSpaceCreateEntity
 import com.devmark.devmark.domain.model.workspace.ResponseInviteCodeEntity
@@ -33,4 +34,9 @@ interface WorkSpaceRepository {
         @Header("Authorization") accessToken: String,
         @Path("id") workspaceId: Int
     ): Result<Boolean>
+
+    suspend fun getBookmarkCode(
+        @Header("Authorization") accessToken: String,
+        @Path("id") workspaceId: Int
+    ): Result<ResponseBookmarkCodeEntity>
 }
