@@ -33,7 +33,7 @@ interface WorkSpaceService {
     suspend fun joinWorkspace(
         @Header("Authorization") accessToken: String,
         @Body inviteCode: RequestJoinWorkSpaceDTO
-    ): Response<ResponseJoinWorkSpaceDTO>
+    ): Response<OkResponse>
     
     @GET("/api/v1/workspace/{id}")
     suspend fun getWorkspaceInfo(
