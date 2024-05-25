@@ -4,8 +4,6 @@ import com.devmark.devmark.data.mapper.bookmark.BookmarkDetailMapper
 import com.devmark.devmark.data.mapper.bookmark.BookmarksMapper
 import com.devmark.devmark.data.mapper.bookmark.CommentMapper
 import com.devmark.devmark.data.mapper.bookmark.UpdateBookmarkMapper
-import com.devmark.devmark.data.model.bookmark.RequestUpdateBookmarkDTO
-import com.devmark.devmark.data.model.bookmark.ResponseBookmarksDTO
 import com.devmark.devmark.data.remote.RetrofitClient
 import com.devmark.devmark.data.remote.api.BookmarkService
 import com.devmark.devmark.domain.model.bookmark.BookmarkDetailEntity
