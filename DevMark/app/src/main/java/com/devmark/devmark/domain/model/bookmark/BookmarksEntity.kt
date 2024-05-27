@@ -8,5 +8,6 @@ data class BookmarksEntity(
     val summary: String,
     val title: String,
     val userId: Int,
-    val workspaceId: Int
+    val workspaceId: Int,
+    val categoryName: String
 )

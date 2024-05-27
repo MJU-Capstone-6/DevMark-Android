@@ -50,7 +50,8 @@ class BookmarkRepositoryImpl : BookmarkRepository {
         userIds: String,
         categoryIds: String
     ): Result<List<BookmarksEntity>> {
-        val response = service.getBookmarks("Bearer $accessToken", workspaceId, userIds, categoryIds)
+        val response =
+            service.getBookmarks("Bearer $accessToken", workspaceId, userIds, categoryIds)
         return if (response.isSuccessful) {
             if (response.body().isNullOrEmpty()) Result.success(listOf())
             else Result.success(BookmarksMapper.mapperToResponseEntity(response.body()!!))
@@ -71,7 +72,7 @@ class BookmarkRepositoryImpl : BookmarkRepository {
             UpdateBookmarkMapper.mapperToRequestDto(bookmark)
         )
         return if (response.isSuccessful) {
-           Result.success(UpdateBookmarkMapper.mapperToResponseEntity(response.body()!!))
+            Result.success(UpdateBookmarkMapper.mapperToResponseEntity(response.body()!!))
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))

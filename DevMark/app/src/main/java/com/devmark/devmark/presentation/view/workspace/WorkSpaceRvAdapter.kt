@@ -36,7 +36,7 @@ class WorkSpaceRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: BookmarksEntity) {
             binding.tvBookMarkTitle.text = item.title
-            binding.tvBookMarkCategory.text = item.categoryId.toString()
+            binding.tvBookMarkCategory.text = item.categoryName
 
             itemView.setOnClickListener {
                 itemClick.onClick(item.id)

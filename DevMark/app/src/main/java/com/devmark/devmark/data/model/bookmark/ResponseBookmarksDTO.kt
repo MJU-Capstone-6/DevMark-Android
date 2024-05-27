@@ -21,5 +21,7 @@ data class ResponseBookmarksDTO(
     @SerializedName("user_id")
     val userId: Int,
     @SerializedName("workspace_id")
-    val workspaceId: Int
+    val workspaceId: Int,
+    @SerializedName("category_name")
+    val categoryName: String
 )
