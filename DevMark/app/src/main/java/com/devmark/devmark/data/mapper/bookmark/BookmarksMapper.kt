@@ -8,10 +8,11 @@ object BookmarksMapper {
         return item.map {
             BookmarksEntity(
                 categoryId = it.categoryId, id = it.id, link = it.link,
-                summary = it.summary,
+                summary = it.summary ?: "",
                 title = it.title,
                 userId = it.userId,
-                workspaceId = it.workspaceId
+                workspaceId = it.workspaceId,
+                categoryName = it.categoryName
             )
         }
     }
