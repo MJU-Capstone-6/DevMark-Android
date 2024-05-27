@@ -133,7 +133,6 @@
                     style="@style/bold_16_workspace_setting"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="245 개"
                     android:textColor="@color/rust"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tv_total_bookmark"
@@ -145,6 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="16dp"
+                    android:clickable="false"
                     android:scrollbars="none"
                     app:layout_constraintStart_toStartOf="@id/tv_total_bookmark"
                     app:layout_constraintTop_toBottomOf="@id/tv_total_bookmark" />

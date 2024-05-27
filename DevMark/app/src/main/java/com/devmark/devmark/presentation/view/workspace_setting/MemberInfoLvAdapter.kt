@@ -8,10 +8,13 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.BaseAdapter
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.devmark.devmark.R
-import com.devmark.devmark.domain.model.Member
 import com.devmark.devmark.databinding.ItemMemberInfoBinding
+import com.devmark.devmark.domain.model.workspace.UserBookmarkCountEntity
 
-class MemberInfoLvAdapter(val context: Context, private val memberList: List<Member>) : BaseAdapter() {
+class MemberInfoLvAdapter(
+    val context: Context,
+    private var memberList: List<UserBookmarkCountEntity>
+) : BaseAdapter() {
     private var mBinding: ItemMemberInfoBinding? = null
     private val binding get() = mBinding!!
 
@@ -24,10 +27,10 @@ class MemberInfoLvAdapter(val context: Context, private val memberList: List<Mem
         )
         binding.clItemMember.layoutParams = params
 
-        binding.tvNameBookmarkInfo.text = memberList[position].name
+        binding.tvNameBookmarkInfo.text = memberList[position].username
         val formattedText = context.getString(
             R.string.num_bookmark_info,
-            memberList[position].bookmarkNum.toString()
+            memberList[position].bookmarkCount.toString()
         )
         binding.tvNumBookmarkInfo.text = formattedText
         return mBinding!!.root
@@ -41,5 +44,10 @@ class MemberInfoLvAdapter(val context: Context, private val memberList: List<Mem
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
+    }
+
+    fun setData(item: List<UserBookmarkCountEntity>) {
+        memberList = item
+        notifyDataSetChanged()
     }
 }

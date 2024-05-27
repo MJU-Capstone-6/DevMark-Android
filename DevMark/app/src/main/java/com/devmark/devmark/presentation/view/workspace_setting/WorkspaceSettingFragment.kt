@@ -12,10 +12,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.domain.model.Member
 import com.devmark.devmark.databinding.FragmentSettingWorkspaceBinding
+import com.devmark.devmark.domain.model.workspace.ResponseWorkspaceSettingInfoEntity
 import com.devmark.devmark.presentation.custom.CustomDialog
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainViewModel
@@ -25,14 +27,7 @@ class WorkspaceSettingFragment(private val workspaceId: Int) : Fragment() {
     private val viewModel: WorkSpaceSettingViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var clipboard: ClipboardManager
-
-    private var memberList = arrayListOf<Member>(
-        Member("문장훈", 20),
-        Member("이성진", 30),
-        Member("최건호", 40),
-        Member("함범준", 35),
-        Member("홍길동", 120)
-    )
+    private lateinit var listAdapter: MemberInfoLvAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,9 +41,9 @@ class WorkspaceSettingFragment(private val workspaceId: Int) : Fragment() {
 
         observer()
         initListener()
-
-        binding.lvWorkspaceSetting.adapter = MemberInfoLvAdapter(requireContext(), memberList)
-        setListViewHeightBasedOnChildren(binding.lvWorkspaceSetting)
+        listAdapter = MemberInfoLvAdapter(requireContext(), listOf())
+        binding.lvWorkspaceSetting.adapter = listAdapter
+        viewModel.getWorkspaceSetting(workspaceId)
 
         return binding.root
     }
@@ -117,6 +112,30 @@ class WorkspaceSettingFragment(private val workspaceId: Int) : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     (requireActivity() as MainActivity).backToSelectWorkspaceActivity()
+                }
+            }
+        }
+
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "워크스페이스 정보 조회 실패: ${it.error}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    LoggerUtils.error(it.error.toString())
+                }
+
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    var bookmarkSum = 0
+                    binding.tvWorkspaceTitle.text = it.data.name
+                    binding.tvWorkspaceDesc.text = it.data.description
+                    listAdapter.setData(it.data.userBookmarkCount)
+                    it.data.userBookmarkCount.forEach { bookmarkSum += it.bookmarkCount }
+                    binding.tvTotalBookmarkNum.text = bookmarkSum.toString()
+                    setListViewHeightBasedOnChildren(binding.lvWorkspaceSetting)
                 }
             }
         }
