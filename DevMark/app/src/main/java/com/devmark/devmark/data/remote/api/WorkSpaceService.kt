@@ -9,6 +9,7 @@ import com.devmark.devmark.data.model.workspace.ResponseInviteCodeDTO
 import com.devmark.devmark.data.model.workspace.ResponseJoinWorkSpaceDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceCreateDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceInfoDTO
+import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceSettingInfoDTO
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -53,4 +54,10 @@ interface WorkSpaceService {
         @Header("Authorization") accessToken: String,
         @Path("id") workspaceId: Int
     ): Response<ResponseBookmarkCodeDTO>
+
+    @GET("/api/v1/workspace/{id}/info")
+    suspend fun getWorkspaceSettingInfo(
+        @Header("Authorization") accessToken: String,
+        @Path("id") workspaceId: Int
+    ): Response<ResponseWorkSpaceSettingInfoDTO>
 }
