@@ -30,8 +30,8 @@ interface BookmarkService {
     suspend fun getBookmarks(
         @Header("Authorization") accessToken: String,
         @Path("id") workspaceId: Int,
-        @Query("users") userIds: String,
-        @Query("categories") categoryIds: String
+        @Query("user") userIds: String,
+        @Query("category") categoryIds: String
     ): Response<List<ResponseBookmarksDTO>>
 
     @PUT("/api/v1/bookmark/{id}")
