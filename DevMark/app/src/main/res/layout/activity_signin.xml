@@ -14,10 +14,10 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="160dp"
-            android:background="#FFFFFF"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/ic_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +27,7 @@
             android:id="@+id/btn_kakao_login"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="80dp"
             android:background="@drawable/img_kakao_login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

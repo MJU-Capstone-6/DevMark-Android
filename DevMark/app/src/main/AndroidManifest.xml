@@ -10,13 +10,13 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_applogo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_applogo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DevMark"
-        tools:targetApi="33"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="33">
 
         <activity
             android:name=".presentation.view.splash.SplashActivity"
@@ -35,7 +35,7 @@
         <activity
             android:name=".presentation.view.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustUnspecified|adjustPan"/>
+            android:windowSoftInputMode="adjustUnspecified|adjustPan" />
 
         <activity
             android:name=".presentation.view.workspace_select.SelectWorkspaceActivity"
