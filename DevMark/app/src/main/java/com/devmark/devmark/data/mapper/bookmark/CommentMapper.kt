@@ -5,13 +5,19 @@ import com.devmark.devmark.domain.model.bookmark.CommentEntity
 
 object CommentMapper {
     fun mapperToResponseEntity(item: List<ResponseCommentsDTO>): List<CommentEntity> {
-        return item.map {
-            it.run {
-                CommentEntity(
-                    commentContext, commentId, createdAt, userId, username
-                )
+        return try {
+            item.map {
+                it.run {
+                    CommentEntity(
+                        commentContext, commentId, createdAt, userId, username
+                    )
+                }
             }
+        } catch (e: NullPointerException){
+            emptyList()
         }
+
+
     }
 
 }
