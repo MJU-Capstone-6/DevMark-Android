@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.databinding.ItemBookmarkBinding
 import com.devmark.devmark.domain.model.bookmark.BookmarksEntity
+import com.devmark.devmark.presentation.utils.TimeUtil
 
 class WorkSpaceRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var bookmarkList = mutableListOf<BookmarksEntity>()
@@ -37,6 +38,7 @@ class WorkSpaceRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(item: BookmarksEntity) {
             binding.tvBookMarkTitle.text = item.title
             binding.tvBookMarkCategory.text = item.categoryName
+            binding.tvCreateTime.text = TimeUtil.formatCreateAt(item.createAt)
 
             itemView.setOnClickListener {
                 itemClick.onClick(item.id)
