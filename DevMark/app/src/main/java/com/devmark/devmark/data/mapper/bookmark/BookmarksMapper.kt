@@ -12,7 +12,8 @@ object BookmarksMapper {
                 title = it.title,
                 userId = it.userId,
                 workspaceId = it.workspaceId,
-                categoryName = it.categoryName
+                categoryName = it.categoryName,
+                createAt = it.createdAt
             )
         }
     }
