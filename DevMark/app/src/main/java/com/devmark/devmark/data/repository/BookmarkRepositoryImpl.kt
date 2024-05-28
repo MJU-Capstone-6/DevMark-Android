@@ -65,7 +65,7 @@ class BookmarkRepositoryImpl : BookmarkRepository {
         accessToken: String,
         bookmarkId: Int,
         bookmark: UpdateBookmarkEntity
-    ): Result<BookmarksEntity> {
+    ): Result<UpdateBookmarkEntity> {
         val response = service.updateBookmark(
             "Bearer $accessToken",
             bookmarkId,

@@ -6,10 +6,10 @@ import com.devmark.devmark.domain.model.bookmark.BookmarksEntity
 import com.devmark.devmark.domain.model.bookmark.UpdateBookmarkEntity
 
 object UpdateBookmarkMapper {
-    fun mapperToResponseEntity(item: BookmarkDTO): BookmarksEntity {
+    fun mapperToResponseEntity(item: BookmarkDTO): UpdateBookmarkEntity {
         return item.run {
-            BookmarksEntity(
-                categoryId, id, link, summary, title, userId, workspaceId, categoryName, createdAt
+            UpdateBookmarkEntity(
+                categoryName?: "NONE", userId, link, summary, workspaceId, title
             )
         }
     }
@@ -17,7 +17,7 @@ object UpdateBookmarkMapper {
     fun mapperToRequestDto(item: UpdateBookmarkEntity): RequestUpdateBookmarkDTO{
         return item.run {
             RequestUpdateBookmarkDTO(
-                categoryId, userId, link, summary, workspaceId, title
+                categoryName, userId, link, summary, workspaceId, title
             )
         }
     }

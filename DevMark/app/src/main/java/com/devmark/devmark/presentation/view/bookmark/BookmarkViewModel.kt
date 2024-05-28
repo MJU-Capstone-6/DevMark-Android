@@ -25,8 +25,8 @@ class BookmarkViewModel : ViewModel() {
     private val _detailState = MutableLiveData<UiState<BookmarkDetailEntity>>(UiState.Loading)
     val detailState: LiveData<UiState<BookmarkDetailEntity>> get() = _detailState
 
-    private val _updateState = MutableLiveData<UiState<BookmarksEntity>>(UiState.Loading)
-    val updateState: LiveData<UiState<BookmarksEntity>> get() = _updateState
+    private val _updateState = MutableLiveData<UiState<UpdateBookmarkEntity>>(UiState.Loading)
+    val updateState: LiveData<UiState<UpdateBookmarkEntity>> get() = _updateState
 
     private val _commentState = MutableLiveData<UiState<List<CommentEntity>>>(UiState.Loading)
     val commentState: LiveData<UiState<List<CommentEntity>>> get() = _commentState
@@ -47,20 +47,15 @@ class BookmarkViewModel : ViewModel() {
         }
     }
 
-    fun updateCategory(newCategoryId: Int) {
-        if (newCategoryId == -1) {
-            _updateState.value = UiState.Failure("Invalid category ID: -1")
-            return
-        }
-
+    fun updateCategory(newCategory: String) {
         _updateState.value = UiState.Loading
 
         viewModelScope.launch {
-            val bookmark = bookmarkInfo.toUpdateBookmarkEntity(newCategoryId)
+            val bookmark = bookmarkInfo.toUpdateBookmarkEntity(newCategory)
 
             bookmarkRepository.updateBookmark(app.userPreferences.getAccessToken().getOrNull().orEmpty(), bookmarkInfo.id, bookmark)
                 .onSuccess {
-                    bookmarkInfo.updateCategoryInfo(it.categoryId)
+                    bookmarkInfo.updateCategoryInfo(it.categoryName)
                     _updateState.value = UiState.Success(it)
                 }.onFailure {
                     _updateState.value = UiState.Failure(it.message)
@@ -80,9 +75,9 @@ class BookmarkViewModel : ViewModel() {
         }
     }
 
-    private fun BookmarkDetailEntity.toUpdateBookmarkEntity(newCategoryId: Int): UpdateBookmarkEntity {
+    private fun BookmarkDetailEntity.toUpdateBookmarkEntity(newCategory: String): UpdateBookmarkEntity {
         return UpdateBookmarkEntity(
-            categoryId = newCategoryId,
+            categoryName = newCategory,
             link = link,
             summary = summary ?: "",
             title = title,
@@ -91,9 +86,8 @@ class BookmarkViewModel : ViewModel() {
         )
     }
 
-    private fun BookmarkDetailEntity.updateCategoryInfo(categoryId: Int) {
-        this.categoryId = categoryId
-        this.categoryName = categoryId.toString()
+    private fun BookmarkDetailEntity.updateCategoryInfo(categoryName: String) {
+        this.categoryName = categoryName
     }
 
     fun postComment(bookmarkId: Int, context: String){

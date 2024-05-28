@@ -2,7 +2,7 @@ package com.devmark.devmark.domain.model.bookmark
 
 
 data class UpdateBookmarkEntity(
-    val categoryId: Int,
+    val categoryName: String,
     val userId: Int,
     val link: String,
     val summary: String,

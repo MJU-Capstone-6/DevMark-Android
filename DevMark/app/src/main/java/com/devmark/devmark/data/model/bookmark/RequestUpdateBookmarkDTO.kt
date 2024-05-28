@@ -3,8 +3,8 @@ package com.devmark.devmark.data.model.bookmark
 import com.google.gson.annotations.SerializedName
 
 data class RequestUpdateBookmarkDTO(
-    @SerializedName("category_id")
-    val categoryId: Int,
+    @SerializedName("category_name")
+    val categoryName: String,
     @SerializedName("id")
     val userId: Int,
     @SerializedName("link")

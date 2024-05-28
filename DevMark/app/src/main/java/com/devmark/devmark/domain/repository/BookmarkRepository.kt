@@ -25,5 +25,5 @@ interface BookmarkRepository {
         accessToken: String,
         bookmarkId: Int,
         bookmark: UpdateBookmarkEntity
-    ): Result<BookmarksEntity>
+    ): Result<UpdateBookmarkEntity>
 }

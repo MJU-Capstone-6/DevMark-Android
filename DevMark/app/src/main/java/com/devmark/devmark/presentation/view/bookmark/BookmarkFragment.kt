@@ -21,6 +21,7 @@ import com.devmark.devmark.databinding.FragmentBookmarkBinding
 import com.devmark.devmark.domain.model.bookmark.BookmarkDetailEntity
 import com.devmark.devmark.domain.model.bookmark.CommentEntity
 import com.devmark.devmark.presentation.utils.UiState
+import com.devmark.devmark.presentation.utils.capitalizeFirstLetter
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.presentation.view.MainViewModel
 import com.devmark.devmark.presentation.view.workspace.OnItemClickListener
@@ -77,7 +78,7 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
             when (state) {
                 is UiState.Failure -> showErrorToast("카테고리 수정 실패: ${state.error}")
                 is UiState.Loading -> {}
-                is UiState.Success -> updateCategory(state.data.categoryId)
+                is UiState.Success -> updateCategory(state.data.categoryName)
             }
         }
     }
@@ -96,9 +97,8 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
         }
     }
 
-    private fun updateCategory(categoryId: Int) {
-        // TODO: 수정 필요
-        binding.btnCategoryEdit.text = categoryId.toString()
+    private fun updateCategory(categoryName: String) {
+        binding.btnCategoryEdit.text = categoryName
     }
 
     private fun setupListeners() {
@@ -151,8 +151,8 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
         UpdateCategoryDialog(categoryNames).apply {
             setButtonClickListener(object : UpdateCategoryDialog.OnButtonClickListener {
                 override fun onButtonClicked(categoryName: String) {
-                    val categoryId = mainViewModel.categoryList.find { it.second == categoryName }?.first ?: -1
-                    viewModel.updateCategory(categoryId)
+                    val requestCategory = mainViewModel.categoryList.find { it.second.lowercase() == categoryName.lowercase() }?.second ?: categoryName.capitalizeFirstLetter()
+                    viewModel.updateCategory(requestCategory)
                 }
             })
         }.show(requireActivity().supportFragmentManager, "")
