@@ -39,6 +39,17 @@
             app:layout_constraintTop_toTopOf="@id/tv_bookMark_category" />
 
         <TextView
+            android:id="@+id/tv_create_time"
+            style="@style/semibold_12_bookmark"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="1시간 전"
+            android:textColor="@color/rust"
+            app:layout_constraintBottom_toBottomOf="@id/iv_bookMark_bottom"
+            app:layout_constraintStart_toStartOf="@id/tv_bookMark_title"
+            app:layout_constraintTop_toTopOf="@id/iv_bookMark_bottom" />
+
+        <TextView
             android:id="@+id/tv_bookMark_category"
             style="@style/semibold_12_bookmark"
             android:layout_width="0dp"

@@ -9,7 +9,7 @@ object UpdateBookmarkMapper {
     fun mapperToResponseEntity(item: BookmarkDTO): BookmarksEntity {
         return item.run {
             BookmarksEntity(
-                categoryId, id, link, summary, title, userId, workspaceId, categoryName
+                categoryId, id, link, summary, title, userId, workspaceId, categoryName, createdAt
             )
         }
     }
