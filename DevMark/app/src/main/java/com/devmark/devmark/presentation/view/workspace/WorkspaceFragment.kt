@@ -61,6 +61,7 @@ class WorkspaceFragment : Fragment() {
 
         binding.tvFilterSort.setOnClickListener {
             binding.tvFilterSort.isSelected = !binding.tvFilterSort.isSelected
+            workSpaceRvAdapter.reverseList()
         }
 
         binding.tvFilterMember.setOnClickListener {

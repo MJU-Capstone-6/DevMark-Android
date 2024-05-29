@@ -29,7 +29,7 @@ class WorkSpaceRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setData(list: List<BookmarksEntity>) {
-        bookmarkList = list.toMutableList()
+        bookmarkList = list.reversed().toMutableList()
         notifyDataSetChanged()
     }
 
@@ -50,5 +50,10 @@ class WorkSpaceRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClick = onItemClickListener
+    }
+
+    fun reverseList() {
+        bookmarkList.reverse()
+        notifyDataSetChanged()
     }
 }
