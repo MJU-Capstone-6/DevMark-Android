@@ -4,11 +4,13 @@ import com.devmark.devmark.data.mapper.bookmark.BookmarkDetailMapper
 import com.devmark.devmark.data.mapper.bookmark.BookmarksMapper
 import com.devmark.devmark.data.mapper.bookmark.CommentMapper
 import com.devmark.devmark.data.mapper.bookmark.UpdateBookmarkMapper
+import com.devmark.devmark.data.mapper.workspace.JoinWorkspaceMapper
 import com.devmark.devmark.data.remote.RetrofitClient
 import com.devmark.devmark.data.remote.api.BookmarkService
 import com.devmark.devmark.domain.model.bookmark.BookmarkDetailEntity
 import com.devmark.devmark.domain.model.bookmark.BookmarksEntity
 import com.devmark.devmark.domain.model.bookmark.CommentEntity
+import com.devmark.devmark.domain.model.bookmark.RequestBookmarkEntity
 import com.devmark.devmark.domain.model.bookmark.UpdateBookmarkEntity
 import com.devmark.devmark.domain.repository.BookmarkRepository
 import org.json.JSONObject
@@ -73,6 +75,40 @@ class BookmarkRepositoryImpl : BookmarkRepository {
         )
         return if (response.isSuccessful) {
             Result.success(UpdateBookmarkMapper.mapperToResponseEntity(response.body()!!))
+        } else {
+            val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
+            Result.failure(Exception(errorMsg))
+        }
+    }
+
+    override suspend fun addBookmark(
+        accessToken: String,
+        bookmark: RequestBookmarkEntity
+    ): Result<UpdateBookmarkEntity> {
+        val response = service.addBookmark(
+            "Bearer $accessToken",
+            bookmark
+        )
+        return if (response.isSuccessful) {
+            Result.success(UpdateBookmarkMapper.mapperToResponseEntity(response.body()!!))
+        } else {
+            val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
+            Result.failure(Exception(errorMsg))
+        }
+    }
+
+    override suspend fun deleteBookmark(accessToken: String, bookmarkId: Int): Result<Boolean> {
+        val response =
+            service.deleteBookmark(
+                "Bearer $accessToken",
+                bookmarkId
+            )
+        return if (response.isSuccessful) {
+            if (response.body() == null) {
+                Result.failure(Exception("null data"))
+            } else {
+                Result.success(response.body()!!.ok)
+            }
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))

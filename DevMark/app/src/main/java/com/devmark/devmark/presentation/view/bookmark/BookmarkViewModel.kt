@@ -9,7 +9,9 @@ import com.devmark.devmark.data.repository.CommentRepositoryImpl
 import com.devmark.devmark.domain.model.bookmark.BookmarkDetailEntity
 import com.devmark.devmark.domain.model.bookmark.BookmarksEntity
 import com.devmark.devmark.domain.model.bookmark.CommentEntity
+import com.devmark.devmark.domain.model.bookmark.RequestBookmarkEntity
 import com.devmark.devmark.domain.model.bookmark.UpdateBookmarkEntity
+import com.devmark.devmark.domain.repository.BookmarkRepository
 import com.devmark.devmark.presentation.base.GlobalApplication.Companion.app
 import com.devmark.devmark.presentation.base.GlobalApplication.Companion.userId
 import com.devmark.devmark.presentation.utils.UiState
@@ -31,19 +33,23 @@ class BookmarkViewModel : ViewModel() {
     private val _commentState = MutableLiveData<UiState<List<CommentEntity>>>(UiState.Loading)
     val commentState: LiveData<UiState<List<CommentEntity>>> get() = _commentState
 
+    private val _uiState = MutableLiveData<UiState<Unit>>(UiState.Loading)
+    val uiState: LiveData<UiState<Unit>> get() = _uiState
 
 
     fun fetchData(bookmarkId: Int) {
         _detailState.value = UiState.Loading
 
         viewModelScope.launch {
-            bookmarkRepository.getBookmarkDetail(app.userPreferences.getAccessToken().getOrNull().orEmpty(), bookmarkId)
-            .onSuccess {
-                bookmarkInfo = it
-                _detailState.value = UiState.Success(it)
-            }.onFailure {
-                _detailState.value = UiState.Failure(it.message)
-            }
+            bookmarkRepository.getBookmarkDetail(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), bookmarkId
+            )
+                .onSuccess {
+                    bookmarkInfo = it
+                    _detailState.value = UiState.Success(it)
+                }.onFailure {
+                    _detailState.value = UiState.Failure(it.message)
+                }
         }
     }
 
@@ -53,7 +59,11 @@ class BookmarkViewModel : ViewModel() {
         viewModelScope.launch {
             val bookmark = bookmarkInfo.toUpdateBookmarkEntity(newCategory)
 
-            bookmarkRepository.updateBookmark(app.userPreferences.getAccessToken().getOrNull().orEmpty(), bookmarkInfo.id, bookmark)
+            bookmarkRepository.updateBookmark(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(),
+                bookmarkInfo.id,
+                bookmark
+            )
                 .onSuccess {
                     bookmarkInfo.updateCategoryInfo(it.categoryName)
                     _updateState.value = UiState.Success(it)
@@ -66,7 +76,9 @@ class BookmarkViewModel : ViewModel() {
     fun fetchComment(bookmarkId: Int) {
         _commentState.value = UiState.Loading
         viewModelScope.launch {
-            bookmarkRepository.getComments(app.userPreferences.getAccessToken().getOrNull().orEmpty(), bookmarkId)
+            bookmarkRepository.getComments(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), bookmarkId
+            )
                 .onSuccess {
                     _commentState.value = UiState.Success(it)
                 }.onFailure {
@@ -90,9 +102,11 @@ class BookmarkViewModel : ViewModel() {
         this.categoryName = categoryName
     }
 
-    fun postComment(bookmarkId: Int, context: String){
+    fun postComment(bookmarkId: Int, context: String) {
         viewModelScope.launch {
-            commentRepository.postComment(app.userPreferences.getAccessToken().getOrNull().orEmpty(), bookmarkId, context)
+            commentRepository.postComment(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), bookmarkId, context
+            )
                 .onSuccess {
                     fetchComment(bookmarkId)
                 }.onFailure {
@@ -101,9 +115,11 @@ class BookmarkViewModel : ViewModel() {
         }
     }
 
-    fun updateComment(bookmarkId: Int, commentId: Int, context: String){
+    fun updateComment(bookmarkId: Int, commentId: Int, context: String) {
         viewModelScope.launch {
-            commentRepository.updateComment(app.userPreferences.getAccessToken().getOrNull().orEmpty(), context, commentId)
+            commentRepository.updateComment(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), context, commentId
+            )
                 .onSuccess {
                     fetchComment(bookmarkId)
                 }.onFailure {
@@ -112,14 +128,49 @@ class BookmarkViewModel : ViewModel() {
         }
     }
 
-    fun deleteComment(bookmarkId: Int, commentId: Int){
+    fun deleteComment(bookmarkId: Int, commentId: Int) {
         viewModelScope.launch {
-            commentRepository.deleteComment(app.userPreferences.getAccessToken().getOrNull().orEmpty(), commentId)
+            commentRepository.deleteComment(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), commentId
+            )
                 .onSuccess {
                     fetchComment(bookmarkId)
                 }.onFailure {
                     _commentState.value = UiState.Failure(it.message)
                 }
+        }
+    }
+
+    fun deleteBookmark(bookmarkId: Int) {
+        viewModelScope.launch {
+            bookmarkRepository.deleteBookmark(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), bookmarkId
+            )
+                .onSuccess {
+                    _uiState.value = UiState.Success(Unit)
+                }.onFailure {
+                    _uiState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
+    fun addBookmark() {
+
+        viewModelScope.launch {
+            val bookmark = RequestBookmarkEntity(
+                categoryId = bookmarkInfo.id,
+                link = bookmarkInfo.link,
+                summary = bookmarkInfo.summary ?: "",
+                title = bookmarkInfo.title,
+                workspaceId = bookmarkInfo.workspaceId
+            )
+            bookmarkRepository.addBookmark(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty(), bookmark
+            ).onSuccess {
+                _uiState.value = UiState.Success(Unit)
+            }.onFailure {
+                _uiState.value = UiState.Failure(it.message)
+            }
         }
     }
 }

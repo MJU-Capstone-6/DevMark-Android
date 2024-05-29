@@ -5,10 +5,14 @@ import com.devmark.devmark.data.model.bookmark.RequestUpdateBookmarkDTO
 import com.devmark.devmark.data.model.bookmark.ResponseBookmarkDTO
 import com.devmark.devmark.data.model.bookmark.ResponseBookmarksDTO
 import com.devmark.devmark.data.model.bookmark.ResponseCommentsDTO
+import com.devmark.devmark.data.model.common.OkResponse
+import com.devmark.devmark.domain.model.bookmark.RequestBookmarkEntity
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -40,4 +44,16 @@ interface BookmarkService {
         @Path("id") bookmarkId: Int,
         @Body bookmark: RequestUpdateBookmarkDTO
     ): Response<BookmarkDTO>
+
+    @POST("/api/v1/bookmark")
+    suspend fun addBookmark(
+        @Header("Authorization") accessToken: String,
+        @Body bookmark: RequestBookmarkEntity
+    ): Response<BookmarkDTO>
+
+    @DELETE("/api/v1/bookmark/{id}")
+    suspend fun deleteBookmark(
+        @Header("Authorization") accessToken: String,
+        @Path("id") bookmarkId: Int,
+    ): Response<OkResponse>
 }
