@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -26,10 +28,11 @@ import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.presentation.view.MainViewModel
 import com.devmark.devmark.presentation.view.workspace.OnItemClickListener
 
-class BookmarkFragment(private val bookmarkId: Int): Fragment() {
+class BookmarkFragment(private val bookmarkId: Int) : Fragment() {
 
     private var _binding: FragmentBookmarkBinding? = null
     private val binding get() = _binding!!
+    private var isBookmark: Boolean = true
     private val viewModel: BookmarkViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var adapter: CommentRvAdapter
@@ -110,6 +113,17 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
             toggleTextColor()
         }
 
+        binding.ibBookmark.setOnClickListener {
+            if (isBookmark) {
+                viewModel.deleteBookmark(bookmarkId)
+                binding.ibBookmark.setImageResource(R.drawable.ic_bookmark_remove)
+            } else {
+                viewModel.addBookmark()
+                binding.ibBookmark.setImageResource(R.drawable.ic_bookmark_setting)
+            }
+            isBookmark = !isBookmark
+        }
+
         binding.ibCopy.setOnClickListener {
             copyToClipboard(bookmarkLink)
         }
@@ -151,7 +165,9 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
         UpdateCategoryDialog(categoryNames).apply {
             setButtonClickListener(object : UpdateCategoryDialog.OnButtonClickListener {
                 override fun onButtonClicked(categoryName: String) {
-                    val requestCategory = mainViewModel.categoryList.find { it.second.lowercase() == categoryName.lowercase() }?.second ?: categoryName.capitalizeFirstLetter()
+                    val requestCategory =
+                        mainViewModel.categoryList.find { it.second.lowercase() == categoryName.lowercase() }?.second
+                            ?: categoryName.capitalizeFirstLetter()
                     viewModel.updateCategory(requestCategory)
                 }
             })
@@ -160,9 +176,9 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
 
     private fun setupCommentRecyclerView() {
         adapter = CommentRvAdapter().apply {
-            setItemClickListener(object : CommentRvAdapter.OnCommentClickListener{
+            setItemClickListener(object : CommentRvAdapter.OnCommentClickListener {
                 override fun onClick(type: String, item: CommentEntity) {
-                    if(type == "delete") viewModel.deleteComment(bookmarkId, item.commentId)
+                    if (type == "delete") viewModel.deleteComment(bookmarkId, item.commentId)
                     else viewModel.updateComment(bookmarkId, item.commentId, item.commentContext)
                 }
             })
@@ -174,8 +190,20 @@ class BookmarkFragment(private val bookmarkId: Int): Fragment() {
         adapter.setData(emptyList())
     }
 
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            // 뒤로가기 막기
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        callback.remove()
         _binding = null
     }
 }

@@ -3,6 +3,7 @@ package com.devmark.devmark.domain.repository
 import com.devmark.devmark.domain.model.bookmark.BookmarkDetailEntity
 import com.devmark.devmark.domain.model.bookmark.BookmarksEntity
 import com.devmark.devmark.domain.model.bookmark.CommentEntity
+import com.devmark.devmark.domain.model.bookmark.RequestBookmarkEntity
 import com.devmark.devmark.domain.model.bookmark.UpdateBookmarkEntity
 
 
@@ -26,4 +27,14 @@ interface BookmarkRepository {
         bookmarkId: Int,
         bookmark: UpdateBookmarkEntity
     ): Result<UpdateBookmarkEntity>
+
+    suspend fun addBookmark(
+        accessToken: String,
+        bookmark: RequestBookmarkEntity
+    ): Result<UpdateBookmarkEntity>
+
+    suspend fun deleteBookmark(
+        accessToken: String,
+        bookmarkId: Int,
+    ): Result<Boolean>
 }

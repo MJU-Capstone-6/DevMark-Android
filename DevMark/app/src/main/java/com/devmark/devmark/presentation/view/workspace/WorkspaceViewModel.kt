@@ -17,10 +17,6 @@ class WorkspaceViewModel : ViewModel() {
     val uiState: LiveData<UiState<List<BookmarksEntity>>> get() = _uiState
 
     fun fetchData(userIds: List<Int>, categoryIds: List<Int>) {
-//        _uiState.value = UiState.Success(listOf(
-//            BookmarksEntity(1, 1, "","","test",0, 1),
-//            BookmarksEntity(2, 2, "","","test",0, 1),
-//        ))
         _uiState.value = UiState.Loading
 
         viewModelScope.launch {
