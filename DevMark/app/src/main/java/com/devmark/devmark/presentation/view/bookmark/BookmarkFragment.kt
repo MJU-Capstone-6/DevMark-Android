@@ -38,6 +38,7 @@ class BookmarkFragment(private val bookmarkId: Int) : Fragment() {
     private lateinit var adapter: CommentRvAdapter
     private lateinit var clipboard: ClipboardManager
     private lateinit var bookmarkLink: String
+    private var requestCategory: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -101,7 +102,8 @@ class BookmarkFragment(private val bookmarkId: Int) : Fragment() {
     }
 
     private fun updateCategory(categoryName: String) {
-        binding.btnCategoryEdit.text = categoryName
+//        binding.btnCategoryEdit.text = categoryName
+        binding.btnCategoryEdit.text = requestCategory
     }
 
     private fun setupListeners() {
@@ -165,10 +167,10 @@ class BookmarkFragment(private val bookmarkId: Int) : Fragment() {
         UpdateCategoryDialog(categoryNames).apply {
             setButtonClickListener(object : UpdateCategoryDialog.OnButtonClickListener {
                 override fun onButtonClicked(categoryName: String) {
-                    val requestCategory =
+                    requestCategory =
                         mainViewModel.categoryList.find { it.second.lowercase() == categoryName.lowercase() }?.second
                             ?: categoryName.capitalizeFirstLetter()
-                    viewModel.updateCategory(requestCategory)
+                    viewModel.updateCategory(requestCategory!!)
                 }
             })
         }.show(requireActivity().supportFragmentManager, "")
