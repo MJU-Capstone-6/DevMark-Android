@@ -7,5 +7,6 @@ data class BookmarkDetailEntity(
     val summary: String?,
     var categoryId: Int,
     var categoryName: String,
-    val workspaceId: Int
+    val workspaceId: Int,
+    val isRead: Boolean
 )

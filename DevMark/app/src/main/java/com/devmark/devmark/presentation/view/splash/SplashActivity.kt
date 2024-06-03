@@ -43,7 +43,7 @@ class SplashActivity : AppCompatActivity() {
                     LoggerUtils.debug("자동 로그인 성공")
 
                     PermissionManager.checkAndRequestNotificationPermission(this)
-                    fetchFcmRegistrationToken()
+//                    fetchFcmRegistrationToken()
 
                     moveActivity(SelectWorkspaceActivity())
                 }
@@ -51,6 +51,7 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
+    // 사용 보류
     private fun fetchFcmRegistrationToken(){
         // 현재 토큰을 가져오려면
         // FirebaseMessaging.getInstace().getToken()을 호출한다.

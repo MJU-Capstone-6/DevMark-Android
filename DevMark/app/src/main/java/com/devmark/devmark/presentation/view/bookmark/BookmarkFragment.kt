@@ -98,6 +98,7 @@ class BookmarkFragment(private val bookmarkId: Int) : Fragment() {
             tvBookmarkTitle.text = data.title
             tvSummary.text = data.summary
             btnCategoryEdit.text = data.categoryName
+            btnReadable.setTextColor(if(data.isRead) ContextCompat.getColor(requireContext(), R.color.alabaster) else ContextCompat.getColor(requireContext(), R.color.rust))
         }
     }
 
@@ -111,9 +112,9 @@ class BookmarkFragment(private val bookmarkId: Int) : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        binding.btnReadable.setOnClickListener {
-            toggleTextColor()
-        }
+//        binding.btnReadable.setOnClickListener {
+//            toggleTextColor()
+//        }
 
         binding.ibBookmark.setOnClickListener {
             if (isBookmark) {

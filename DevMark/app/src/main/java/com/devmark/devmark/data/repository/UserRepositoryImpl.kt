@@ -2,6 +2,7 @@ package com.devmark.devmark.data.repository
 
 import com.devmark.devmark.data.mapper.user.LoginMapper
 import com.devmark.devmark.data.mapper.user.WorkSpaceListMapper
+import com.devmark.devmark.data.model.user.RequestLoginDTO
 import com.devmark.devmark.data.remote.RetrofitClient
 import com.devmark.devmark.data.remote.api.UserService
 import com.devmark.devmark.domain.model.user.ResponseLoginEntity
@@ -12,8 +13,8 @@ import org.json.JSONObject
 class UserRepositoryImpl : UserRepository {
     private val service = RetrofitClient.getInstance().create(UserService::class.java)
 
-    override suspend fun login(accessToken: String): Result<ResponseLoginEntity> {
-        val res = service.login("Bearer $accessToken")
+    override suspend fun login(accessToken: String, registrationToken: String): Result<ResponseLoginEntity> {
+        val res = service.login("Bearer $accessToken", RequestLoginDTO(registrationToken))
 
         return if (res.isSuccessful) {
             val data = res.body()!!

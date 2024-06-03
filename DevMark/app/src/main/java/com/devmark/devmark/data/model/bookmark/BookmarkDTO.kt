@@ -13,5 +13,6 @@ data class BookmarkDTO(
     @SerializedName("updated_at") val updatedAt: String,
     @SerializedName("user_id") val userId: Int,
     @SerializedName("workspace_id") val workspaceId: Int,
-    @SerializedName("category_name") val categoryName: String?
+    @SerializedName("category_name") val categoryName: String?,
+    @SerializedName("is_read") val isRead: Boolean
 )

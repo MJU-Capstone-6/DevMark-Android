@@ -13,7 +13,8 @@ object BookmarkDetailMapper {
                 link = this.bookmark.link,
                 categoryId = this.category.id,
                 categoryName = this.category.name,
-                workspaceId = this.workspace.id
+                workspaceId = this.workspace.id,
+                isRead = this.bookmark.isRead
             )
         }
     }
