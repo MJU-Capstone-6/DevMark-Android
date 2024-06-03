@@ -1,5 +1,6 @@
 package com.devmark.devmark.data.remote.api
 
+import com.devmark.devmark.data.model.user.RequestLoginDTO
 import com.devmark.devmark.data.model.user.ResponseLoginDTO
 import com.devmark.devmark.data.model.workspace.RequestWorkSpaceCreateDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceListDTO
@@ -12,7 +13,8 @@ import retrofit2.http.POST
 interface UserService {
     @POST("/api/v1/auth/kakao")
     suspend fun login(
-        @Header("Authorization") accessToken: String
+        @Header("Authorization") accessToken: String,
+        @Body registrationToken: RequestLoginDTO
     ): Response<ResponseLoginDTO>
 
     @GET("/api/v1/user/workspace")

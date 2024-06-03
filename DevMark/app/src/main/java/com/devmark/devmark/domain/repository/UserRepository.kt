@@ -4,7 +4,7 @@ import com.devmark.devmark.domain.model.user.ResponseLoginEntity
 import com.devmark.devmark.domain.model.user.ResponseWorkSpaceListEntity
 
 interface UserRepository {
-    suspend fun login(accessToken: String): Result<ResponseLoginEntity>
+    suspend fun login(accessToken: String, registrationToken: String): Result<ResponseLoginEntity>
 
     suspend fun getWorkspaceList(accessToken: String): Result<ResponseWorkSpaceListEntity>
 }
