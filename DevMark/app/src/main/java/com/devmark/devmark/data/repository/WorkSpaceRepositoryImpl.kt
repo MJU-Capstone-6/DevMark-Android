@@ -7,14 +7,11 @@ import com.devmark.devmark.data.mapper.workspace.RecommendPostMapper
 import com.devmark.devmark.data.mapper.workspace.WorkSpaceCreateMapper
 import com.devmark.devmark.data.mapper.workspace.WorkSpaceInfoMapper
 import com.devmark.devmark.data.mapper.workspace.WorkSpaceSettingInfoMapper
-import com.devmark.devmark.data.model.common.OkResponse
-import com.devmark.devmark.data.model.workspace.ResponseRecommendPostDTO
 import com.devmark.devmark.data.remote.RetrofitClient
 import com.devmark.devmark.data.remote.api.WorkSpaceService
 import com.devmark.devmark.domain.model.bookmark.ResponseBookmarkCodeEntity
 import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.domain.model.workspace.RecommendPostItem
-import com.devmark.devmark.domain.model.workspace.RecommendPosts
 import com.devmark.devmark.domain.model.workspace.RequestWorkSpaceCreateEntity
 import com.devmark.devmark.domain.model.workspace.ResponseInviteCodeEntity
 import com.devmark.devmark.domain.model.workspace.ResponseWorkspaceSettingInfoEntity

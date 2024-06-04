@@ -11,10 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.view.MainActivity
-import com.devmark.devmark.domain.model.Recommend
 import com.devmark.devmark.domain.model.TopCategory
 import com.devmark.devmark.databinding.FragmentRecommendBinding
-import com.devmark.devmark.domain.model.workspace.RecommendLink
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainViewModel
 

@@ -1,11 +1,8 @@
 package com.devmark.devmark.data.mapper.workspace
 
 import com.devmark.devmark.data.model.workspace.ResponseRecommendPostDTO
-import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceSettingInfoDTO
 import com.devmark.devmark.domain.model.workspace.RecommendLink
 import com.devmark.devmark.domain.model.workspace.RecommendPostItem
-import com.devmark.devmark.domain.model.workspace.RecommendPosts
-import com.devmark.devmark.domain.model.workspace.ResponseWorkspaceSettingInfoEntity
 
 object RecommendPostMapper {
     fun mapperToResponseEntity(item: ResponseRecommendPostDTO): List<RecommendPostItem> {

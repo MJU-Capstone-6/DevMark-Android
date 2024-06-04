@@ -1,17 +1,12 @@
 package com.devmark.devmark.domain.repository
 
-import com.devmark.devmark.data.model.workspace.ResponseRecommendPostDTO
 import com.devmark.devmark.domain.model.bookmark.ResponseBookmarkCodeEntity
 import com.devmark.devmark.domain.model.user.WorkspaceEntity
 import com.devmark.devmark.domain.model.workspace.RecommendPostItem
-import com.devmark.devmark.domain.model.workspace.RecommendPosts
 import com.devmark.devmark.domain.model.workspace.RequestWorkSpaceCreateEntity
 import com.devmark.devmark.domain.model.workspace.ResponseInviteCodeEntity
 import com.devmark.devmark.domain.model.workspace.ResponseWorkspaceSettingInfoEntity
 import com.devmark.devmark.domain.model.workspace.WorkSpaceInfoEntity
-import retrofit2.Response
-import retrofit2.http.Header
-import retrofit2.http.Path
 
 interface WorkSpaceRepository {
     suspend fun createWorkspace(

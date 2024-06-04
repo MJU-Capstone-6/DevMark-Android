@@ -6,7 +6,6 @@ import com.devmark.devmark.data.model.workspace.RequestInviteCodeDTO
 import com.devmark.devmark.data.model.workspace.RequestJoinWorkSpaceDTO
 import com.devmark.devmark.data.model.workspace.RequestWorkSpaceCreateDTO
 import com.devmark.devmark.data.model.workspace.ResponseInviteCodeDTO
-import com.devmark.devmark.data.model.workspace.ResponseJoinWorkSpaceDTO
 import com.devmark.devmark.data.model.workspace.ResponseRecommendPostDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceCreateDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceInfoDTO
