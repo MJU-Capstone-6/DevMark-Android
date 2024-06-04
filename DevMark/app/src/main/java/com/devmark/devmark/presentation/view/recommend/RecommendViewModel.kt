@@ -5,8 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmark.devmark.data.repository.WorkSpaceRepositoryImpl
 import com.devmark.devmark.domain.model.workspace.RealRecommendPost
-import com.devmark.devmark.domain.model.workspace.RecommendLink
-import com.devmark.devmark.domain.model.workspace.RecommendPostItem
+import com.devmark.devmark.domain.model.workspace.TopCategory
 import com.devmark.devmark.presentation.base.GlobalApplication.Companion.app
 import com.devmark.devmark.presentation.utils.UiState
 import kotlinx.coroutines.launch
@@ -16,6 +15,9 @@ class RecommendViewModel: ViewModel() {
 
     private var _uiState = MutableLiveData<UiState<List<RealRecommendPost>>>(UiState.Loading)
     val uiState get() = _uiState
+
+    private var _categoryState = MutableLiveData<UiState<List<TopCategory>>>(UiState.Loading)
+    val categoryState get() = _categoryState
 
     fun fetchData(workspaceId: Int){
         _uiState.value = UiState.Loading
@@ -35,6 +37,20 @@ class RecommendViewModel: ViewModel() {
                 }
                 .onFailure {
                     _uiState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
+    fun fetchTopCategoryData(workspaceId: Int){
+        _categoryState.value = UiState.Loading
+
+        viewModelScope.launch {
+            repositoryImpl.getTopCategory(app.userPreferences.getAccessToken().getOrNull().orEmpty(), workspaceId)
+                .onSuccess {
+                    _categoryState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _categoryState.value = UiState.Failure(it.message)
                 }
         }
     }

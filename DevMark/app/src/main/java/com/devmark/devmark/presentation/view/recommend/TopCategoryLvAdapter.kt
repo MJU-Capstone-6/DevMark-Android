@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.devmark.devmark.R
-import com.devmark.devmark.domain.model.TopCategory
 import com.devmark.devmark.databinding.ItemTopCategoryBinding
+import com.devmark.devmark.domain.model.workspace.TopCategory
 
-class TopCategoryLvAdapter(val context: Context, private val categoryList: List<TopCategory>) :
+class TopCategoryLvAdapter(val context: Context, private var categoryList: List<TopCategory>) :
     BaseAdapter() {
     private var mBinding: ItemTopCategoryBinding? = null
     private val binding get() = mBinding!!
@@ -20,10 +20,10 @@ class TopCategoryLvAdapter(val context: Context, private val categoryList: List<
         mBinding =
             ItemTopCategoryBinding.inflate(LayoutInflater.from(parent?.context))
 
-        binding.tvTopCategoryName.text = categoryList[position].category
+        binding.tvTopCategoryName.text = categoryList[position].name
         val formattedText = context.getString(
             R.string.num_mybookmark_category,
-            categoryList[position].num.toString()
+            categoryList[position].bookmarkCount.toString()
         )
         binding.tvTopCategoryNum.text = formattedText
         return mBinding!!.root
@@ -37,5 +37,10 @@ class TopCategoryLvAdapter(val context: Context, private val categoryList: List<
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
+    }
+
+    fun setData(newList: List<TopCategory>){
+        categoryList = newList
+        notifyDataSetChanged()
     }
 }

@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.view.MainActivity
-import com.devmark.devmark.domain.model.TopCategory
 import com.devmark.devmark.databinding.FragmentRecommendBinding
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainViewModel
@@ -19,7 +18,6 @@ import com.devmark.devmark.presentation.view.MainViewModel
 class RecommendFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private val viewModel: RecommendViewModel by viewModels()
-    private val topCategoryList = ArrayList<TopCategory>()
     private lateinit var binding: FragmentRecommendBinding
     private lateinit var recommendAdapter: RecommendRvAdapter
     private lateinit var topCategoryAdapter: TopCategoryLvAdapter
@@ -41,6 +39,7 @@ class RecommendFragment : Fragment() {
         setRecommendPostRv()
         setTopCategoryPostRv()
         viewModel.fetchData(mainViewModel.workspaceId)
+        viewModel.fetchTopCategoryData(mainViewModel.workspaceId)
     }
 
     private fun observer(){
@@ -50,6 +49,16 @@ class RecommendFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     recommendAdapter.setData(it.data)
+                }
+            }
+        }
+
+        viewModel.categoryState.observe(viewLifecycleOwner){
+            when (it) {
+                is UiState.Failure -> showErrorToast("북마크 정보 조회 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    topCategoryAdapter.setData(it.data)
                 }
             }
         }
@@ -72,10 +81,7 @@ class RecommendFragment : Fragment() {
     }
 
     private fun setTopCategoryPostRv(){
-        topCategoryList.add(TopCategory("Android", 22))
-        topCategoryList.add(TopCategory("Kotlin", 10))
-        topCategoryList.add(TopCategory("Golang", 6))
-        topCategoryAdapter = TopCategoryLvAdapter(requireContext(), topCategoryList)
+        topCategoryAdapter = TopCategoryLvAdapter(requireContext(), listOf())
         binding.lvTopCategory.apply {
             adapter = topCategoryAdapter
         }
