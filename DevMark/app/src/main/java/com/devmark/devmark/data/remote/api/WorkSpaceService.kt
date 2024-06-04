@@ -6,7 +6,8 @@ import com.devmark.devmark.data.model.workspace.RequestInviteCodeDTO
 import com.devmark.devmark.data.model.workspace.RequestJoinWorkSpaceDTO
 import com.devmark.devmark.data.model.workspace.RequestWorkSpaceCreateDTO
 import com.devmark.devmark.data.model.workspace.ResponseInviteCodeDTO
-import com.devmark.devmark.data.model.workspace.ResponseJoinWorkSpaceDTO
+import com.devmark.devmark.data.model.workspace.ResponseRecommendPostDTO
+import com.devmark.devmark.data.model.workspace.ResponseTopCategoryDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceCreateDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceInfoDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceSettingInfoDTO
@@ -60,4 +61,16 @@ interface WorkSpaceService {
         @Header("Authorization") accessToken: String,
         @Path("id") workspaceId: Int
     ): Response<ResponseWorkSpaceSettingInfoDTO>
+
+    @GET("/api/v1/workspace/{id}/recommend")
+    suspend fun getRecommendPost(
+        @Header("Authorization") accessToken: String,
+        @Path("id") workspaceId: Int
+    ): Response<ResponseRecommendPostDTO>
+
+    @GET("/api/v1/workspace/{id}/top")
+    suspend fun getTopCategory(
+        @Header("Authorization") accessToken: String,
+        @Path("id") workspaceId: Int
+    ): Response<ResponseTopCategoryDTO>
 }
