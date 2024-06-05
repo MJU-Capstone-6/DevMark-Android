@@ -1,5 +1,7 @@
 package com.devmark.devmark.presentation.view.recommend
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.view.MainActivity
 import com.devmark.devmark.databinding.FragmentRecommendBinding
+import com.devmark.devmark.domain.model.workspace.RealRecommendPost
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainViewModel
 
@@ -70,7 +73,13 @@ class RecommendFragment : Fragment() {
     }
 
     private fun setRecommendPostRv(){
-        recommendAdapter = RecommendRvAdapter()
+        recommendAdapter = RecommendRvAdapter().apply {
+            setRecommendPostClickListener(object : RecommendRvAdapter.OnRecommendClickListener{
+                override fun onClick(item: RealRecommendPost) {
+                    if(item.link.isNotEmpty()) moveInternet(item.link)
+                }
+            })
+        }
         recommendAdapter.setData(listOf())
 
         binding.rvRecommend.apply {
@@ -85,5 +94,11 @@ class RecommendFragment : Fragment() {
         binding.lvTopCategory.apply {
             adapter = topCategoryAdapter
         }
+    }
+
+    private fun moveInternet(link: String){
+        val address = Uri.parse(link)
+        val intent = Intent(Intent.ACTION_VIEW, address)
+        startActivity(intent)
     }
 }
