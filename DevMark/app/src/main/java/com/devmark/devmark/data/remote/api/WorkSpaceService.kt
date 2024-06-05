@@ -44,7 +44,7 @@ interface WorkSpaceService {
         @Path("id") workspaceId: Int,
     ): Response<ResponseWorkSpaceInfoDTO>
 
-    @DELETE("/api/v1/workspace/{id}")
+    @DELETE("/api/v1/workspace/{id}/exit")
     suspend fun deleteWorkspace(
         @Header("Authorization") accessToken: String,
         @Path("id") workspaceId: Int
