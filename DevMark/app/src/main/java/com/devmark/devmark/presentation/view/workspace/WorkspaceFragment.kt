@@ -36,6 +36,9 @@ class WorkspaceFragment : Fragment() {
     ): View {
         (requireActivity() as MainActivity).changeNaviVisibility(true)
         binding = FragmentWorkspaceBinding.inflate(layoutInflater)
+        val workspaceName = requireActivity().intent.getStringExtra("WORKSPACE_NAME")
+        binding.tbWorkspaceTitle.text = workspaceName.toString()
+
         observer()
         initListener()
         return binding.root

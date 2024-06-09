@@ -71,7 +71,11 @@ class SelectWorkspaceFragment : Fragment() {
             })
             this.setWorkspaceClickListener(object : OnWorkspaceClickListener {
                 override fun onWorkspaceClick(id: Int, name: String, description: String) {
-                    CoroutineScope(Dispatchers.IO).launch { app.userPreferences.setCurrentWorkspace(id) }
+                    CoroutineScope(Dispatchers.IO).launch {
+                        app.userPreferences.setCurrentWorkspace(
+                            id
+                        )
+                    }
 
                     val intent = Intent(requireContext(), MainActivity::class.java).apply {
                         putExtra("WORKSPACE_ID", id)
@@ -95,7 +99,7 @@ class SelectWorkspaceFragment : Fragment() {
         }
     }
 
-    private fun initListener(){
+    private fun initListener() {
         binding.icNowWorkspace.loItemWorkspace.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java).apply {
                 putExtra("WORKSPACE_ID", viewModel.currentWorkspace.value?.id)
@@ -122,7 +126,8 @@ class SelectWorkspaceFragment : Fragment() {
 
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    binding.icNowWorkspace.root.visibility = if(viewModel.currentWorkspace.value == null) View.INVISIBLE else View.VISIBLE
+                    binding.icNowWorkspace.root.visibility =
+                        if (viewModel.currentWorkspace.value == null) View.INVISIBLE else View.VISIBLE
                     workSpaceSelectRvAdapter.setData(it.data)
                 }
             }
@@ -134,6 +139,7 @@ class SelectWorkspaceFragment : Fragment() {
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                     LoggerUtils.error("워크스페이스 생성 실패: ${it.error}")
                 }
+
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     workSpaceSelectRvAdapter.addItem(item = it.data)
@@ -141,10 +147,10 @@ class SelectWorkspaceFragment : Fragment() {
             }
         }
 
-        viewModel.currentWorkspace.observe(viewLifecycleOwner){
-            if(it.id != -1){
+        viewModel.currentWorkspace.observe(viewLifecycleOwner) {
+            if (it.id != -1) {
                 binding.icNowWorkspace.root.visibility = View.VISIBLE
-                with(binding.icNowWorkspace){
+                with(binding.icNowWorkspace) {
                     tvWorkspaceName.text = it.name
                     tvWorkspaceDetail.text = it.description
                     tvTotalPeopleNum.text = it.userCount.toString()
