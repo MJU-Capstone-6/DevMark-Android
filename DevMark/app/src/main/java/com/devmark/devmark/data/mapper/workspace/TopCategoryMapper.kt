@@ -9,11 +9,11 @@ import com.devmark.devmark.domain.model.workspace.TopCategory
 object TopCategoryMapper {
     fun mapperToResponseEntity(item: ResponseTopCategoryDTO): List<TopCategory> {
         return item.map {
-           TopCategory(
-               bookmarkCount = it.bookmarkCount,
-               id = it.id,
-               name = it.name
-           )
+            TopCategory(
+                bookmarkCount = it.bookmarkCount,
+                id = it.id,
+                name = it.name
+            )
         }
     }
 }
