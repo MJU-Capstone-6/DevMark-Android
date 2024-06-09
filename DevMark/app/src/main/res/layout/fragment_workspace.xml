@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="안드로이드 스터디"
+                tools:text="안드로이드 스터디"
                 android:textColor="@color/taupe" />
 
             <ImageButton
@@ -113,6 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:padding="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_filter" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
