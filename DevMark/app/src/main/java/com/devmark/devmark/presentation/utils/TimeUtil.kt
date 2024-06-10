@@ -13,13 +13,15 @@ object TimeUtil {
 
         val duration = Duration.between(createTime, now)
 
-        return if(createTime != null) {when {
-            duration.seconds < 60 -> "방금"
-            duration.toMinutes() < 60 -> "${duration.toMinutes()}분 전"
-            duration.toHours() < 24 -> "${duration.toHours()}시간 전"
-            duration.toDays() < 7 -> "${duration.toDays()}일 전"
-            else -> createTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        }} else {
+        return if (createTime != null) {
+            when {
+                duration.seconds < 60 -> "방금"
+                duration.toMinutes() < 60 -> "${duration.toMinutes()}분 전"
+                duration.toHours() < 24 -> "${duration.toHours()}시간 전"
+                duration.toDays() < 7 -> "${duration.toDays()}일 전"
+                else -> createTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            }
+        } else {
             "0000-00-00"
         }
     }
@@ -39,8 +41,12 @@ object TimeUtil {
             try {
                 return if (pattern.endsWith("Z")) {
                     LocalDateTime.parse(endTimeString, DateTimeFormatter.ofPattern(pattern))
+                        .plusHours(9)
                 } else {
-                    LocalDateTime.parse(endTimeString.replace("Z", ""), DateTimeFormatter.ofPattern(pattern))
+                    LocalDateTime.parse(
+                        endTimeString.replace("Z", ""),
+                        DateTimeFormatter.ofPattern(pattern)
+                    ).plusHours(9)
                 }
             } catch (e: DateTimeParseException) {
                 LoggerUtils.error("TimeUtils: $pattern -> 실패")

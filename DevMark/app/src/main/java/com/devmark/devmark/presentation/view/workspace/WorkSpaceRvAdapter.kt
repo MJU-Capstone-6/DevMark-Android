@@ -29,7 +29,7 @@ class WorkSpaceRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setData(list: List<BookmarksEntity>) {
-        bookmarkList = list.reversed().toMutableList()
+        bookmarkList = list.sortedByDescending { it.createAt }.toMutableList()
         notifyDataSetChanged()
     }
 

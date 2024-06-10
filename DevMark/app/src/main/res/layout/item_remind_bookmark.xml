@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -33,33 +34,20 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/bookmark_bottom"
-            app:layout_constraintBottom_toBottomOf="@id/tv_bookMark_category"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_bookMark_category" />
+            app:layout_constraintTop_toBottomOf="@id/tv_bookMark_title" />
 
         <TextView
-            android:id="@+id/tv_remind_time"
+            android:id="@+id/tv_create_time"
             style="@style/semibold_12_bookmark"
             android:layout_width="0dp"
-            android:textColor="@color/rust"
             android:layout_height="wrap_content"
-            android:text="1시간 전"
-            app:layout_constraintStart_toStartOf="@id/tv_bookMark_title"
+            android:textColor="@color/rust"
             app:layout_constraintBottom_toBottomOf="@id/iv_bookMark_bottom"
+            app:layout_constraintStart_toStartOf="@id/tv_bookMark_title"
             app:layout_constraintTop_toTopOf="@id/iv_bookMark_bottom" />
-
-        <TextView
-            android:id="@+id/tv_bookMark_category"
-            style="@style/semibold_12_bookmark"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:gravity="center"
-            android:textColor="@color/rust"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/iv_bookMark_bottom" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

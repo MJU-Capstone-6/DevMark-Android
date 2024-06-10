@@ -8,7 +8,8 @@ object RecommendPostMapper {
     fun mapperToResponseEntity(item: ResponseRecommendPostDTO): List<RecommendPostItem> {
         return item.map {
             RecommendPostItem(
-                name = it.name, recommendLinks = it.recommendLinks.map { link ->
+                name = it.name,
+                recommendLinks = it.recommendLinks.map { link ->
                     RecommendLink(
                         link.categoryId,
                         link.createdAt,
