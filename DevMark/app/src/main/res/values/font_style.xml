@@ -45,9 +45,9 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="regular_10_workspace">
+    <style name="regular_12_workspace">
         <item name="fontFamily">@font/pretendard_regular</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 

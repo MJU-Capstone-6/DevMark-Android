@@ -7,6 +7,7 @@ import okhttp3.internal.platform.Platform.Companion.INFO
 import okhttp3.internal.platform.Platform.Companion.WARN
 import okhttp3.logging.HttpLoggingInterceptor
 
+@Suppress("DEPRECATION")
 class PrettyJsonLogger : HttpLoggingInterceptor.Logger {
     private val gson = GsonBuilder().setPrettyPrinting().create()
     private val jsonParser = JsonParser()
@@ -15,10 +16,11 @@ class PrettyJsonLogger : HttpLoggingInterceptor.Logger {
         val trimMessage = message.trim()
 
         if ((trimMessage.startsWith("{") && trimMessage.endsWith("}"))
-            || (trimMessage.startsWith("[") && trimMessage.endsWith("]"))) {
+            || (trimMessage.startsWith("[") && trimMessage.endsWith("]"))
+        ) {
             try {
                 val prettyJson = gson.toJson(jsonParser.parse(message))
-                Platform.get().log(prettyJson, INFO,null)
+                Platform.get().log(prettyJson, INFO, null)
             } catch (e: Exception) {
                 Platform.get().log(message, WARN, e)
             }

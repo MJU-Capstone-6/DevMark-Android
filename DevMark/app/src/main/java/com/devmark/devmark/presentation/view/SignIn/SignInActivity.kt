@@ -2,7 +2,6 @@ package com.devmark.devmark.presentation.view.signin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
@@ -12,7 +11,6 @@ import com.devmark.devmark.data.remote.KakaoAuthService
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.databinding.ActivitySigninBinding
 import com.devmark.devmark.presentation.utils.UiState
-
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding

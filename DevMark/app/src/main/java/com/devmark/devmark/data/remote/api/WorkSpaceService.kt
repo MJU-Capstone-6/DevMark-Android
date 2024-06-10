@@ -37,7 +37,7 @@ interface WorkSpaceService {
         @Header("Authorization") accessToken: String,
         @Body inviteCode: RequestJoinWorkSpaceDTO
     ): Response<OkResponse>
-    
+
     @GET("/api/v1/workspace/{id}")
     suspend fun getWorkspaceInfo(
         @Header("Authorization") accessToken: String,

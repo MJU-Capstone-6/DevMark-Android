@@ -13,7 +13,6 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.devmark.devmark.databinding.DialogSignoutBinding
 
-
 @Suppress("DEPRECATION")
 class SignOutDialog(val title: String) : DialogFragment() {
     private var _binding: DialogSignoutBinding? = null

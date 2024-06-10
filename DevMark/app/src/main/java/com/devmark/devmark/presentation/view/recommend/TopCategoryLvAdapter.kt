@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import com.devmark.devmark.R
 import com.devmark.devmark.databinding.ItemTopCategoryBinding
 import com.devmark.devmark.domain.model.workspace.TopCategory
+import com.devmark.devmark.presentation.utils.capitalizeFirstLetter
 
 class TopCategoryLvAdapter(val context: Context, private var categoryList: List<TopCategory>) :
     BaseAdapter() {
@@ -20,7 +21,7 @@ class TopCategoryLvAdapter(val context: Context, private var categoryList: List<
         mBinding =
             ItemTopCategoryBinding.inflate(LayoutInflater.from(parent?.context))
 
-        binding.tvTopCategoryName.text = categoryList[position].name
+        binding.tvTopCategoryName.text = categoryList[position].name.capitalizeFirstLetter()
         val formattedText = context.getString(
             R.string.num_mybookmark_category,
             categoryList[position].bookmarkCount.toString()

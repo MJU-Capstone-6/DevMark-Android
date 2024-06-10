@@ -1,12 +1,10 @@
 package com.devmark.devmark.presentation.view.workspace
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.R
 import com.devmark.devmark.databinding.ItemFilterListBinding
-
 
 class MemberRvAdapter(private val selectedList: List<Int>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

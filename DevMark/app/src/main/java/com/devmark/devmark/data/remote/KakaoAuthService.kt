@@ -37,7 +37,7 @@ class KakaoAuthService(private val context: Context) {
 
     private fun signInError(throwable: Throwable) {
         val kakaoType = if (isKakaoTalkLoginAvailable) KAKAO_TALK else KAKAO_ACCOUNT
-         Log.e("LOGIN", "{$kakaoType}으로 로그인 실패 ${throwable.message}")
+        Log.e("LOGIN", "{$kakaoType}으로 로그인 실패 ${throwable.message}")
     }
 
     private fun signInSuccess(

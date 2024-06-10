@@ -12,17 +12,18 @@ import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.launch
 
-class SplashViewModel: ViewModel() {
+class SplashViewModel : ViewModel() {
     private val userRepositoryImpl = UserRepositoryImpl()
 
     private val _loginState = MutableLiveData<UiState<Unit>>(UiState.Loading)
     val loginState: LiveData<UiState<Unit>> get() = _loginState
 
-    fun doValidation(){
+    fun doValidation() {
         _loginState.value = UiState.Loading
 
         viewModelScope.launch {
-            userRepositoryImpl.getWorkspaceList(app.userPreferences.getAccessToken().getOrNull().orEmpty()
+            userRepositoryImpl.getWorkspaceList(
+                app.userPreferences.getAccessToken().getOrNull().orEmpty()
             ).onSuccess {
                 userId = it.id
                 validationKakao()
@@ -32,7 +33,7 @@ class SplashViewModel: ViewModel() {
         }
     }
 
-    private fun validationKakao(){
+    private fun validationKakao() {
         if (AuthApiClient.instance.hasToken()) {
             UserApiClient.instance.accessTokenInfo { _, error ->
                 if (error != null) {
