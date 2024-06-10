@@ -2,6 +2,7 @@ package com.devmark.devmark.data.remote.api
 
 import com.devmark.devmark.data.model.user.RequestLoginDTO
 import com.devmark.devmark.data.model.user.ResponseLoginDTO
+import com.devmark.devmark.data.model.user.ResponseNotificationDTO
 import com.devmark.devmark.data.model.workspace.RequestWorkSpaceCreateDTO
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceListDTO
 import retrofit2.Response
@@ -21,4 +22,9 @@ interface UserService {
     suspend fun getWorkspaceList(
         @Header("Authorization") accessToken: String,
     ): Response<ResponseWorkSpaceListDTO>
+
+    @GET("/api/v1/user/notification")
+    suspend fun getNotificationList(
+        @Header("Authorization") accessToken: String,
+    ): Response<ResponseNotificationDTO>
 }

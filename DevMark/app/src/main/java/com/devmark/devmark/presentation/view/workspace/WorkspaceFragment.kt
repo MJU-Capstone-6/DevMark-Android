@@ -152,9 +152,9 @@ class WorkspaceFragment : Fragment() {
     private fun setBookmarkRv() {
         workSpaceRvAdapter = WorkSpaceRvAdapter().apply {
             this.setItemClickListener(object : OnItemClickListener {
-                override fun onClick(item: Int) {
+                override fun onClick(id: Int) {
                     (requireActivity() as MainActivity).replaceFragmentWithBackstack(
-                        BookmarkFragment(item)
+                        BookmarkFragment(id)
                     )
                 }
             })
@@ -172,11 +172,11 @@ class WorkspaceFragment : Fragment() {
     private fun setCategoryRv() {
         categoryRvAdapter = CategoryRvAdapter(categoryFilterList).apply {
             this.setItemClickListener(object : OnItemClickListener {
-                override fun onClick(id: Int) {
-                    if (categoryFilterList.contains(id)) {
-                        categoryFilterList.remove(id)
+                override fun onClick(item: Int) {
+                    if (categoryFilterList.contains(item)) {
+                        categoryFilterList.remove(item)
                     } else {
-                        categoryFilterList.add(id)
+                        categoryFilterList.add(item)
                     }
                     viewModel.fetchData(memberFilterList, categoryFilterList)
                 }
