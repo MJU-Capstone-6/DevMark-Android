@@ -2,7 +2,6 @@ package com.devmark.devmark.data.repository
 
 import com.devmark.devmark.data.model.comment.RequestPostCommentDTO
 import com.devmark.devmark.data.model.comment.RequestUpdateCommentDTO
-import com.devmark.devmark.data.model.common.OkResponse
 import com.devmark.devmark.data.remote.RetrofitClient
 import com.devmark.devmark.data.remote.api.CommentService
 import com.devmark.devmark.domain.model.comment.CommentEntity
@@ -18,7 +17,8 @@ class CommentRepositoryImpl : CommentRepository {
         bookmarkId: Int,
         context: String
     ): Result<CommentEntity> {
-        val response = service.postComment("Bearer $accessToken", RequestPostCommentDTO(bookmarkId, context))
+        val response =
+            service.postComment("Bearer $accessToken", RequestPostCommentDTO(bookmarkId, context))
         return if (response.isSuccessful) {
             val item = response.body()!!.run {
                 CommentEntity(
@@ -41,7 +41,11 @@ class CommentRepositoryImpl : CommentRepository {
         context: String,
         commentId: Int
     ): Result<CommentEntity> {
-        val response = service.updateComment("Bearer $accessToken", RequestUpdateCommentDTO(context), commentId)
+        val response = service.updateComment(
+            "Bearer $accessToken",
+            RequestUpdateCommentDTO(context),
+            commentId
+        )
         return if (response.isSuccessful) {
             val item = response.body()!!.run {
                 CommentEntity(

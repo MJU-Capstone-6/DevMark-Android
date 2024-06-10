@@ -164,7 +164,7 @@ class WorkSpaceRepositoryImpl : WorkSpaceRepository {
                 workspaceId
             )
         return if (response.isSuccessful) {
-            if(response.body() == null) Result.success(listOf())
+            if (response.body() == null) Result.success(listOf())
             else Result.success(RecommendPostMapper.mapperToResponseEntity(response.body()!!))
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
@@ -182,7 +182,7 @@ class WorkSpaceRepositoryImpl : WorkSpaceRepository {
                 workspaceId
             )
         return if (response.isSuccessful) {
-            if(response.body() == null) Result.success(listOf())
+            if (response.body() == null) Result.success(listOf())
             else Result.success(TopCategoryMapper.mapperToResponseEntity(response.body()!!))
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")

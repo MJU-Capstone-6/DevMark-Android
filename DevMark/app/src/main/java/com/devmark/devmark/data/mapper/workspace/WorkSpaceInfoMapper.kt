@@ -1,6 +1,5 @@
 package com.devmark.devmark.data.mapper.workspace
 
-import com.devmark.devmark.data.model.workspace.Category
 import com.devmark.devmark.data.model.workspace.ResponseWorkSpaceInfoDTO
 import com.devmark.devmark.domain.model.workspace.WorkSpaceInfoEntity
 

@@ -7,16 +7,22 @@ import java.lang.reflect.Type
 
 class NullOnEmptyConverterFactory : Converter.Factory() {
     fun converterFactory() = this
-    override fun responseBodyConverter(type: Type, annotations: Array<out Annotation>, retrofit: Retrofit) = object : Converter<ResponseBody, Any?> {
-        val nextResponseBodyConverter = retrofit.nextResponseBodyConverter<Any?>(converterFactory(), type, annotations)
+    override fun responseBodyConverter(
+        type: Type,
+        annotations: Array<out Annotation>,
+        retrofit: Retrofit
+    ) = object : Converter<ResponseBody, Any?> {
+        val nextResponseBodyConverter =
+            retrofit.nextResponseBodyConverter<Any?>(converterFactory(), type, annotations)
+
         override fun convert(value: ResponseBody) = if (value.contentLength() != 0L) {
-            try{
+            try {
                 nextResponseBodyConverter.convert(value)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 null
             }
-        } else{
+        } else {
             null
         }
     }

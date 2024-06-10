@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import android.widget.Toast
 
 object PermissionManager {
     const val PERMISSION_REQUEST_CODE = 5000

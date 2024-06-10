@@ -17,8 +17,9 @@ val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(
     name = "com.devmark.devmark.user_preferences"
 )
 
-class UserPreferencesRepositoryImpl: UserPreferencesRepository {
-    private val userDataStorePreferences: DataStore<Preferences> = app.applicationContext.userDataStore
+class UserPreferencesRepositoryImpl : UserPreferencesRepository {
+    private val userDataStorePreferences: DataStore<Preferences> =
+        app.applicationContext.userDataStore
 
     private companion object {
         private val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
@@ -33,7 +34,7 @@ class UserPreferencesRepositoryImpl: UserPreferencesRepository {
                 preferences.clear()
             }
             Result.success(true)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Result.success(false)
         }
     }

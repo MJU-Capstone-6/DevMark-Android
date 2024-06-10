@@ -2,7 +2,6 @@ package com.devmark.devmark.data.mapper.bookmark
 
 import com.devmark.devmark.data.model.bookmark.BookmarkDTO
 import com.devmark.devmark.data.model.bookmark.RequestUpdateBookmarkDTO
-import com.devmark.devmark.domain.model.bookmark.BookmarksEntity
 import com.devmark.devmark.domain.model.bookmark.UpdateBookmarkEntity
 
 object UpdateBookmarkMapper {

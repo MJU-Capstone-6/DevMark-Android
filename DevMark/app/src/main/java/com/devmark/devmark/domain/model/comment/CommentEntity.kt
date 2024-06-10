@@ -1,6 +1,5 @@
 package com.devmark.devmark.domain.model.comment
 
-import com.google.gson.annotations.SerializedName
 
 data class CommentEntity(
     val commentContext: String,

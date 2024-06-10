@@ -12,12 +12,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.view.MainActivity
-import com.devmark.devmark.domain.model.Member
 import com.devmark.devmark.databinding.FragmentSettingWorkspaceBinding
-import com.devmark.devmark.domain.model.workspace.ResponseWorkspaceSettingInfoEntity
 import com.devmark.devmark.presentation.custom.CustomDialog
 import com.devmark.devmark.presentation.utils.UiState
 import com.devmark.devmark.presentation.view.MainViewModel

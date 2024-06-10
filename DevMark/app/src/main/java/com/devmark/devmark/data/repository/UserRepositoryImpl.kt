@@ -3,15 +3,12 @@ package com.devmark.devmark.data.repository
 import com.devmark.devmark.data.mapper.user.LoginMapper
 import com.devmark.devmark.data.mapper.user.NotificationMapper
 import com.devmark.devmark.data.mapper.user.WorkSpaceListMapper
-import com.devmark.devmark.data.mapper.workspace.RecommendPostMapper
 import com.devmark.devmark.data.model.user.RequestLoginDTO
 import com.devmark.devmark.data.remote.RetrofitClient
 import com.devmark.devmark.data.remote.api.UserService
-import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.domain.model.user.NotificationEntity
 import com.devmark.devmark.domain.model.user.ResponseLoginEntity
 import com.devmark.devmark.domain.model.user.ResponseWorkSpaceListEntity
-import com.devmark.devmark.domain.model.workspace.RecommendPostItem
 import com.devmark.devmark.domain.repository.UserRepository
 import org.json.JSONObject
 

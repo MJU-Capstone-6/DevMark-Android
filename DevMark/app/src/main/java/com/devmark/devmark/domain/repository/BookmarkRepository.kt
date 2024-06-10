@@ -6,7 +6,6 @@ import com.devmark.devmark.domain.model.bookmark.CommentEntity
 import com.devmark.devmark.domain.model.bookmark.RequestBookmarkEntity
 import com.devmark.devmark.domain.model.bookmark.UpdateBookmarkEntity
 
-
 interface BookmarkRepository {
     suspend fun getBookmarkDetail(
         accessToken: String,

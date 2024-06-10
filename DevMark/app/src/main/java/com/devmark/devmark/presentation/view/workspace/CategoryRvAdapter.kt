@@ -64,5 +64,4 @@ class CategoryRvAdapter(private val selectedList: List<Int>) :
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClick = onItemClickListener
     }
-
 }

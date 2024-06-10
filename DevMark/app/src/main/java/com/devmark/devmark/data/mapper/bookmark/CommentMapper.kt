@@ -13,11 +13,8 @@ object CommentMapper {
                     )
                 }
             }
-        } catch (e: NullPointerException){
+        } catch (e: NullPointerException) {
             emptyList()
         }
-
-
     }
-
 }

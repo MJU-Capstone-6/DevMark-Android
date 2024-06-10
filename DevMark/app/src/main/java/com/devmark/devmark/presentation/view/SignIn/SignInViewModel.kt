@@ -49,7 +49,9 @@ class SignInViewModel : ViewModel() {
                 if (task.isSuccessful) {
                     continuation.resume(task.result)
                 } else {
-                    continuation.resumeWithException(task.exception ?: Exception("Unknown error occurred"))
+                    continuation.resumeWithException(
+                        task.exception ?: Exception("Unknown error occurred")
+                    )
                 }
             }
         }

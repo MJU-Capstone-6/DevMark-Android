@@ -13,7 +13,10 @@ import androidx.fragment.app.DialogFragment
 import com.devmark.devmark.R
 import com.devmark.devmark.databinding.DialogCustomBinding
 
-class CustomDialog private constructor(private val dialogType: DialogType, private val msg: String?) : DialogFragment() {
+class CustomDialog private constructor(
+    private val dialogType: DialogType,
+    private val msg: String?
+) : DialogFragment() {
 
     enum class DialogType {
         WS_EXIT
@@ -60,16 +63,18 @@ class CustomDialog private constructor(private val dialogType: DialogType, priva
         binding.lifecycleOwner = viewLifecycleOwner
 
         when (dialogType) {
-            DialogType.WS_EXIT -> { setWorkSpaceExit() }
+            DialogType.WS_EXIT -> {
+                setWorkSpaceExit()
+            }
         }
 
         return binding.root
     }
 
-    private lateinit var listener : DialogOKClickedListener
+    private lateinit var listener: DialogOKClickedListener
 
     fun setOnOKClickedListener(listener: (String) -> Unit) {
-        this.listener = object: DialogOKClickedListener {
+        this.listener = object : DialogOKClickedListener {
             override fun onOKClicked(value: String) {
                 listener(value)
             }
@@ -77,7 +82,7 @@ class CustomDialog private constructor(private val dialogType: DialogType, priva
     }
 
     interface DialogOKClickedListener {
-        fun onOKClicked(value : String)
+        fun onOKClicked(value: String)
     }
 
     override fun onDestroyView() {
@@ -90,7 +95,7 @@ class CustomDialog private constructor(private val dialogType: DialogType, priva
         instance = null
     }
 
-    private fun setWorkSpaceExit(){
+    private fun setWorkSpaceExit() {
         binding.dialogTitle.text = getString(R.string.dialog_ws_exit_title)
         binding.dialogComment.text = getString(R.string.dialog_ws_exit_comment)
         binding.dialogBtnYes.text = getString(R.string.dialog_ws_exit_yes)
