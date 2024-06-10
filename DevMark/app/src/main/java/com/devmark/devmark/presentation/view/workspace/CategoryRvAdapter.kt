@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.R
 import com.devmark.devmark.databinding.ItemFilterListBinding
+import com.devmark.devmark.presentation.utils.capitalizeFirstLetter
 
 class CategoryRvAdapter(private val selectedList: List<Int>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -44,7 +45,7 @@ class CategoryRvAdapter(private val selectedList: List<Int>) :
                 false
             }
 
-            binding.tvFilter.text = item.second
+            binding.tvFilter.text = item.second.capitalizeFirstLetter()
             binding.tvFilter.setOnClickListener {
                 itemClick.onClick(item.first)
                 val newColor =

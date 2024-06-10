@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devmark.devmark.databinding.ItemBookmarkBinding
 import com.devmark.devmark.domain.model.bookmark.CommentEntity
 import com.devmark.devmark.domain.model.workspace.RealRecommendPost
+import com.devmark.devmark.presentation.utils.capitalizeFirstLetter
 import com.devmark.devmark.presentation.view.bookmark.CommentRvAdapter
 
 class RecommendRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -38,7 +39,7 @@ class RecommendRvAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RealRecommendPost) {
             binding.tvBookMarkTitle.text = item.title
-            binding.tvBookMarkCategory.text = item.categoryName
+            binding.tvBookMarkCategory.text = item.categoryName.capitalizeFirstLetter()
 
             itemView.setOnClickListener {
                 recommendPostClickListener.onClick(item)
