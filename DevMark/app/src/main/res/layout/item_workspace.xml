@@ -27,8 +27,10 @@
             android:background="@drawable/workspace_right"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/guideline1"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tv_workspace_name"
@@ -74,10 +76,10 @@
 
         <TextView
             android:id="@+id/tv_total_bookmark_num"
-            style="@style/regular_10_workspace"
+            style="@style/regular_12_workspace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:textColor="@color/taupe"
             app:layout_constraintStart_toStartOf="@id/tv_total_bookmark"
             app:layout_constraintTop_toBottomOf="@id/tv_total_bookmark" />
@@ -87,7 +89,7 @@
             style="@style/medium_12_workspace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:text="@string/workspace_total_people"
             android:textColor="@color/rust"
             app:layout_constraintStart_toStartOf="@id/tv_total_bookmark"
@@ -95,10 +97,10 @@
 
         <TextView
             android:id="@+id/tv_total_people_num"
-            style="@style/regular_10_workspace"
+            style="@style/regular_12_workspace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:textColor="@color/taupe"
             app:layout_constraintStart_toStartOf="@id/tv_total_bookmark"
             app:layout_constraintTop_toBottomOf="@id/tv_total_people" />
