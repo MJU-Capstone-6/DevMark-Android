@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmark.devmark.presentation.base.GlobalApplication.Companion.app
 import com.devmark.devmark.data.repository.UserRepositoryImpl
+import com.devmark.devmark.data.utils.LoggerUtils
 import com.devmark.devmark.presentation.utils.UiState
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,7 @@ class SignInViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val registrationToken = getFirebaseToken()
+                LoggerUtils.info(registrationToken)
 
                 userRepositoryImpl.login(accessToken, registrationToken).onSuccess {
                     runBlocking(Dispatchers.IO) {

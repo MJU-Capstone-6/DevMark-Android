@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException
 
 object TimeUtil {
     fun formatCreateAt(createAt: String): String {
-        val createTime = parseDateTime(createAt)
+        val createTime = parseDateTime(createAt.adjustDateTime())
         val now = LocalDateTime.now()
 
         val duration = Duration.between(createTime, now)
